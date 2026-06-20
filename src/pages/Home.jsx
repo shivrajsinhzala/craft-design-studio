@@ -11,8 +11,6 @@ import PageTransition from '../components/PageTransition.jsx';
 import RevealText from '../components/RevealText.jsx';
 import Footer from '../components/Footer.jsx';
 
-import HeroWebGLSlider from '../components/HeroWebGLSlider.jsx';
-
 gsap.registerPlugin(ScrollTrigger);
 
 const heroSlides = [
@@ -362,7 +360,26 @@ export default function Home() {
               className="hero-img-frame" 
               id="heroFrame"
             >
-              <HeroWebGLSlider images={heroSlides.map(s => s.img)} activeIndex={heroIdx} />
+              <div className="hero-img" style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
+                {heroSlides.map((slide, idx) => (
+                  <motion.img
+                    key={slide.img}
+                    src={slide.img}
+                    alt={`${slide.title} — ${slide.location} visualization`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: idx === heroIdx ? 1 : 0 }}
+                    transition={{ duration: 0.9, ease: 'easeInOut' }}
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      pointerEvents: idx === heroIdx ? 'auto' : 'none',
+                    }}
+                  />
+                ))}
+              </div>
               
               <div className="hero-img-badge" aria-hidden="true" style={{ overflow: 'hidden' }}>
                 <AnimatePresence mode="wait">
@@ -410,7 +427,7 @@ export default function Home() {
           </div>
           <div className="hero-bottom" aria-label="Studio statistics">
             <div className="hero-stat">
-              <h3><span className="count-n" data-target="50">0</span>={/* Stat counters */}<em>+</em></h3>
+              <h3><span className="count-n" data-target="50">0</span><em>+</em></h3>
               <p>Projects Delivered</p>
             </div>
             <div className="hero-sep" aria-hidden="true"></div>
