@@ -11,3 +11,13 @@ desktop.ini
 
 # Gemini agent files
 .gemini/
+
+# Dependency directories
+node_modules/
+
+# Production build output
+dist/
+
+# Local env files
+.env*.local
+
