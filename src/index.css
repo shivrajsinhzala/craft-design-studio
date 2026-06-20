@@ -349,6 +349,37 @@ address { font-style:normal; }
   backdrop-filter: blur(10px);
   padding: 9px 16px;
   border-radius: 40px;
+  z-index: 5;
+}
+.hero-slider-nav {
+  position: absolute;
+  bottom: 28px; right: 28px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(20,18,16,0.48);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 12px 16px;
+  border-radius: 40px;
+  z-index: 5;
+}
+.hero-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.4s var(--ease);
+}
+.hero-dot.active {
+  background: var(--yellow);
+  transform: scale(1.4);
+}
+.hero-dot:hover:not(.active) {
+  background: rgba(255,255,255,0.85);
 }
 .hero-float-tag {
   position: absolute;

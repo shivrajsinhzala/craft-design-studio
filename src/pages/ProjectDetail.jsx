@@ -57,7 +57,7 @@ export default function ProjectDetail() {
         <Helmet>
           <title>{`${project.title} — ${project.tag} | Craft The Design Studio`}</title>
           <meta name="description" content={project.description} />
-          <link rel="canonical" href={`https://craftdesignstudio.in/#/project/${project.id}`} />
+          <link rel="canonical" href={`https://craftdesignstudio.in/project/${project.id}`} />
           <meta property="og:image" content={`https://craftdesignstudio.in${project.banner}`} />
           <meta name="twitter:image" content={`https://craftdesignstudio.in${project.banner}`} />
         </Helmet>

@@ -11,7 +11,42 @@ import PageTransition from '../components/PageTransition.jsx';
 import RevealText from '../components/RevealText.jsx';
 import Footer from '../components/Footer.jsx';
 
+import HeroWebGLSlider from '../components/HeroWebGLSlider.jsx';
+
 gsap.registerPlugin(ScrollTrigger);
+
+const heroSlides = [
+  {
+    title: 'Flora 11',
+    location: 'Morbi',
+    img: '/Flora 11/F11 LV ELE 01.webp'
+  },
+  {
+    title: 'Golden Heights',
+    location: 'Morbi',
+    img: '/Golden Heights/GH MB ELE 1.webp'
+  },
+  {
+    title: 'Silver Heights',
+    location: 'Morbi',
+    img: '/Silver Heights/FL LV ELE 1.webp'
+  },
+  {
+    title: 'Office Design',
+    location: 'Morbi',
+    img: '/Office Design/N.OFFICE ELE 01.webp'
+  },
+  {
+    title: 'Sthapatya',
+    location: 'Morbi',
+    img: '/Sthapatya/ELEVATION 1.webp'
+  },
+  {
+    title: 'Twin Tower',
+    location: 'Morbi',
+    img: '/Twin Tower/L1.webp'
+  }
+];
 
 const serviceImages = [
   '/Silver Heights/FL LV ELE 1.webp',     // Interior Design
@@ -35,6 +70,24 @@ export default function Home() {
     message: ''
   });
   const [formStatus, setFormStatus] = useState('idle');
+
+  // Hero Slider State
+  const [heroIdx, setHeroIdx] = useState(0);
+  const heroTimerRef = useRef(null);
+
+  const resetHeroTimer = () => {
+    if (heroTimerRef.current) clearInterval(heroTimerRef.current);
+    heroTimerRef.current = setInterval(() => {
+      setHeroIdx((prev) => (prev + 1) % heroSlides.length);
+    }, 5500); // 5.5s autoplay interval
+  };
+
+  useEffect(() => {
+    resetHeroTimer();
+    return () => {
+      if (heroTimerRef.current) clearInterval(heroTimerRef.current);
+    };
+  }, []);
 
   // Services Hover Preview State
   const [hoveredSvcIdx, setHoveredSvcIdx] = useState(null);
@@ -253,7 +306,7 @@ export default function Home() {
         <Helmet>
           <title>Craft – The Design Studio | Designing Interiors, Defining Elegance</title>
           <meta name="description" content="Premium interior design, 3D visualization, architectural rendering, and walkthrough studio in Morbi & Rajkot, Gujarat. Designing Interiors, Defining Elegance." />
-          <link rel="canonical" href="https://craftdesignstudio.in/#/" />
+          <link rel="canonical" href="https://craftdesignstudio.in/" />
         </Helmet>
 
         {/* Skip link */}
@@ -309,11 +362,38 @@ export default function Home() {
               className="hero-img-frame" 
               id="heroFrame"
             >
-              <img src="/Flora 11/F11 LV ELE 01.webp" alt="Premium living room interior design by Craft Design Studio" className="hero-img" fetchPriority="high" width="960" height="720" style={{ transform: 'none' }} />
-              <div className="hero-img-badge" aria-hidden="true">
-                <span>Flora 11</span>
-                <span>·</span>
-                <span>Morbi</span>
+              <HeroWebGLSlider images={heroSlides.map(s => s.img)} activeIndex={heroIdx} />
+              
+              <div className="hero-img-badge" aria-hidden="true" style={{ overflow: 'hidden' }}>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={heroIdx}
+                    initial={{ y: 15, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: -15, opacity: 0 }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    style={{ display: 'flex', gap: '6px', alignItems: 'center' }}
+                  >
+                    <span>{heroSlides[heroIdx].title}</span>
+                    <span>·</span>
+                    <span>{heroSlides[heroIdx].location}</span>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* Slider indicators */}
+              <div className="hero-slider-nav" aria-label="Hero slider controls">
+                {heroSlides.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      setHeroIdx(idx);
+                      resetHeroTimer();
+                    }}
+                    className={`hero-dot ${idx === heroIdx ? 'active' : ''}`}
+                    aria-label={`Go to slide ${idx + 1}`}
+                  />
+                ))}
               </div>
             </motion.div>
             <motion.div 
