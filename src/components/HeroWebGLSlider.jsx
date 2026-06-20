@@ -23,7 +23,7 @@ const FRAGMENT_SHADER = `
 
   // Simple procedural noise for displacement
   float rand(vec2 n) { 
-    return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453;
+    return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
   }
   float noise(vec2 p) {
     vec2 ip = floor(p);
