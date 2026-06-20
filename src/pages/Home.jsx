@@ -14,11 +14,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Representative images for the service hover previews
 const serviceImages = [
-  '/Silver Heights/FL LV ELE 1.png',     // Interior Design
-  '/Flora 11/F11 LV ELE 01.png',         // 3D Interior Visualization
-  '/Sthapatya/ELEVATION 1.png',          // Architectural Visualization
-  '/Golden Heights/GH MB ELE 1.png',      // 3D Floor Plans
-  '/Twin Tower/L1.png'                   // Animation Walkthroughs
+  '/Silver Heights/FL LV ELE 1.webp',     // Interior Design
+  '/Flora 11/F11 LV ELE 01.webp',         // 3D Interior Visualization
+  '/Sthapatya/ELEVATION 1.webp',          // Architectural Visualization
+  '/Golden Heights/GH MB ELE 1.webp',      // 3D Floor Plans
+  '/Twin Tower/L1.webp'                   // Animation Walkthroughs
 ];
 
 export default function Home() {
@@ -294,7 +294,7 @@ export default function Home() {
               className="hero-img-frame" 
               id="heroFrame"
             >
-              <img src="/Flora 11/F11 LV ELE 01.png" alt="Premium living room interior design by Craft Design Studio" className="hero-img" fetchPriority="high" width="960" height="720" style={{ transform: 'none' }} />
+              <img src="/Flora 11/F11 LV ELE 01.webp" alt="Premium living room interior design by Craft Design Studio" className="hero-img" fetchPriority="high" width="960" height="720" style={{ transform: 'none' }} />
               <div className="hero-img-badge" aria-hidden="true">
                 <span>Flora 11</span>
                 <span>·</span>
@@ -357,7 +357,7 @@ export default function Home() {
                   transition={{ duration: 1.4, ease: [0.19, 1, 0.22, 1] }}
                   className="ab-img ab-img-1"
                 >
-                  <img src="/Sthapatya/ELEVATION 1.png" alt="Sthapatya residential elevation design with modern architecture by Craft Design Studio" loading="lazy" width="800" height="1000" />
+                  <img src="/Sthapatya/ELEVATION 1.webp" alt="Sthapatya residential elevation design with modern architecture by Craft Design Studio" loading="lazy" width="800" height="1000" />
                 </motion.div>
                 <motion.div 
                   initial={{ clipPath: 'inset(0 0 100% 0)' }}
@@ -366,7 +366,7 @@ export default function Home() {
                   transition={{ duration: 1.4, delay: 0.2, ease: [0.19, 1, 0.22, 1] }}
                   className="ab-img ab-img-2"
                 >
-                  <img src="/Twin Tower/L1.png" alt="Twin Tower luxury living room visualization with contemporary interiors" loading="lazy" width="600" height="400" />
+                  <img src="/Twin Tower/L1.webp" alt="Twin Tower luxury living room visualization with contemporary interiors" loading="lazy" width="600" height="400" />
                 </motion.div>
                 <div className="ab-accent-box" aria-hidden="true">
                   <span className="ab-year">Est.</span>
@@ -415,7 +415,7 @@ export default function Home() {
                     className="founder-card"
                   >
                     <div className="f-av">
-                      <img src="/vhzala.jpeg" alt="Vishvarajsinh Zala — Co-Founder of Craft Design Studio" loading="lazy" width="72" height="72" />
+                      <img src="/vhzala.webp" alt="Vishvarajsinh Zala — Co-Founder of Craft Design Studio" loading="lazy" width="72" height="72" />
                     </div>
                     <div className="f-info">
                       <h4>Vishvarajsinh Zala</h4>
@@ -433,7 +433,7 @@ export default function Home() {
                     className="founder-card"
                   >
                     <div className="f-av">
-                      <img src="/yash.jpeg" alt="Yash Gharvaliya — Co-Founder of Craft Design Studio" loading="lazy" width="72" height="72" />
+                      <img src="/yash.webp" alt="Yash Gharvaliya — Co-Founder of Craft Design Studio" loading="lazy" width="72" height="72" />
                     </div>
                     <div className="f-info">
                       <h4>Yash Gharvaliya</h4>
