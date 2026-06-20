@@ -1033,6 +1033,7 @@ address { font-style:normal; }
   .h-pin { min-height: auto; padding: 48px 0; }
   .featured-hd { flex-direction:column; align-items:flex-start; padding-top:0; padding-bottom:0; }
   .featured-hd-wrapper { padding-bottom:24px; }
+  .scroll-cue { display:none; }
   .h-track-container {
     overflow-x: auto !important;
     overflow-y: hidden;
