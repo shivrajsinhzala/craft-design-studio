@@ -196,6 +196,7 @@ address { font-style:normal; }
 }
 .nav.menu-open {
   transform: none !important;
+  will-change: auto !important;
   background: transparent !important;
   box-shadow: none !important;
   border-bottom: none !important;
@@ -1031,6 +1032,8 @@ address { font-style:normal; }
   .nav-logo img { height:36px; }
   .nav-links {
     position:fixed; inset:0;
+    width:100vw;
+    height:100vh;
     background:var(--bg);
     flex-direction:column;
     justify-content:center;
