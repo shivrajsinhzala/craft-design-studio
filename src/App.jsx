@@ -85,6 +85,8 @@ export default function App() {
         <title>Craft – The Design Studio | Designing Interiors, Defining Elegance</title>
         <meta name="description" content="Premium interior design, 3D visualization, architectural rendering, and animation walkthrough studio based in Morbi & Rajkot, Gujarat. Designing Interiors, Defining Elegance." />
         <link rel="canonical" href="https://craftdesignstudio.in/" />
+        <meta property="og:image" content="https://craftdesignstudio.in/og-image.png" />
+        <meta name="twitter:image" content="https://craftdesignstudio.in/og-image.png" />
       </Helmet>
       <ScrollToTop />
       <Cursor />
