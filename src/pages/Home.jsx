@@ -716,6 +716,8 @@ export default function Home() {
                     </div>
                   </Link>
                 ))}
+                {/* Right spacer to keep the last card from touching the right edge of the screen */}
+                <div className="h-track-spacer" style={{ width: 'var(--pad-h)', flexShrink: 0 }} aria-hidden="true" />
               </div>
             </div>
           </div>
