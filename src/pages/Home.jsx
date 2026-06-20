@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import * as Lucide from 'lucide-react';
 import { projectsData } from '../data/projectsData.js';
 import PageTransition from '../components/PageTransition.jsx';
@@ -12,7 +13,6 @@ import Footer from '../components/Footer.jsx';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Representative images for the service hover previews
 const serviceImages = [
   '/Silver Heights/FL LV ELE 1.webp',     // Interior Design
   '/Flora 11/F11 LV ELE 01.webp',         // 3D Interior Visualization
@@ -211,15 +211,16 @@ export default function Home() {
     const pin = document.getElementById('hPin');
     const track = document.getElementById('hTrack');
     if (pin && track) {
+      // Small timeout to allow DOM and images layout to settle
       setTimeout(() => {
-        const trackWidth = track.scrollWidth;
-        const viewWidth = window.innerWidth;
-        const distance = trackWidth - viewWidth;
+        const getScrollAmount = () => {
+          return track.scrollWidth - window.innerWidth;
+        };
 
-        if (distance <= 0) return;
+        if (getScrollAmount() <= 0) return;
 
         const hScrollTween = gsap.to(track, {
-          x: () => -distance,
+          x: () => -getScrollAmount(),
           ease: 'none',
         });
 
@@ -227,20 +228,25 @@ export default function Home() {
           trigger: pin,
           pin: true,
           animation: hScrollTween,
-          scrub: 1,
-          end: () => '+=' + distance,
+          scrub: true, // Direct synchronization with smooth scroll (Lenis) to eliminate jerks
+          end: () => '+=' + getScrollAmount(),
           invalidateOnRefresh: true,
-          anticipatePin: 1,
         });
 
         ScrollTrigger.refresh();
-      }, 100);
+      }, 150);
     }
   }, { scope: containerRef });
 
   return (
     <PageTransition>
       <div ref={containerRef}>
+        <Helmet>
+          <title>Craft – The Design Studio | Designing Interiors, Defining Elegance</title>
+          <meta name="description" content="Premium interior design, 3D visualization, architectural rendering, and walkthrough studio in Morbi & Rajkot, Gujarat. Designing Interiors, Defining Elegance." />
+          <link rel="canonical" href="https://craftdesignstudio.in/#/" />
+        </Helmet>
+
         {/* Skip link */}
         <a href="#main-content-section" className="skip-link" onClick={(e) => scrollToSection(e, '#main-content-section')}>
           Skip to main content
@@ -315,7 +321,7 @@ export default function Home() {
           </div>
           <div className="hero-bottom" aria-label="Studio statistics">
             <div className="hero-stat">
-              <h3><span className="count-n" data-target="50">0</span><em>+</em></h3>
+              <h3><span className="count-n" data-target="50">0</span>={/* Stat counters */}<em>+</em></h3>
               <p>Projects Delivered</p>
             </div>
             <div className="hero-sep" aria-hidden="true"></div>
@@ -575,48 +581,53 @@ export default function Home() {
           )}
         </section>
 
-        {/* FEATURED PROJECTS — HORIZONTAL SCROLL */}
+        {/* FEATURED PROJECTS — HORIZONTAL SCROLL WITH PINNED HEADING */}
         <section className="featured" id="projects" aria-label="Featured Projects">
-          <div className="featured-hd">
-            <div>
-              <p className="label">Our Portfolio</p>
-              <h2 className="section-title">
-                <RevealText text="Featured" delay={0.1} />
-                <RevealText text="Projects" className="yellow-t" delay={0.2} />
-              </h2>
-            </div>
-            <p className="scroll-cue">
-              <Lucide.MoveRight className="icon-sm" aria-hidden="true" />&nbsp;Scroll to explore
-            </p>
-          </div>
           <div className="h-pin" id="hPin">
-            <div className="h-track" id="hTrack" role="list" aria-label="Project gallery">
-              {projectsData.map((proj, idx) => (
-                <Link
-                  key={proj.id}
-                  className="proj-card"
-                  to={`/project/${proj.id}`}
-                  role="listitem"
-                  aria-label={`${proj.title} — ${proj.tag} project`}
-                >
-                  <div className="proj-img">
-                    <img src={proj.thumbnail} alt={`${proj.title} thumbnail`} loading="lazy" width="440" height="480" />
-                    <div className="proj-img-overlay" aria-hidden="true"></div>
-                  </div>
-                  <div className="proj-meta">
-                    <span className="proj-num" aria-hidden="true">
-                      {String(idx + 1).padStart(2, '0')}
-                    </span>
-                    <div className="proj-text">
-                      <h3>{proj.title}</h3>
-                      <p>{proj.tag}</p>
+            <div className="featured-hd-wrapper">
+              <div className="featured-hd">
+                <div>
+                  <p className="label">Our Portfolio</p>
+                  <h2 className="section-title">
+                    <RevealText text="Featured" delay={0.1} />
+                    <RevealText text="Projects" className="yellow-t" delay={0.2} />
+                  </h2>
+                </div>
+                <p className="scroll-cue">
+                  <Lucide.MoveRight className="icon-sm" aria-hidden="true" />&nbsp;Scroll to explore
+                </p>
+              </div>
+            </div>
+            
+            <div className="h-track-container" style={{ overflow: 'visible', width: '100%' }}>
+              <div className="h-track" id="hTrack" role="list" aria-label="Project gallery">
+                {projectsData.map((proj, idx) => (
+                  <Link
+                    key={proj.id}
+                    className="proj-card"
+                    to={`/project/${proj.id}`}
+                    role="listitem"
+                    aria-label={`${proj.title} — ${proj.tag} project`}
+                  >
+                    <div className="proj-img">
+                      <img src={proj.thumbnail} alt={`${proj.title} thumbnail`} loading="lazy" width="440" height="480" />
+                      <div className="proj-img-overlay" aria-hidden="true"></div>
                     </div>
-                    <div className="proj-arrow-wrap" aria-hidden="true">
-                      <Lucide.ArrowUpRight aria-hidden="true" />
+                    <div className="proj-meta">
+                      <span className="proj-num" aria-hidden="true">
+                        {String(idx + 1).padStart(2, '0')}
+                      </span>
+                      <div className="proj-text">
+                        <h3>{proj.title}</h3>
+                        <p>{proj.tag}</p>
+                      </div>
+                      <div className="proj-arrow-wrap" aria-hidden="true">
+                        <Lucide.ArrowUpRight aria-hidden="true" />
+                      </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </section>

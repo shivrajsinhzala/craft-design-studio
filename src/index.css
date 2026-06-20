@@ -551,24 +551,33 @@ address { font-style:normal; }
 /* ════════════════════════════════════════════════════
    FEATURED PROJECTS — HORIZONTAL SCROLL
    ════════════════════════════════════════════════════ */
-.featured { overflow:hidden; padding-top: 20px; }
+.featured { overflow:hidden; padding:0; }
+.featured-hd-wrapper { width:100%; padding-bottom:32px; }
 .featured-hd {
   display:flex; align-items:flex-end; justify-content:space-between;
   gap:24px;
-  padding-top:100px; padding-bottom:48px;
   max-width:var(--max-w); margin:0 auto;
   padding-left:var(--pad-h); padding-right:var(--pad-h);
+  padding-top:0; padding-bottom:0;
 }
 .scroll-cue {
   display:flex; align-items:center; gap:8px;
   font-family:var(--ff-mono); font-size:12px; letter-spacing:0.12em; text-transform:uppercase;
   color:var(--muted); padding-bottom:8px;
 }
-.h-pin { position:relative; }
+.h-pin {
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-height:100vh;
+  overflow:hidden;
+  background:var(--bg);
+}
 .h-track {
   display:flex;
   gap:20px;
-  padding:0 var(--pad-h) 80px;
+  padding:0 var(--pad-h);
 }
 .proj-card {
   display:flex; flex-direction:column;
@@ -990,8 +999,9 @@ address { font-style:normal; }
   .svc-n { font-size:2.2rem; }
   .services-head { flex-direction:column; align-items:flex-start; }
 
-  .featured-hd { flex-direction:column; align-items:flex-start; padding-top:64px; padding-bottom:32px; }
-  .h-track { gap:14px; padding:0 var(--pad-h) 60px; }
+  .featured-hd { flex-direction:column; align-items:flex-start; padding-top:0; padding-bottom:0; }
+  .featured-hd-wrapper { padding-bottom:24px; }
+  .h-track { gap:14px; padding:0 var(--pad-h); }
   .proj-card { min-width:280px; }
   .proj-img  { height:320px; }
   .proj-meta { padding:14px 16px; gap:12px; }

@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import * as Lucide from 'lucide-react';
 import { projectsData } from '../data/projectsData.js';
 import Lightbox from '../components/Lightbox.jsx';
@@ -28,19 +29,6 @@ export default function ProjectDetail() {
   // Lightbox State
   const [lightboxImg, setLightboxImg] = useState(null);
 
-  // Dynamic SEO Metadata
-  useEffect(() => {
-    if (project) {
-      document.title = `${project.title} — ${project.tag} | Craft The Design Studio`;
-      
-      // Update meta description
-      let metaDescription = document.querySelector('meta[name="description"]');
-      if (metaDescription) {
-        metaDescription.setAttribute('content', project.description);
-      }
-    }
-  }, [project]);
-
   if (!project) {
     return (
       <div className="container" style={{ padding: '200px 80px', textAlign: 'center' }}>
@@ -66,6 +54,12 @@ export default function ProjectDetail() {
   return (
     <PageTransition>
       <div ref={containerRef}>
+        <Helmet>
+          <title>{`${project.title} — ${project.tag} | Craft The Design Studio`}</title>
+          <meta name="description" content={project.description} />
+          <link rel="canonical" href={`https://craftdesignstudio.in/#/project/${project.id}`} />
+        </Helmet>
+
         {/* Skip to gallery */}
         <a
           href="#gallery"
@@ -84,7 +78,7 @@ export default function ProjectDetail() {
             <motion.img 
               initial={{ scale: 1.12 }}
               animate={{ scale: 1 }}
-              transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }} // easeOutExpo
+              transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
               src={project.banner} 
               alt={`${project.title} hero banner`} 
               fetchPriority="high" 

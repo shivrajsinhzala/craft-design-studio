@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
@@ -80,6 +81,11 @@ export default function App() {
 
   return (
     <Router>
+      <Helmet>
+        <title>Craft – The Design Studio | Designing Interiors, Defining Elegance</title>
+        <meta name="description" content="Premium interior design, 3D visualization, architectural rendering, and animation walkthrough studio based in Morbi & Rajkot, Gujarat. Designing Interiors, Defining Elegance." />
+        <link rel="canonical" href="https://craftdesignstudio.in/" />
+      </Helmet>
       <ScrollToTop />
       <Cursor />
       <Navbar />
