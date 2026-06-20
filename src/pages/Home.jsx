@@ -213,24 +213,33 @@ export default function Home() {
     if (pin && track) {
       // Small timeout to allow DOM and images layout to settle
       setTimeout(() => {
-        const getScrollAmount = () => {
-          return track.scrollWidth - window.innerWidth;
-        };
+        const mm = gsap.matchMedia();
 
-        if (getScrollAmount() <= 0) return;
+        mm.add("(min-width: 768px)", () => {
+          const getScrollAmount = () => {
+            return track.scrollWidth - window.innerWidth;
+          };
 
-        const hScrollTween = gsap.to(track, {
-          x: () => -getScrollAmount(),
-          ease: 'none',
+          if (getScrollAmount() <= 0) return;
+
+          const hScrollTween = gsap.to(track, {
+            x: () => -getScrollAmount(),
+            ease: 'none',
+          });
+
+          ScrollTrigger.create({
+            trigger: pin,
+            pin: true,
+            animation: hScrollTween,
+            scrub: true, // Direct synchronization with smooth scroll (Lenis) to eliminate jerks
+            end: () => '+=' + getScrollAmount(),
+            invalidateOnRefresh: true,
+          });
         });
 
-        ScrollTrigger.create({
-          trigger: pin,
-          pin: true,
-          animation: hScrollTween,
-          scrub: true, // Direct synchronization with smooth scroll (Lenis) to eliminate jerks
-          end: () => '+=' + getScrollAmount(),
-          invalidateOnRefresh: true,
+        mm.add("(max-width: 767px)", () => {
+          // Reset any transforms so native CSS overflow-x takes over
+          gsap.set(track, { clearProps: "transform" });
         });
 
         ScrollTrigger.refresh();
