@@ -21,23 +21,16 @@ const FRAGMENT_SHADER = `
   uniform vec2 u_resolution;
   uniform vec2 u_img_resolution;
 
-  // Simple procedural noise for displacement
-  float rand(vec2 n) { 
-    return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
-  }
-  float noise(vec2 p) {
-    vec2 ip = floor(p);
-    vec2 fp = fract(p);
-    vec2 u = fp*fp*(3.0-2.0*fp);
-    return mix(
-      mix(rand(ip), rand(ip+vec2(1.0,0.0)), u.x),
-      mix(rand(ip+vec2(0.0,1.0)), rand(ip+vec2(1.0,1.0)), u.x),
-      u.y
-    );
+  // Separated RGB sampling for premium chromatic aberration
+  vec4 sampleRGB(sampler2D tex, vec2 uv, float offset) {
+    float r = texture2D(tex, uv - vec2(offset, 0.0)).r;
+    float g = texture2D(tex, uv).g;
+    float b = texture2D(tex, uv + vec2(offset, 0.0)).b;
+    float a = texture2D(tex, uv).a;
+    return vec4(r, g, b, a);
   }
 
   void main() {
-    // cover aspect ratio calculation
     float screenRatio = u_resolution.x / u_resolution.y;
     float imgRatio = u_img_resolution.x / u_img_resolution.y;
     vec2 ratio = vec2(
@@ -51,14 +44,22 @@ const FRAGMENT_SHADER = `
 
     // Liquid displacement strength peaks at progress 0.5
     float strength = sin(u_progress * 3.14159265);
-    float displacement = noise(uv * 8.0 + u_time * 0.04) * 0.12 * strength;
+    
+    // Multi-layered wavy distortion for a complex fluid feel
+    float distortion = sin(uv.x * 12.0 + uv.y * 8.0 + u_time * 0.03) * 0.025 + 
+                       cos(uv.y * 15.0 - uv.x * 6.0 + u_time * 0.02) * 0.015;
+    
+    distortion *= strength;
 
     // Displacement offset for both textures
-    vec2 uv1 = vec2(uv.x + u_progress * displacement, uv.y + u_progress * displacement);
-    vec2 uv2 = vec2(uv.x - (1.0 - u_progress) * displacement, uv.y - (1.0 - u_progress) * displacement);
+    vec2 uv1 = vec2(uv.x + u_progress * distortion, uv.y + u_progress * distortion);
+    vec2 uv2 = vec2(uv.x - (1.0 - u_progress) * distortion, uv.y - (1.0 - u_progress) * distortion);
 
-    vec4 color1 = texture2D(u_texture1, uv1);
-    vec4 color2 = texture2D(u_texture2, uv2);
+    // Chromatic aberration offset - peaks at progress = 0.5
+    float abOffset = 0.018 * strength;
+
+    vec4 color1 = sampleRGB(u_texture1, uv1, abOffset);
+    vec4 color2 = sampleRGB(u_texture2, uv2, abOffset);
 
     gl_FragColor = mix(color1, color2, u_progress);
   }
@@ -200,7 +201,11 @@ export default function HeroWebGLSlider({ images, activeIndex }) {
       }
     };
     
+    // Initial size checks using timeouts to let DOM layout settle
     resizeCanvas();
+    const t1 = setTimeout(resizeCanvas, 100);
+    const t2 = setTimeout(resizeCanvas, 500);
+
     window.addEventListener('resize', resizeCanvas, { passive: true });
 
     // Render loop
@@ -209,7 +214,6 @@ export default function HeroWebGLSlider({ images, activeIndex }) {
         if (!glRef.current || !programRef.current) return;
         
         timeRef.current += 0.5; // Update time for noise wave animation
-        resizeCanvas();
 
         const activeTexData = texturesRef.current[activeIndex];
         const prevTexData = texturesRef.current[prevIndexRef.current] || activeTexData;
@@ -245,6 +249,8 @@ export default function HeroWebGLSlider({ images, activeIndex }) {
     };
 
     return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
       window.removeEventListener('resize', resizeCanvas);
       cancelAnimationFrame(animationFrameRef.current);
       animationFrameRef.current = null;
