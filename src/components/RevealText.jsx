@@ -36,7 +36,7 @@ export default function RevealText({ text, className, delay = 0 }) {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: '-5%' }}
-      style={{ display: 'inline-flex', flexWrap: 'wrap', overflow: 'hidden' }}
+      style={{ display: 'inline-flex', flexWrap: 'wrap', overflow: 'visible' }}
     >
       {words.map((word, idx) => (
         <span
@@ -45,8 +45,8 @@ export default function RevealText({ text, className, delay = 0 }) {
             display: 'inline-block',
             overflow: 'hidden',
             marginRight: '0.25em',
-            paddingBottom: '0.15em',
-            marginBottom: '-0.15em',
+            paddingBottom: '0.25em',
+            marginBottom: '-0.25em',
           }}
         >
           <motion.span
