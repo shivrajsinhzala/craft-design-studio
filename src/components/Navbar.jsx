@@ -124,7 +124,7 @@ export default function Navbar() {
   return (
     <header
       ref={navRef}
-      className={`nav ${isScrolled || location.pathname !== '/' ? 'scrolled' : ''}`}
+      className={`nav ${isScrolled || location.pathname !== '/' ? 'scrolled' : ''} ${isOpen ? 'menu-open' : ''}`}
       role="banner"
     >
       <Link to="/" onClick={closeMenu} className="nav-logo" aria-label="Craft The Design Studio – Home">
