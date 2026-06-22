@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useSpring } from 'framer-motion';
 import * as Lucide from 'lucide-react';
 import { blogsData } from '../data/blogsData.js';
 import PageTransition from '../components/PageTransition.jsx';
@@ -12,6 +12,14 @@ export default function BlogDetail() {
   const navigate = useNavigate();
 
   const blog = blogsData.find((b) => b.slug === slug);
+
+  // Scroll Progress Bar Tracker
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -39,6 +47,20 @@ export default function BlogDetail() {
   const prevBlog = blogIndex > 0 ? blogsData[blogIndex - 1] : null;
   const nextBlog = blogIndex < blogsData.length - 1 ? blogsData[blogIndex + 1] : null;
 
+  // Find 2 related articles using category and tag relevance
+  const relatedBlogs = blogsData
+    .filter((b) => b.slug !== slug)
+    .map((b) => {
+      let score = 0;
+      if (b.category === blog.category) score += 3;
+      const commonTags = b.tags.filter(t => blog.tags.includes(t));
+      score += commonTags.length;
+      return { blog: b, score };
+    })
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 2)
+    .map(item => item.blog);
+
   return (
     <PageTransition>
       <div>
@@ -52,6 +74,21 @@ export default function BlogDetail() {
           <meta property="og:image" content={`https://craftdesignstudio.in${blog.banner}`} />
           <meta name="twitter:image" content={`https://craftdesignstudio.in${blog.banner}`} />
         </Helmet>
+
+        {/* Scroll Progress Bar */}
+        <motion.div 
+          style={{ 
+            scaleX, 
+            position: 'fixed', 
+            top: 0, 
+            left: 0, 
+            right: 0, 
+            height: '4px', 
+            background: 'var(--yellow)', 
+            transformOrigin: '0%', 
+            zIndex: 9999 
+          }} 
+        />
 
         {/* HERO */}
         <div className="proj-hero" style={{ height: '70vh' }}>
@@ -113,7 +150,7 @@ export default function BlogDetail() {
         </motion.nav>
 
         {/* ARTICLE BODY */}
-        <section className="container" style={{ padding: '60px var(--pad-h) 100px var(--pad-h)', display: 'flex', justifyContent: 'center' }}>
+        <section className="container" style={{ padding: '60px var(--pad-h) 80px var(--pad-h)', display: 'flex', justifyContent: 'center' }}>
           <article 
             className="blog-content-body"
             style={{ 
@@ -137,6 +174,7 @@ export default function BlogDetail() {
             transition={{ duration: 0.8 }}
             className="proj-nav-bar" 
             aria-label="Article navigation"
+            style={{ borderBottom: '1px solid var(--border)', paddingBottom: '40px', marginBottom: '0' }}
           >
             <div className="proj-nav-prev">
               {prevBlog ? (
@@ -162,6 +200,92 @@ export default function BlogDetail() {
               )}
             </div>
           </motion.nav>
+        )}
+
+        {/* RELATED ARTICLES */}
+        {relatedBlogs.length > 0 && (
+          <section className="related-blogs-sec" style={{ background: 'var(--bg-cream)', padding: '100px var(--pad-h)', borderTop: '1px solid var(--border)' }}>
+            <div className="container" style={{ padding: 0 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '50px' }}>
+                <div>
+                  <span className="label" style={{ marginBottom: '12px' }}>Read More</span>
+                  <h2 style={{ fontFamily: 'var(--ff-display)', fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontWeight: 400, color: 'var(--dark)' }}>Related Insights</h2>
+                </div>
+                <Link to="/blog" className="btn-dark" style={{ padding: '12px 24px', fontSize: '10px' }}>
+                  <span>View All Articles</span>
+                  <Lucide.ArrowRight className="icon-xs" style={{ width: '13px', height: '13px' }} />
+                </Link>
+              </div>
+              
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '40px' }}>
+                {relatedBlogs.map((rBlog) => (
+                  <motion.article 
+                    key={rBlog.slug}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    style={{ 
+                      background: 'var(--bg)', 
+                      border: '1px solid var(--border)', 
+                      borderRadius: '2px', 
+                      overflow: 'hidden',
+                      display: 'flex',
+                      flexDirection: 'column'
+                    }}
+                    className="blog-card"
+                  >
+                    <div style={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/10' }}>
+                      <Link to={`/blog/${rBlog.slug}`} style={{ display: 'block', width: '100%', height: '100%' }}>
+                        <img 
+                          src={rBlog.banner} 
+                          alt={rBlog.title} 
+                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                          className="zoom-hover-img"
+                        />
+                      </Link>
+                      <span style={{
+                        position: 'absolute',
+                        top: '16px',
+                        left: '16px',
+                        fontSize: '8px',
+                        fontFamily: 'var(--ff-mono)',
+                        padding: '4px 10px',
+                        background: 'rgba(20,18,16,0.85)',
+                        backdropFilter: 'blur(8px)',
+                        color: '#fff',
+                        borderRadius: '20px',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.06em',
+                        fontWeight: 500
+                      }}>
+                        {rBlog.category}
+                      </span>
+                    </div>
+                    <div style={{ padding: '28px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                      <div style={{ display: 'flex', gap: '10px', fontFamily: 'var(--ff-mono)', fontSize: '10px', color: 'var(--muted)', marginBottom: '14px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                        <span>{rBlog.date}</span>
+                        <span>·</span>
+                        <span>{rBlog.readTime}</span>
+                      </div>
+                      <h4 style={{ fontFamily: 'var(--ff-display)', fontSize: '1.5rem', fontWeight: 400, color: 'var(--dark)', marginBottom: '14px', lineHeight: 1.3 }}>
+                        <Link to={`/blog/${rBlog.slug}`} style={{ transition: 'color 0.3s' }} className="blog-title-link">
+                          {rBlog.title}
+                        </Link>
+                      </h4>
+                      <p className="body-t" style={{ fontSize: '0.9rem', marginBottom: '24px', flexGrow: 1, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                        {rBlog.excerpt}
+                      </p>
+                      <Link to={`/blog/${rBlog.slug}`} className="btn-ghost" style={{ marginTop: 'auto', padding: '10px 20px', fontSize: '10px', justifyContent: 'center', borderWidth: '1px' }}>
+                        <span>Read Insight</span>
+                        <Lucide.ArrowUpRight className="icon-xs" style={{ width: '12px', height: '12px' }} />
+                      </Link>
+                    </div>
+                  </motion.article>
+                ))}
+              </div>
+            </div>
+          </section>
         )}
 
         <Footer simple={true} />

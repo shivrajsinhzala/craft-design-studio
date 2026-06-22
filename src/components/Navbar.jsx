@@ -16,6 +16,7 @@ export default function Navbar() {
     { name: 'Services', target: '#services' },
     { name: 'Projects', target: '#projects' },
     { name: 'Process', target: '#process' },
+    { name: 'Blog', target: '/blog', isExternal: true },
     { name: 'Contact', target: '#contact', isCta: true },
   ];
 
@@ -98,10 +99,16 @@ export default function Navbar() {
   };
 
   // Handle navigation clicking
-  const handleNavClick = (e, target) => {
-    e.preventDefault();
+  const handleNavClick = (e, target, isExternal) => {
     closeMenu();
 
+    if (isExternal) {
+      document.body.style.overflow = '';
+      if (window.lenis) window.lenis.start();
+      return;
+    }
+
+    e.preventDefault();
     if (location.pathname === '/') {
       if (window.lenis) {
         window.lenis.scrollTo(target);
@@ -130,12 +137,25 @@ export default function Navbar() {
         aria-label="Main navigation"
       >
         {navLinks.map((link) => {
+          if (link.isExternal) {
+            const isActive = location.pathname === link.target;
+            return (
+              <Link
+                key={link.name}
+                to={link.target}
+                onClick={(e) => handleNavClick(e, link.target, true)}
+                className={`nav-lnk ${isActive ? 'active' : ''}`}
+              >
+                {link.name}
+              </Link>
+            );
+          }
           const isActive = activeSection === link.target;
           return (
             <a
               key={link.name}
               href={link.target}
-              onClick={(e) => handleNavClick(e, link.target)}
+              onClick={(e) => handleNavClick(e, link.target, false)}
               className={`nav-lnk ${link.isCta ? 'nav-cta' : ''} ${isActive ? 'active' : ''}`}
             >
               {link.name}

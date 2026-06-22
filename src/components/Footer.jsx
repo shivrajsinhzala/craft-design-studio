@@ -22,7 +22,6 @@ export default function Footer({ simple = false }) {
             <p>
               &copy; {new Date().getFullYear()} Craft – The Design Studio. All rights reserved.
               <a href="https://shivrajsinh.in" target="_blank" rel="noopener noreferrer" style={{ marginLeft: '12px', opacity: 0.65, textDecoration: 'underline' }}>Developed by shivrajsinh.in</a>
-              <Link to="/blog" style={{ marginLeft: '12px', opacity: 0.15 }}>Blog</Link>
             </p>
             <p>Morbi &amp; Rajkot, Gujarat, India</p>
           </div>
@@ -82,6 +81,13 @@ export default function Footer({ simple = false }) {
               <Link to="/project/sthapatya">Sthapatya</Link>
               <Link to="/project/twin-tower">Twin Tower</Link>
             </nav>
+            <nav className="footer-col" aria-label="Studio navigation">
+              <h5>Studio</h5>
+              <Link to="/" onClick={() => window.lenis?.scrollTo(0)}>Home</Link>
+              <a href="#about" onClick={(e) => { e.preventDefault(); navigate('/', { state: { scrollTo: '#about' } }) }}>About</a>
+              <Link to="/blog">Blog &amp; Insights</Link>
+              <a href="#contact" onClick={(e) => { e.preventDefault(); navigate('/', { state: { scrollTo: '#contact' } }) }}>Contact</a>
+            </nav>
             <div className="footer-col">
               <h5>Locations</h5>
               <address>
@@ -96,7 +102,6 @@ export default function Footer({ simple = false }) {
           <p>
             &copy; {new Date().getFullYear()} Craft – The Design Studio. All rights reserved.
             <a href="https://shivrajsinh.in" target="_blank" rel="noopener noreferrer" style={{ marginLeft: '12px', opacity: 0.65, textDecoration: 'underline' }}>Developed by shivrajsinh.in</a>
-            <Link to="/blog" style={{ marginLeft: '12px', opacity: 0.15 }}>Blog</Link>
           </p>
           <p>Morbi &amp; Rajkot, Gujarat, India</p>
         </div>
