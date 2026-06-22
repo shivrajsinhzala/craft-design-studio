@@ -473,10 +473,16 @@ address { font-style:normal; }
   border-bottom: 1px solid var(--border);
   padding: 18px 0;
 }
-.marquee-wrap { display:flex; white-space:nowrap; }
+.marquee-wrap { display:flex; overflow:hidden; white-space:nowrap; width:100%; }
 .marquee-track {
-  display: inline-flex; align-items:center;
+  display: flex; flex-shrink: 0; align-items:center;
   white-space: nowrap;
+  animation: marquee 25s linear infinite;
+  will-change: transform;
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
 }
 .marquee-track span {
   font-family: var(--ff-display);

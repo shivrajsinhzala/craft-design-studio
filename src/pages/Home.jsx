@@ -58,7 +58,6 @@ export default function Home() {
   const navigate = useNavigate();
   const location = useLocation();
   const containerRef = useRef(null);
-  const marqueeTrackRef = useRef(null);
 
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
 
@@ -134,49 +133,7 @@ export default function Home() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [mouseX, mouseY]);
 
-  // ── Marquee Loop (custom translation) ──
-  useEffect(() => {
-    const track = marqueeTrackRef.current;
-    if (!track || !track.parentElement) return;
 
-    let clone = track.parentElement.querySelector('.marquee-track-clone');
-    if (!clone) {
-      clone = track.cloneNode(true);
-      clone.classList.add('marquee-track-clone');
-      clone.setAttribute('aria-hidden', 'true');
-      track.parentElement.appendChild(clone);
-    }
-
-    track.style.willChange = 'transform';
-    clone.style.willChange = 'transform';
-
-    let pos = 0;
-    const speed = 0.5;
-    let w = track.offsetWidth;
-
-    clone.style.transform = `translateX(${w}px)`;
-
-    const onResize = () => {
-      w = track.offsetWidth;
-    };
-    window.addEventListener('resize', onResize, { passive: true });
-
-    let isMounted = true;
-    const loop = () => {
-      if (!isMounted) return;
-      pos -= speed;
-      if (Math.abs(pos) >= w) pos += w;
-      track.style.transform = `translateX(${pos}px)`;
-      clone.style.transform = `translateX(${pos + w}px)`;
-      requestAnimationFrame(loop);
-    };
-    loop();
-
-    return () => {
-      isMounted = false;
-      window.removeEventListener('resize', onResize);
-    };
-  }, []);
 
   // ── Form Submission ──
   const handleInputChange = (e) => {
@@ -464,7 +421,15 @@ export default function Home() {
         {/* MARQUEE */}
         <div id="main-content-section" className="marquee-strip" aria-hidden="true">
           <div className="marquee-wrap">
-            <div ref={marqueeTrackRef} className="marquee-track">
+            <div className="marquee-track">
+              <span>Designing Interiors</span><span className="mdot">·</span>
+              <span>Defining Elegance</span><span className="mdot">·</span>
+              <span>3D Visualization</span><span className="mdot">·</span>
+              <span>Architectural Excellence</span><span className="mdot">·</span>
+              <span>Interior Design</span><span className="mdot">·</span>
+              <span>Animation Walkthroughs</span><span className="mdot">·</span>
+            </div>
+            <div className="marquee-track" aria-hidden="true">
               <span>Designing Interiors</span><span className="mdot">·</span>
               <span>Defining Elegance</span><span className="mdot">·</span>
               <span>3D Visualization</span><span className="mdot">·</span>
