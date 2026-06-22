@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
@@ -56,8 +56,35 @@ const serviceImages = [
 
 export default function Home() {
   const navigate = useNavigate();
+  const location = useLocation();
   const containerRef = useRef(null);
   const marqueeTrackRef = useRef(null);
+
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
+
+  useEffect(() => {
+    const mql = window.matchMedia('(min-width: 768px)');
+    const onChange = (e) => setIsDesktop(e.matches);
+    mql.addEventListener('change', onChange);
+    return () => mql.removeEventListener('change', onChange);
+  }, []);
+
+  useEffect(() => {
+    if (location.state && location.state.scrollTo) {
+      const target = location.state.scrollTo;
+      window.history.replaceState({}, document.title);
+
+      const timer = setTimeout(() => {
+        if (window.lenis) {
+          window.lenis.scrollTo(target, { duration: 1.5 });
+        } else {
+          document.querySelector(target)?.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 700);
+
+      return () => clearTimeout(timer);
+    }
+  }, [location]);
 
   // Form State
   const [formState, setFormState] = useState({
@@ -262,39 +289,34 @@ export default function Home() {
     const pin = document.getElementById('hPin');
     const track = document.getElementById('hTrack');
     if (pin && track) {
-      // Small timeout to allow DOM and images layout to settle
-      setTimeout(() => {
-        const mm = gsap.matchMedia();
+      const mm = gsap.matchMedia(containerRef);
 
-        mm.add("(min-width: 768px)", () => {
-          const getScrollAmount = () => {
-            return track.scrollWidth - window.innerWidth;
-          };
+      mm.add("(min-width: 768px)", () => {
+        const getScrollAmount = () => {
+          return track.scrollWidth - window.innerWidth;
+        };
 
-          if (getScrollAmount() <= 0) return;
-
-          const hScrollTween = gsap.to(track, {
-            x: () => -getScrollAmount(),
-            ease: 'none',
-          });
-
-          ScrollTrigger.create({
-            trigger: pin,
-            pin: true,
-            animation: hScrollTween,
-            scrub: true, // Direct synchronization with smooth scroll (Lenis) to eliminate jerks
-            end: () => '+=' + getScrollAmount(),
-            invalidateOnRefresh: true,
-          });
+        const hScrollTween = gsap.to(track, {
+          x: () => -getScrollAmount(),
+          ease: 'none',
         });
 
-        mm.add("(max-width: 767px)", () => {
-          // Reset any transforms so native CSS overflow-x takes over
-          gsap.set(track, { clearProps: "transform" });
+        ScrollTrigger.create({
+          trigger: pin,
+          pin: true,
+          animation: hScrollTween,
+          scrub: true, // Direct synchronization with smooth scroll (Lenis) to eliminate jerks
+          end: () => '+=' + getScrollAmount(),
+          invalidateOnRefresh: true,
         });
+      });
 
-        ScrollTrigger.refresh();
-      }, 150);
+      mm.add("(max-width: 767px)", () => {
+        // Reset any transforms so native CSS overflow-x takes over
+        gsap.set(track, { clearProps: "transform" });
+      });
+
+      ScrollTrigger.refresh();
     }
   }, { scope: containerRef });
 
@@ -321,12 +343,8 @@ export default function Home() {
               </span>
             </p>
             <h1 className="hero-title" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-              <RevealText text="Designing" delay={0.1} />
-              <RevealText text="Interiors," delay={0.2} />
-              <div style={{ display: 'flex', gap: '0.25em', flexWrap: 'wrap' }}>
-                <RevealText text="Defining" className="yellow-t" delay={0.3} />
-                <RevealText text="Elegance." delay={0.4} />
-              </div>
+              <RevealText text="Designing Interiors," delay={0.1} />
+              <RevealText text="Defining Elegance." className="yellow-t" delay={0.3} />
             </h1>
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
@@ -646,7 +664,7 @@ export default function Home() {
           </div>
           
           {/* Awwwards-style mouse following image preview follower */}
-          {window.innerWidth >= 768 && (
+          {isDesktop && (
             <motion.div
               style={{
                 position: 'fixed',

@@ -10,6 +10,9 @@ import Navbar from './components/Navbar.jsx';
 import Cursor from './components/Cursor.jsx';
 import Home from './pages/Home.jsx';
 import ProjectDetail from './pages/ProjectDetail.jsx';
+import BlogList from './pages/BlogList.jsx';
+import BlogDetail from './pages/BlogDetail.jsx';
+import NotFound from './pages/NotFound.jsx';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -37,6 +40,9 @@ function AnimatedRoutes() {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
         <Route path="/project/:id" element={<ProjectDetail />} />
+        <Route path="/blog" element={<BlogList />} />
+        <Route path="/blog/:slug" element={<BlogDetail />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>
   );

@@ -109,15 +109,7 @@ export default function Navbar() {
         document.querySelector(target)?.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
-      // Navigate home, wait for mount, then scroll
-      navigate('/');
-      setTimeout(() => {
-        if (window.lenis) {
-          window.lenis.scrollTo(target);
-        } else {
-          document.querySelector(target)?.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 150);
+      navigate('/', { state: { scrollTo: target } });
     }
   };
 

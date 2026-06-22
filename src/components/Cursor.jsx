@@ -1,14 +1,10 @@
 import React, { useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 
 export default function Cursor() {
   const cursorRef = useRef(null);
-  const location = useLocation();
 
   useEffect(() => {
-    if (window.innerWidth < 768) return;
-
     const el = cursorRef.current;
     if (!el) return;
 
@@ -25,8 +21,8 @@ export default function Cursor() {
     const onMouseUp = () => el.classList.remove('small');
 
     window.addEventListener('mousemove', onMouseMove, { passive: true });
-    window.addEventListener('mousedown', onMouseDown);
-    window.addEventListener('mouseup', onMouseUp);
+    window.addEventListener('mousedown', onMouseDown, { passive: true });
+    window.addEventListener('mouseup', onMouseUp, { passive: true });
 
     // Smooth lerp loop
     const tick = () => {
@@ -39,36 +35,11 @@ export default function Cursor() {
     };
     tick();
 
-    // Clean up
-    return () => {
-      isMounted = false;
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mousedown', onMouseDown);
-      window.removeEventListener('mouseup', onMouseUp);
-    };
-  }, []);
-
-  // Handle magnetic pull and scale effects (refreshes on route change)
-  useEffect(() => {
-    if (window.innerWidth < 768) return;
-
-    const el = cursorRef.current;
-    if (!el) return;
-
-    // Hover scale effects (.big)
-    const addHoverClass = () => el.classList.add('big');
-    const removeHoverClass = () => el.classList.remove('big');
-
+    // Event delegation for hover states
     const hoverSelectors = 'a, button, .proj-card, .svc-row, .founder-card, .c-loc, .gallery-grid img';
-    const hoverTargets = document.querySelectorAll(hoverSelectors);
-    hoverTargets.forEach((t) => {
-      t.addEventListener('mouseenter', addHoverClass);
-      t.addEventListener('mouseleave', removeHoverClass);
-    });
-
-    // Magnetic pull effects
     const magneticSelectors = '.btn-dark, .btn-ghost, .nav-lnk, .proj-arrow-wrap, .proj-nav-all';
-    const magneticTargets = document.querySelectorAll(magneticSelectors);
+
+    let activeMagnetic = null;
 
     const onBtnMouseMove = (e) => {
       const btn = e.currentTarget;
@@ -81,30 +52,58 @@ export default function Cursor() {
     const onBtnMouseLeave = (e) => {
       const btn = e.currentTarget;
       gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.4)' });
+      btn.removeEventListener('mousemove', onBtnMouseMove);
+      btn.removeEventListener('mouseleave', onBtnMouseLeave);
+      if (activeMagnetic === btn) {
+        activeMagnetic = null;
+      }
     };
 
-    magneticTargets.forEach((btn) => {
-      btn.addEventListener('mousemove', onBtnMouseMove);
-      btn.addEventListener('mouseleave', onBtnMouseLeave);
-    });
+    const onMouseOver = (e) => {
+      if (!e.target || typeof e.target.closest !== 'function') return;
 
+      // Scale cursor up on hover targets
+      if (e.target.closest(hoverSelectors)) {
+        el.classList.add('big');
+      }
+
+      // Attach magnetic behavior on mouseenter
+      const targetMagnetic = e.target.closest(magneticSelectors);
+      if (targetMagnetic && targetMagnetic !== activeMagnetic) {
+        activeMagnetic = targetMagnetic;
+        targetMagnetic.addEventListener('mousemove', onBtnMouseMove, { passive: true });
+        targetMagnetic.addEventListener('mouseleave', onBtnMouseLeave);
+      }
+    };
+
+    const onMouseOut = (e) => {
+      if (!e.target || typeof e.target.closest !== 'function') return;
+
+      // Scale cursor back down
+      if (!e.relatedTarget || typeof e.relatedTarget.closest !== 'function' || !e.relatedTarget.closest(hoverSelectors)) {
+        el.classList.remove('big');
+      }
+    };
+
+    document.addEventListener('mouseover', onMouseOver, { passive: true });
+    document.addEventListener('mouseout', onMouseOut, { passive: true });
+
+    // Clean up
     return () => {
-      el.classList.remove('big'); // Reset cursor state
-      hoverTargets.forEach((t) => {
-        t.removeEventListener('mouseenter', addHoverClass);
-        t.removeEventListener('mouseleave', removeHoverClass);
-      });
-      magneticTargets.forEach((btn) => {
-        btn.removeEventListener('mousemove', onBtnMouseMove);
-        btn.removeEventListener('mouseleave', onBtnMouseLeave);
-        // Reset translation state
-        gsap.killTweensOf(btn);
-        gsap.set(btn, { x: 0, y: 0 });
-      });
+      isMounted = false;
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mousedown', onMouseDown);
+      window.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener('mouseover', onMouseOver);
+      document.removeEventListener('mouseout', onMouseOut);
+      if (activeMagnetic) {
+        activeMagnetic.removeEventListener('mousemove', onBtnMouseMove);
+        activeMagnetic.removeEventListener('mouseleave', onBtnMouseLeave);
+        gsap.killTweensOf(activeMagnetic);
+        gsap.set(activeMagnetic, { x: 0, y: 0 });
+      }
     };
-  }, [location]);
-
-  if (window.innerWidth < 768) return null;
+  }, []);
 
   return <div className="cursor" ref={cursorRef} aria-hidden="true" />;
 }

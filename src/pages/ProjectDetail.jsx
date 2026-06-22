@@ -27,7 +27,7 @@ export default function ProjectDetail() {
       : null;
 
   // Lightbox State
-  const [lightboxImg, setLightboxImg] = useState(null);
+  const [lightboxIndex, setLightboxIndex] = useState(-1);
 
   if (!project) {
     return (
@@ -44,10 +44,10 @@ export default function ProjectDetail() {
   }
 
   // Handle keyboard interaction for opening lightbox
-  const handleKeyDownImage = (e, img) => {
+  const handleKeyDownImage = (e, index) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      setLightboxImg(img);
+      setLightboxIndex(index);
     }
   };
 
@@ -153,8 +153,8 @@ export default function ProjectDetail() {
                 src={img.src}
                 alt={img.alt}
                 loading="lazy"
-                onClick={() => setLightboxImg(img)}
-                onKeyDown={(e) => handleKeyDownImage(e, img)}
+                onClick={() => setLightboxIndex(index)}
+                onKeyDown={(e) => handleKeyDownImage(e, index)}
                 tabIndex={0}
                 role="button"
                 aria-label={`Open lightbox view for: ${img.alt}`}
@@ -204,10 +204,12 @@ export default function ProjectDetail() {
 
         {/* Accessible Lightbox Modal */}
         <Lightbox
-          isOpen={!!lightboxImg}
-          imgSrc={lightboxImg?.src}
-          imgAlt={lightboxImg?.alt}
-          onClose={() => setLightboxImg(null)}
+          isOpen={lightboxIndex > -1}
+          images={project.images}
+          activeIndex={lightboxIndex}
+          onPrev={() => setLightboxIndex((prev) => (prev === 0 ? project.images.length - 1 : prev - 1))}
+          onNext={() => setLightboxIndex((prev) => (prev === project.images.length - 1 ? 0 : prev + 1))}
+          onClose={() => setLightboxIndex(-1)}
         />
       </div>
     </PageTransition>

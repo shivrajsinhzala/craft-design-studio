@@ -1,15 +1,16 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 export default function Footer({ simple = false }) {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const handleServiceClick = (e) => {
     e.preventDefault();
     if (location.pathname === '/') {
       window.lenis?.scrollTo('#services');
     } else {
-      window.location.href = '/#services';
+      navigate('/', { state: { scrollTo: '#services' } });
     }
   };
 
@@ -18,7 +19,11 @@ export default function Footer({ simple = false }) {
       <footer className="footer" role="contentinfo">
         <div className="container">
           <div className="footer-btm">
-            <p>&copy; {new Date().getFullYear()} Craft – The Design Studio. All rights reserved.</p>
+            <p>
+              &copy; {new Date().getFullYear()} Craft – The Design Studio. All rights reserved.
+              <a href="https://shivrajsinh.in" target="_blank" rel="noopener noreferrer" style={{ marginLeft: '12px', opacity: 0.65, textDecoration: 'underline' }}>Developed by shivrajsinh.in</a>
+              <Link to="/blog" style={{ marginLeft: '12px', opacity: 0.15 }}>Blog</Link>
+            </p>
             <p>Morbi &amp; Rajkot, Gujarat, India</p>
           </div>
         </div>
@@ -88,7 +93,11 @@ export default function Footer({ simple = false }) {
           </div>
         </div>
         <div className="footer-btm">
-          <p>&copy; {new Date().getFullYear()} Craft – The Design Studio. All rights reserved.</p>
+          <p>
+            &copy; {new Date().getFullYear()} Craft – The Design Studio. All rights reserved.
+            <a href="https://shivrajsinh.in" target="_blank" rel="noopener noreferrer" style={{ marginLeft: '12px', opacity: 0.65, textDecoration: 'underline' }}>Developed by shivrajsinh.in</a>
+            <Link to="/blog" style={{ marginLeft: '12px', opacity: 0.15 }}>Blog</Link>
+          </p>
           <p>Morbi &amp; Rajkot, Gujarat, India</p>
         </div>
       </div>
