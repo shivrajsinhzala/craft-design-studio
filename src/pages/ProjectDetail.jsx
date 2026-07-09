@@ -55,11 +55,39 @@ export default function ProjectDetail() {
     <PageTransition>
       <div ref={containerRef}>
         <Helmet>
-          <title>{`${project.title} — ${project.tag} | Craft The Design Studio`}</title>
+          <title>{`${project.title} — ${project.tag} | Craft Design Studio`}</title>
           <meta name="description" content={project.description} />
           <link rel="canonical" href={`https://craftdesignstudio.in/project/${project.id}`} />
+          
+          {/* Open Graph */}
+          <meta property="og:type" content="article" />
+          <meta property="og:title" content={`${project.title} — ${project.tag} | Craft Design Studio`} />
+          <meta property="og:description" content={project.description} />
+          <meta property="og:url" content={`https://craftdesignstudio.in/project/${project.id}`} />
           <meta property="og:image" content={`https://craftdesignstudio.in${project.banner}`} />
+          
+          {/* Twitter */}
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={`${project.title} | Craft Design Studio`} />
+          <meta name="twitter:description" content={project.description} />
           <meta name="twitter:image" content={`https://craftdesignstudio.in${project.banner}`} />
+
+          {/* JSON-LD Schema */}
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "VisualArtwork",
+              "name": project.title,
+              "description": project.description,
+              "image": `https://craftdesignstudio.in${project.banner}`,
+              "creator": {
+                "@type": "Organization",
+                "name": "Craft Design Studio"
+              },
+              "artMedium": "3D Render",
+              "artform": "Architecture & Interior Visualization"
+            })}
+          </script>
         </Helmet>
 
         {/* Skip to gallery */}

@@ -68,11 +68,40 @@ export default function BlogDetail() {
           <title>{`${blog.metaTitle || blog.title} | Craft Design Studio`}</title>
           <meta name="description" content={blog.metaDescription} />
           <link rel="canonical" href={`https://craftdesignstudio.in/blog/${blog.slug}`} />
+          
           <meta property="og:type" content="article" />
           <meta property="og:title" content={`${blog.title} | Craft Design Studio`} />
           <meta property="og:description" content={blog.metaDescription} />
+          <meta property="og:url" content={`https://craftdesignstudio.in/blog/${blog.slug}`} />
           <meta property="og:image" content={`https://craftdesignstudio.in${blog.banner}`} />
+          
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={`${blog.title} | Craft Design Studio`} />
+          <meta name="twitter:description" content={blog.metaDescription} />
           <meta name="twitter:image" content={`https://craftdesignstudio.in${blog.banner}`} />
+
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Article",
+              "headline": blog.title,
+              "description": blog.metaDescription,
+              "image": `https://craftdesignstudio.in${blog.banner}`,
+              "author": {
+                "@type": "Person",
+                "name": "Craft Design Studio"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "Craft Design Studio",
+                "logo": {
+                  "@type": "ImageObject",
+                  "url": "https://craftdesignstudio.in/Logo.png"
+                }
+              },
+              "datePublished": blog.date || "2023-01-01"
+            })}
+          </script>
         </Helmet>
 
         {/* Scroll Progress Bar */}
@@ -103,7 +132,7 @@ export default function BlogDetail() {
             />
           </div>
           <div className="proj-hero-overlay" aria-hidden="true" style={{ opacity: 0.75 }}></div>
-          <div className="proj-hero-content">
+          <div className="blog-hero-content">
             <motion.div 
               initial={{ y: 15, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -178,11 +207,15 @@ export default function BlogDetail() {
           >
             <div className="proj-nav-prev">
               {prevBlog ? (
-                <Link to={`/blog/${prevBlog.slug}`} className="proj-nav-link">
-                  <Lucide.ArrowLeft aria-hidden="true" /> {prevBlog.title}
+                <Link to={`/blog/${prevBlog.slug}`} className="proj-nav-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', textAlign: 'left' }}>
+                  <Lucide.ArrowLeft aria-hidden="true" style={{ flexShrink: 0 }} />
+                  <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                    <span style={{ fontSize: '9px', opacity: 0.5, letterSpacing: '0.05em' }}>Previous Article</span>
+                    <span style={{ fontSize: '12px', fontWeight: 500, color: 'var(--dark)', marginTop: '4px', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden', textTransform: 'none', letterSpacing: 'normal' }}>{prevBlog.title}</span>
+                  </span>
                 </Link>
               ) : (
-                <span style={{ opacity: 0.3 }}>First Article</span>
+                <span style={{ opacity: 0.3, fontFamily: 'var(--ff-mono)', fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase' }}>First Article</span>
               )}
             </div>
             <div className="proj-nav-center">
@@ -192,11 +225,15 @@ export default function BlogDetail() {
             </div>
             <div className="proj-nav-next">
               {nextBlog ? (
-                <Link to={`/blog/${nextBlog.slug}`} className="proj-nav-link">
-                  {nextBlog.title} <Lucide.ArrowRight aria-hidden="true" />
+                <Link to={`/blog/${nextBlog.slug}`} className="proj-nav-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', textAlign: 'right', justifyContent: 'flex-end' }}>
+                  <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                    <span style={{ fontSize: '9px', opacity: 0.5, letterSpacing: '0.05em' }}>Next Article</span>
+                    <span style={{ fontSize: '12px', fontWeight: 500, color: 'var(--dark)', marginTop: '4px', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden', textTransform: 'none', letterSpacing: 'normal' }}>{nextBlog.title}</span>
+                  </span>
+                  <Lucide.ArrowRight aria-hidden="true" style={{ flexShrink: 0 }} />
                 </Link>
               ) : (
-                <span style={{ opacity: 0.3 }}>Latest Article</span>
+                <span style={{ opacity: 0.3, fontFamily: 'var(--ff-mono)', fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Latest Article</span>
               )}
             </div>
           </motion.nav>
@@ -206,7 +243,7 @@ export default function BlogDetail() {
         {relatedBlogs.length > 0 && (
           <section className="related-blogs-sec" style={{ background: 'var(--bg-cream)', padding: '100px var(--pad-h)', borderTop: '1px solid var(--border)' }}>
             <div className="container" style={{ padding: 0 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '50px' }}>
+              <div className="related-blogs-header">
                 <div>
                   <span className="label" style={{ marginBottom: '12px' }}>Read More</span>
                   <h2 style={{ fontFamily: 'var(--ff-display)', fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontWeight: 400, color: 'var(--dark)' }}>Related Insights</h2>
@@ -217,7 +254,7 @@ export default function BlogDetail() {
                 </Link>
               </div>
               
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '40px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '40px' }}>
                 {relatedBlogs.map((rBlog) => (
                   <motion.article 
                     key={rBlog.slug}

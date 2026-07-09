@@ -281,9 +281,44 @@ export default function Home() {
     <PageTransition>
       <div ref={containerRef}>
         <Helmet>
-          <title>Craft – The Design Studio | Designing Interiors, Defining Elegance</title>
-          <meta name="description" content="Premium interior design, 3D visualization, architectural rendering, and walkthrough studio in Morbi & Rajkot, Gujarat. Designing Interiors, Defining Elegance." />
+          <title>Craft Design Studio | Interior Design, 3D Visualization & Turnkey Projects in Morbi</title>
+          <meta name="description" content="Premium interior design, 3D visualization, turnkey projects, architectural rendering, and walkthrough studio in Morbi & Rajkot, Gujarat. Craft Design Studio." />
           <link rel="canonical" href="https://craftdesignstudio.in/" />
+          <script type="application/ld+json">
+            {JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ProfessionalService",
+              "name": "Craft Design Studio",
+              "alternateName": "Craft – The Design Studio",
+              "description": "Premium interior design, 3D visualization, turnkey projects, architectural rendering, and walkthrough animation studio in Morbi & Rajkot, Gujarat.",
+              "image": "https://craftdesignstudio.in/Logo.png",
+              "@id": "https://craftdesignstudio.in/#organization",
+              "url": "https://craftdesignstudio.in/",
+              "telephone": "+91-87583-95671, +91-83206-95380",
+              "priceRange": "$$$",
+              "address": [
+                {
+                  "@type": "PostalAddress",
+                  "streetAddress": "1st Floor, Shreeji Arcade, Opposite VI Store, Sanala Road",
+                  "addressLocality": "Morbi",
+                  "addressRegion": "Gujarat",
+                  "postalCode": "363641",
+                  "addressCountry": "IN"
+                },
+                {
+                  "@type": "PostalAddress",
+                  "streetAddress": "Kataria Chowkdi, Near Housing",
+                  "addressLocality": "Rajkot",
+                  "addressRegion": "Gujarat",
+                  "postalCode": "360001",
+                  "addressCountry": "IN"
+                }
+              ],
+              "sameAs": [
+                "https://instagram.com/craft_design_studio1"
+              ]
+            })}
+          </script>
         </Helmet>
 
         {/* Skip link */}

@@ -62,17 +62,9 @@ export default function BlogList() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(12, 1fr)',
-                  gap: '32px',
-                  background: 'var(--bg-cream)',
-                  border: '1px solid var(--border)',
-                  borderRadius: '2px',
-                  overflow: 'hidden'
-                }}
+                className="feat-card"
               >
-                <div style={{ gridColumn: 'span 7', overflow: 'hidden', aspectRatio: '16/10' }} className="feat-img-col">
+                <div className="feat-img-col">
                   <Link to={`/blog/${featuredBlog.slug}`} style={{ display: 'block', width: '100%', height: '100%' }}>
                     <img
                       src={featuredBlog.banner}
@@ -87,16 +79,7 @@ export default function BlogList() {
                     />
                   </Link>
                 </div>
-                <div 
-                  style={{ 
-                    gridColumn: 'span 5', 
-                    padding: '48px', 
-                    display: 'flex', 
-                    flexDirection: 'column', 
-                    justifyContent: 'center' 
-                  }}
-                  className="feat-content-col"
-                >
+                <div className="feat-content-col">
                   <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
                     <span 
                       style={{ 
@@ -114,7 +97,7 @@ export default function BlogList() {
                       {featuredBlog.category}
                     </span>
                   </div>
-                  <h3 style={{ fontFamily: 'var(--ff-display)', fontSize: '2.2rem', fontWeight: 400, lineHeight: 1.2, color: 'var(--dark)', marginBottom: '18px' }}>
+                  <h3 className="feat-title">
                     <Link to={`/blog/${featuredBlog.slug}`} style={{ transition: 'color 0.3s' }} className="blog-title-link">
                       {featuredBlog.title}
                     </Link>
@@ -122,7 +105,7 @@ export default function BlogList() {
                   <p className="body-t" style={{ fontSize: '0.96rem', marginBottom: '28px', lineHeight: '1.8' }}>
                     {featuredBlog.excerpt}
                   </p>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px', fontFamily: 'var(--ff-mono)', fontSize: '10px', color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '32px' }}>
+                  <div className="feat-meta">
                     <span>By {featuredBlog.author}</span>
                     <span>·</span>
                     <span>{featuredBlog.date}</span>
@@ -137,17 +120,7 @@ export default function BlogList() {
           )}
 
           {/* CATEGORY TABS */}
-          <div 
-            style={{ 
-              display: 'flex', 
-              gap: '8px', 
-              borderBottom: '1px solid var(--border)', 
-              paddingBottom: '16px', 
-              marginBottom: '44px',
-              overflowX: 'auto',
-              scrollbarWidth: 'none'
-            }}
-          >
+          <div className="category-tabs">
             {CATEGORIES.map(cat => (
               <button
                 key={cat}
@@ -177,11 +150,7 @@ export default function BlogList() {
               <motion.div
                 layout
                 key={activeCategory}
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
-                  gap: '40px 28px'
-                }}
+                className="blog-grid"
               >
                 {gridBlogs.map((blog, idx) => (
                   <motion.article
