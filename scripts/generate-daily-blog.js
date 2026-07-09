@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
+import crypto from 'crypto';
 
 // Manual .env loader to run on all Node versions without external dependencies
 try {
@@ -155,7 +156,7 @@ OUTPUT JSON SCHEMA:
   // 4. Request generation from Gemini API
   console.log("🤖 Generating article from Gemini API...");
   try {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`;
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -219,6 +220,32 @@ OUTPUT JSON SCHEMA:
       process.exit(1);
     }
 
+    // 6.5 Request Indexing via Google Indexing API
+    const blogUrl = `https://craftdesignstudio.in/blog/${newBlog.slug}`;
+    console.log(`📡 Checking Google Indexing API configuration for URL: ${blogUrl}`);
+    try {
+      let credentials;
+      if (process.env.GOOGLE_SERVICE_ACCOUNT_JSON) {
+        credentials = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON);
+      } else {
+        const saPath = path.join(projectRoot, 'service-account.json');
+        if (fs.existsSync(saPath)) {
+          credentials = JSON.parse(fs.readFileSync(saPath, 'utf-8'));
+        }
+      }
+
+      if (credentials) {
+        console.log("🔑 Google Indexing credentials found. Requesting instant indexing...");
+        const token = await getGoogleIndexingToken(credentials.client_email, credentials.private_key);
+        const result = await requestGoogleIndexing(blogUrl, token);
+        console.log("✅ Google Indexing API Response:", JSON.stringify(result));
+      } else {
+        console.log("ℹ️ Google Indexing credentials not set up (no service-account.json or GOOGLE_SERVICE_ACCOUNT_JSON env var). Skipping instant index ping.");
+      }
+    } catch (indexingError) {
+      console.error("⚠️ Failed to request instant indexing:", indexingError.message);
+    }
+
     // 7. Commit and push if enabled
     if (shouldPush) {
       console.log("📤 Committing and pushing changes to Git repository...");
@@ -241,6 +268,69 @@ OUTPUT JSON SCHEMA:
     console.error("❌ Error in Daily Blog pipeline:", error);
     process.exit(1);
   }
+}
+
+function base64url(str) {
+  return Buffer.from(str)
+    .toString('base64')
+    .replace(/=/g, '')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_');
+}
+
+async function getGoogleIndexingToken(clientEmail, privateKey) {
+  const header = base64url(JSON.stringify({ alg: 'RS256', typ: 'JWT' }));
+  const now = Math.floor(Date.now() / 1000);
+  const payload = base64url(JSON.stringify({
+    iss: clientEmail,
+    scope: 'https://www.googleapis.com/auth/indexing',
+    aud: 'https://oauth2.googleapis.com/token',
+    exp: now + 3600,
+    iat: now
+  }));
+
+  const signatureInput = `${header}.${payload}`;
+  const signer = crypto.createSign('RSA-SHA256');
+  signer.update(signatureInput);
+  const signature = base64url(signer.sign(privateKey));
+
+  const jwt = `${signatureInput}.${signature}`;
+
+  const response = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: `grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=${jwt}`
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`Failed to get access token: ${text}`);
+  }
+
+  const data = await response.json();
+  return data.access_token;
+}
+
+async function requestGoogleIndexing(url, accessToken) {
+  const response = await fetch('https://indexing.googleapis.com/v1/urlNotifications:publish', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    body: JSON.stringify({
+      url: url,
+      type: 'URL_UPDATED'
+    })
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`Indexing API error: ${text}`);
+  }
+
+  const data = await response.json();
+  return data;
 }
 
 run();

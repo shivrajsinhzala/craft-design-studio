@@ -21,4 +21,5 @@ dist/
 # Local env files
 .env
 .env*.local
+service-account.json
 
