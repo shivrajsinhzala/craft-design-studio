@@ -7,6 +7,7 @@ import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motio
 import { Helmet } from 'react-helmet-async';
 import * as Lucide from 'lucide-react';
 import { projectsData } from '../data/projectsData.js';
+import { blogsData } from '../data/blogsData.js';
 import PageTransition from '../components/PageTransition.jsx';
 import RevealText from '../components/RevealText.jsx';
 import Footer from '../components/Footer.jsx';
@@ -811,6 +812,92 @@ export default function Home() {
                     <p>{step.text}</p>
                   </div>
                 </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* LATEST INSIGHTS (SEO & Indexing Link Section) */}
+        <section className="latest-insights section" id="insights" aria-label="Latest Design Insights">
+          <div className="container">
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '50px' }} className="insights-head">
+              <div>
+                <p className="label">Our Journal</p>
+                <h2 className="section-title">
+                  <RevealText text="Latest Insights" delay={0.1} />
+                </h2>
+              </div>
+              <Link to="/blog" className="btn-dark" style={{ padding: '12px 24px', fontSize: '10px' }}>
+                <span>Read All Insights</span>
+                <Lucide.ArrowRight className="icon-xs" />
+              </Link>
+            </div>
+            
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '30px' }} className="insights-grid">
+              {blogsData.slice(0, 3).map((blog, idx) => (
+                <motion.article 
+                  key={blog.slug}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: idx * 0.1 }}
+                  style={{ 
+                    background: 'var(--bg-cream)', 
+                    border: '1px solid var(--border)', 
+                    borderRadius: '2px', 
+                    overflow: 'hidden',
+                    display: 'flex',
+                    flexDirection: 'column'
+                  }}
+                  className="blog-card"
+                >
+                  <div style={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/10' }}>
+                    <Link to={`/blog/${blog.slug}`} style={{ display: 'block', width: '100%', height: '100%' }}>
+                      <img 
+                        src={blog.banner} 
+                        alt={blog.title} 
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        className="zoom-hover-img"
+                      />
+                    </Link>
+                    <span style={{
+                      position: 'absolute',
+                      top: '16px',
+                      left: '16px',
+                      fontSize: '8px',
+                      fontFamily: 'var(--ff-mono)',
+                      padding: '4px 10px',
+                      background: 'rgba(20,18,16,0.85)',
+                      backdropFilter: 'blur(8px)',
+                      color: '#fff',
+                      borderRadius: '20px',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.06em',
+                      fontWeight: 500
+                    }}>
+                      {blog.category}
+                    </span>
+                  </div>
+                  <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                    <div style={{ display: 'flex', gap: '10px', fontFamily: 'var(--ff-mono)', fontSize: '10px', color: 'var(--muted)', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                      <span>{blog.date}</span>
+                      <span>·</span>
+                      <span>{blog.readTime}</span>
+                    </div>
+                    <h4 style={{ fontFamily: 'var(--ff-display)', fontSize: '1.4rem', fontWeight: 400, color: 'var(--dark)', marginBottom: '12px', lineHeight: 1.3 }}>
+                      <Link to={`/blog/${blog.slug}`} style={{ transition: 'color 0.3s' }} className="blog-title-link">
+                        {blog.title}
+                      </Link>
+                    </h4>
+                    <p className="body-t" style={{ fontSize: '0.88rem', marginBottom: '20px', flexGrow: 1, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                      {blog.excerpt}
+                    </p>
+                    <Link to={`/blog/${blog.slug}`} className="btn-ghost" style={{ marginTop: 'auto', padding: '8px 16px', fontSize: '10px', justifyContent: 'center', borderWidth: '1px' }}>
+                      <span>Read Insight</span>
+                      <Lucide.ArrowUpRight className="icon-xs" style={{ width: '12px', height: '12px' }} />
+                    </Link>
+                  </div>
+                </motion.article>
               ))}
             </div>
           </div>
