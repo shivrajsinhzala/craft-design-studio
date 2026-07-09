@@ -312,7 +312,7 @@ async function getGoogleIndexingToken(clientEmail, privateKey) {
 }
 
 async function requestGoogleIndexing(url, accessToken) {
-  const response = await fetch('https://indexing.googleapis.com/v1/urlNotifications:publish', {
+  const response = await fetch('https://indexing.googleapis.com/v3/urlNotifications:publish', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
