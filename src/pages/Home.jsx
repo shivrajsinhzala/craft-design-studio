@@ -290,13 +290,18 @@ export default function Home() {
               "@context": "https://schema.org",
               "@type": "ProfessionalService",
               "name": "Craft Design Studio",
-              "alternateName": "Craft – The Design Studio",
+              "alternateName": "Craft Design Studio",
               "description": "Premium interior design, 3D visualization, turnkey projects, architectural rendering, and walkthrough animation studio in Morbi & Rajkot, Gujarat.",
               "image": "https://craftdesignstudio.in/Logo.png",
               "@id": "https://craftdesignstudio.in/#organization",
               "url": "https://craftdesignstudio.in/",
               "telephone": "+91-87583-95671, +91-83206-95380",
               "priceRange": "$$$",
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "reviewCount": "28"
+              },
               "address": [
                 {
                   "@type": "PostalAddress",
