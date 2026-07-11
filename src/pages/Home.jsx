@@ -320,8 +320,15 @@ export default function Home() {
                   "addressCountry": "IN"
                 }
               ],
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": "22.8133765",
+                "longitude": "70.8297183"
+              },
+              "hasMap": "https://www.google.com/maps?cid=17039764175334688423",
               "sameAs": [
-                "https://instagram.com/craft_design_studio1"
+                "https://instagram.com/craft_design_studio1",
+                "https://www.google.com/maps?cid=17039764175334688423"
               ]
             })}
           </script>
