@@ -88,11 +88,20 @@ export default function App() {
   return (
     <Router>
       <Helmet>
-        <title>Craft – The Design Studio | Designing Interiors, Defining Elegance</title>
+        <title>Craft Design Studio | Designing Interiors, Defining Elegance</title>
         <meta name="description" content="Premium interior design, 3D visualization, architectural rendering, and animation walkthrough studio based in Morbi & Rajkot, Gujarat. Designing Interiors, Defining Elegance." />
         <link rel="canonical" href="https://craftdesignstudio.in/" />
         <meta property="og:image" content="https://craftdesignstudio.in/og-image.png" />
         <meta name="twitter:image" content="https://craftdesignstudio.in/og-image.png" />
+        <link rel="shortcut icon" href="https://craftdesignstudio.in/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="16x16" href="https://craftdesignstudio.in/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="https://craftdesignstudio.in/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="48x48" href="https://craftdesignstudio.in/favicon-48x48.png" />
+        <link rel="icon" type="image/png" sizes="96x96" href="https://craftdesignstudio.in/favicon-96x96.png" />
+        <link rel="icon" type="image/png" sizes="144x144" href="https://craftdesignstudio.in/favicon-144x144.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="https://craftdesignstudio.in/favicon-192x192.png" />
+        <link rel="icon" type="image/png" sizes="512x512" href="https://craftdesignstudio.in/favicon.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="https://craftdesignstudio.in/apple-touch-icon.png" />
       </Helmet>
       <ScrollToTop />
       <Cursor />

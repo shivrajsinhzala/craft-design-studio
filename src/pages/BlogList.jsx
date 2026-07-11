@@ -33,7 +33,7 @@ export default function BlogList() {
     <PageTransition>
       <div className="blog-list-page">
         <Helmet>
-          <title>Design Journal & Insights | Craft – The Design Studio</title>
+          <title>Design Journal & Insights | Craft Design Studio</title>
           <meta name="description" content="Read our design journal featuring insights on interior design trends, 3D visualization, architectural rendering, and workspace planning in Morbi and Rajkot, Gujarat." />
           <link rel="canonical" href="https://craftdesignstudio.in/blog" />
         </Helmet>
@@ -125,19 +125,7 @@ export default function BlogList() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                style={{
-                  fontFamily: 'var(--ff-mono)',
-                  fontSize: '11px',
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase',
-                  padding: '8px 18px',
-                  borderRadius: '2px',
-                  transition: 'all 0.3s var(--ease)',
-                  background: activeCategory === cat ? 'var(--dark)' : 'transparent',
-                  color: activeCategory === cat ? '#fff' : 'var(--muted)',
-                  border: activeCategory === cat ? '1px solid var(--dark)' : '1px solid transparent'
-                }}
-                className="category-btn"
+                className={`category-btn ${activeCategory === cat ? 'active' : ''}`}
               >
                 {cat}
               </button>

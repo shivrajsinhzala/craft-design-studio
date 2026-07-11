@@ -19,10 +19,14 @@ export default function Cursor() {
 
     const onMouseDown = () => el.classList.add('small');
     const onMouseUp = () => el.classList.remove('small');
+    const onMouseLeave = () => el.classList.add('hidden');
+    const onMouseEnter = () => el.classList.remove('hidden');
 
     window.addEventListener('mousemove', onMouseMove, { passive: true });
     window.addEventListener('mousedown', onMouseDown, { passive: true });
     window.addEventListener('mouseup', onMouseUp, { passive: true });
+    document.addEventListener('mouseleave', onMouseLeave);
+    document.addEventListener('mouseenter', onMouseEnter);
 
     // Smooth lerp loop
     const tick = () => {
@@ -94,6 +98,8 @@ export default function Cursor() {
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('mousedown', onMouseDown);
       window.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener('mouseleave', onMouseLeave);
+      document.removeEventListener('mouseenter', onMouseEnter);
       document.removeEventListener('mouseover', onMouseOver);
       document.removeEventListener('mouseout', onMouseOut);
       if (activeMagnetic) {
