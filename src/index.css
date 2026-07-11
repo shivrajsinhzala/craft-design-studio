@@ -1553,8 +1553,10 @@ textarea:focus-visible {
   pointer-events: none;
 }
 .whatsapp-icon {
-  width: 28px;
-  height: 28px;
+  width: 28px !important;
+  height: 28px !important;
+  aspect-ratio: 1 / 1 !important;
+  flex-shrink: 0 !important;
   transition: transform 0.4s var(--ease-out);
 }
 .whatsapp-float:hover {
@@ -1615,8 +1617,8 @@ textarea:focus-visible {
     height: 48px;
   }
   .whatsapp-icon {
-    width: 24px;
-    height: 24px;
+    width: 24px !important;
+    height: 24px !important;
   }
   .whatsapp-float .tooltip-text {
     display: none; /* Hide tooltip on mobile */
