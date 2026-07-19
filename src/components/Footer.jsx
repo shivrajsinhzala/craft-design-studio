@@ -1,16 +1,13 @@
 import React from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+// using window.location instead of react-router-dom
 
 export default function Footer({ simple = false }) {
-  const location = useLocation();
-  const navigate = useNavigate();
-
   const handleServiceClick = (e) => {
     e.preventDefault();
-    if (location.pathname === '/') {
+    if (window.location.pathname === '/') {
       window.lenis?.scrollTo('#services');
     } else {
-      navigate('/', { state: { scrollTo: '#services' } });
+      window.location.href = '/#services';
     }
   };
 
@@ -74,19 +71,19 @@ export default function Footer({ simple = false }) {
             </nav>
             <nav className="footer-col" aria-label="Projects navigation">
               <h5>Projects</h5>
-              <Link to="/project/flora-11">Flora 11</Link>
-              <Link to="/project/golden-heights">Golden Heights</Link>
-              <Link to="/project/silver-heights">Silver Heights</Link>
-              <Link to="/project/office-design">Office Design</Link>
-              <Link to="/project/sthapatya">Sthapatya</Link>
-              <Link to="/project/twin-tower">Twin Tower</Link>
+              <a href="/project/flora-11">Flora 11</a>
+              <a href="/project/golden-heights">Golden Heights</a>
+              <a href="/project/silver-heights">Silver Heights</a>
+              <a href="/project/office-design">Office Design</a>
+              <a href="/project/sthapatya">Sthapatya</a>
+              <a href="/project/twin-tower">Twin Tower</a>
             </nav>
             <nav className="footer-col" aria-label="Studio navigation">
               <h5>Studio</h5>
-              <Link to="/" onClick={() => window.lenis?.scrollTo(0)}>Home</Link>
-              <a href="#about" onClick={(e) => { e.preventDefault(); navigate('/', { state: { scrollTo: '#about' } }) }}>About</a>
-              <Link to="/blog">Blog &amp; Insights</Link>
-              <a href="#contact" onClick={(e) => { e.preventDefault(); navigate('/', { state: { scrollTo: '#contact' } }) }}>Contact</a>
+              <a href="/" onClick={(e) => { e.preventDefault(); window.lenis?.scrollTo(0); window.location.href='/'; }}>Home</a>
+              <a href="/#about">About</a>
+              <a href="/blog">Blog &amp; Insights</a>
+              <a href="/#contact">Contact</a>
             </nav>
             <div className="footer-col">
               <h5>Locations</h5>

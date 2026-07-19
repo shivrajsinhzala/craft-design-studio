@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+// using window.location instead of react-router-dom
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -8,8 +8,10 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const navRef = useRef(null);
-  const location = useLocation();
-  const navigate = useNavigate();
+  const [pathname, setPathname] = useState('/');
+  useEffect(() => {
+    setPathname(window.location.pathname);
+  }, []);
 
   const navLinks = [
     { name: 'About', target: '#about' },
@@ -57,7 +59,7 @@ export default function Navbar() {
 
   // GSAP ScrollTrigger to track active section on Home page
   useEffect(() => {
-    if (location.pathname !== '/') {
+    if (pathname !== '/') {
       setActiveSection('projects'); // Default active on project pages
       return;
     }
@@ -79,7 +81,7 @@ export default function Navbar() {
     return () => {
       triggers.forEach((t) => t.kill());
     };
-  }, [location]);
+  }, [pathname]);
 
   // Toggle mobile navigation menu
   const toggleMenu = () => {
@@ -109,26 +111,26 @@ export default function Navbar() {
     }
 
     e.preventDefault();
-    if (location.pathname === '/') {
+    if (pathname === '/') {
       if (window.lenis) {
         window.lenis.scrollTo(target);
       } else {
         document.querySelector(target)?.scrollIntoView({ behavior: 'smooth' });
       }
     } else {
-      navigate('/', { state: { scrollTo: target } });
+      window.location.href = `/#${target.replace('#', '')}`;
     }
   };
 
   return (
     <header
       ref={navRef}
-      className={`nav ${isScrolled || location.pathname !== '/' ? 'scrolled' : ''} ${isOpen ? 'menu-open' : ''}`}
+      className={`nav ${isScrolled || pathname !== '/' ? 'scrolled' : ''} ${isOpen ? 'menu-open' : ''}`}
       role="banner"
     >
-      <Link to="/" onClick={closeMenu} className="nav-logo" aria-label="Craft The Design Studio – Home">
+      <a href="/" onClick={closeMenu} className="nav-logo" aria-label="Craft The Design Studio – Home">
         <img src="/Logo.png" alt="Craft The Design Studio" width="138" height="46" />
-      </Link>
+      </a>
 
       <nav
         className={`nav-links ${isOpen ? 'open' : ''}`}
@@ -138,16 +140,16 @@ export default function Navbar() {
       >
         {navLinks.map((link) => {
           if (link.isExternal) {
-            const isActive = location.pathname === link.target;
+            const isActive = pathname === link.target;
             return (
-              <Link
+              <a
                 key={link.name}
-                to={link.target}
+                href={link.target}
                 onClick={(e) => handleNavClick(e, link.target, true)}
                 className={`nav-lnk ${isActive ? 'active' : ''}`}
               >
                 {link.name}
-              </Link>
+              </a>
             );
           }
           const isActive = activeSection === link.target;

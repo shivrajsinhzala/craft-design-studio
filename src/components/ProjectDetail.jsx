@@ -1,30 +1,12 @@
 import React, { useState, useRef } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
 import * as Lucide from 'lucide-react';
-import { projectsData } from '../data/projectsData.js';
 import Lightbox from '../components/Lightbox.jsx';
 import Footer from '../components/Footer.jsx';
 import PageTransition from '../components/PageTransition.jsx';
 
-export default function ProjectDetail() {
-  const { id } = useParams();
-  const navigate = useNavigate();
+export default function ProjectDetail({ project, prevProject, nextProject }) {
   const containerRef = useRef(null);
-
-  // Find current, next, and previous projects
-  const projectIndex = projectsData.findIndex((p) => p.id === id);
-  const project = projectsData[projectIndex];
-
-  const prevProject =
-    projectIndex > -1
-      ? projectsData[projectIndex === 0 ? projectsData.length - 1 : projectIndex - 1]
-      : null;
-  const nextProject =
-    projectIndex > -1
-      ? projectsData[projectIndex === projectsData.length - 1 ? 0 : projectIndex + 1]
-      : null;
 
   // Lightbox State
   const [lightboxIndex, setLightboxIndex] = useState(-1);
@@ -36,9 +18,9 @@ export default function ProjectDetail() {
         <p className="body-t" style={{ marginTop: '20px' }}>
           The project you are looking for does not exist.
         </p>
-        <Link to="/" className="btn-dark" style={{ marginTop: '20px' }}>
+        <a href="/" className="btn-dark" style={{ marginTop: '20px' }}>
           Back to Homepage
-        </Link>
+        </a>
       </div>
     );
   }
@@ -54,41 +36,7 @@ export default function ProjectDetail() {
   return (
     <PageTransition>
       <div ref={containerRef}>
-        <Helmet>
-          <title>{`${project.title} — ${project.tag} | Craft Design Studio`}</title>
-          <meta name="description" content={project.description} />
-          <link rel="canonical" href={`https://craftdesignstudio.in/project/${project.id}`} />
-          
-          {/* Open Graph */}
-          <meta property="og:type" content="article" />
-          <meta property="og:title" content={`${project.title} — ${project.tag} | Craft Design Studio`} />
-          <meta property="og:description" content={project.description} />
-          <meta property="og:url" content={`https://craftdesignstudio.in/project/${project.id}`} />
-          <meta property="og:image" content={`https://craftdesignstudio.in${project.banner}`} />
-          
-          {/* Twitter */}
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content={`${project.title} | Craft Design Studio`} />
-          <meta name="twitter:description" content={project.description} />
-          <meta name="twitter:image" content={`https://craftdesignstudio.in${project.banner}`} />
 
-          {/* JSON-LD Schema */}
-          <script type="application/ld+json">
-            {JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "VisualArtwork",
-              "name": project.title,
-              "description": project.description,
-              "image": `https://craftdesignstudio.in${project.banner}`,
-              "creator": {
-                "@type": "Organization",
-                "name": "Craft Design Studio"
-              },
-              "artMedium": "3D Render",
-              "artform": "Architecture & Interior Visualization"
-            })}
-          </script>
-        </Helmet>
 
         {/* Skip to gallery */}
         <a
@@ -151,14 +99,13 @@ export default function ProjectDetail() {
           className="proj-breadcrumb" 
           aria-label="Breadcrumb"
         >
-          <Link to="/">Home</Link>
+          <a href="/">Home</a>
           <Lucide.ChevronRight aria-hidden="true" />
           <a
             href="/#projects"
             onClick={(e) => {
               e.preventDefault();
-              navigate('/');
-              setTimeout(() => window.lenis?.scrollTo('#projects'), 150);
+              window.location.href = '/#projects';
             }}
           >
             Projects
@@ -202,17 +149,16 @@ export default function ProjectDetail() {
             aria-label="Project navigation"
           >
             <div className="proj-nav-prev">
-              <Link to={`/project/${prevProject.id}`} className="proj-nav-link">
+              <a href={`/project/${prevProject.id}`} className="proj-nav-link">
                 <Lucide.ArrowLeft aria-hidden="true" /> {prevProject.title}
-              </Link>
+              </a>
             </div>
             <div className="proj-nav-center">
               <a
                 href="/#projects"
                 onClick={(e) => {
                   e.preventDefault();
-                  navigate('/');
-                  setTimeout(() => window.lenis?.scrollTo('#projects'), 150);
+                  window.location.href = '/#projects';
                 }}
                 className="proj-nav-all"
               >
@@ -220,9 +166,9 @@ export default function ProjectDetail() {
               </a>
             </div>
             <div className="proj-nav-next">
-              <Link to={`/project/${nextProject.id}`} className="proj-nav-link">
+              <a href={`/project/${nextProject.id}`} className="proj-nav-link">
                 {nextProject.title} <Lucide.ArrowRight aria-hidden="true" />
-              </Link>
+              </a>
             </div>
           </motion.nav>
         )}

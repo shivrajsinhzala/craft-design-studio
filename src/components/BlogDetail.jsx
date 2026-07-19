@@ -1,17 +1,10 @@
 import React, { useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import * as Lucide from 'lucide-react';
-import { blogsData } from '../data/blogsData.js';
 import PageTransition from '../components/PageTransition.jsx';
 import Footer from '../components/Footer.jsx';
 
-export default function BlogDetail() {
-  const { slug } = useParams();
-  const navigate = useNavigate();
-
-  const blog = blogsData.find((b) => b.slug === slug);
+export default function BlogDetail({ blog, prevBlog, nextBlog, relatedBlogs }) {
 
   // Scroll Progress Bar Tracker
   const { scrollYProgress } = useScroll();
@@ -26,7 +19,7 @@ export default function BlogDetail() {
     if (window.lenis) {
       window.lenis.scrollTo(0, { immediate: true });
     }
-  }, [slug]);
+  }, [blog]);
 
   if (!blog) {
     return (
@@ -35,75 +28,16 @@ export default function BlogDetail() {
         <p className="body-t" style={{ marginTop: '20px' }}>
           The article you are looking for does not exist.
         </p>
-        <Link to="/blog" className="btn-dark" style={{ marginTop: '20px' }}>
+        <a href="/blog" className="btn-dark" style={{ marginTop: '20px' }}>
           Back to Insights
-        </Link>
+        </a>
       </div>
     );
   }
 
-  // Find next/prev articles
-  const blogIndex = blogsData.findIndex((b) => b.slug === slug);
-  const prevBlog = blogIndex > 0 ? blogsData[blogIndex - 1] : null;
-  const nextBlog = blogIndex < blogsData.length - 1 ? blogsData[blogIndex + 1] : null;
-
-  // Find 2 related articles using category and tag relevance
-  const relatedBlogs = blogsData
-    .filter((b) => b.slug !== slug)
-    .map((b) => {
-      let score = 0;
-      if (b.category === blog.category) score += 3;
-      const commonTags = b.tags.filter(t => blog.tags.includes(t));
-      score += commonTags.length;
-      return { blog: b, score };
-    })
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 2)
-    .map(item => item.blog);
-
   return (
     <PageTransition>
       <div>
-        <Helmet>
-          <title>{`${blog.metaTitle || blog.title} | Craft Design Studio`}</title>
-          <meta name="description" content={blog.metaDescription} />
-          <link rel="canonical" href={`https://craftdesignstudio.in/blog/${blog.slug}`} />
-          
-          <meta property="og:type" content="article" />
-          <meta property="og:title" content={`${blog.title} | Craft Design Studio`} />
-          <meta property="og:description" content={blog.metaDescription} />
-          <meta property="og:url" content={`https://craftdesignstudio.in/blog/${blog.slug}`} />
-          <meta property="og:image" content={`https://craftdesignstudio.in${blog.banner}`} />
-          
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content={`${blog.title} | Craft Design Studio`} />
-          <meta name="twitter:description" content={blog.metaDescription} />
-          <meta name="twitter:image" content={`https://craftdesignstudio.in${blog.banner}`} />
-
-          <script type="application/ld+json">
-            {JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Article",
-              "headline": blog.title,
-              "description": blog.metaDescription,
-              "image": `https://craftdesignstudio.in${blog.banner}`,
-              "author": {
-                "@type": "Person",
-                "name": "Craft Design Studio"
-              },
-              "publisher": {
-                "@type": "Organization",
-                "name": "Craft Design Studio",
-                "logo": {
-                  "@type": "ImageObject",
-                  "url": "https://craftdesignstudio.in/Logo.png"
-                }
-              },
-              "datePublished": blog.date || "2023-01-01"
-            })}
-          </script>
-        </Helmet>
-
         {/* Scroll Progress Bar */}
         <motion.div 
           style={{ 
@@ -171,9 +105,9 @@ export default function BlogDetail() {
           className="proj-breadcrumb" 
           aria-label="Breadcrumb"
         >
-          <Link to="/">Home</Link>
+          <a href="/">Home</a>
           <Lucide.ChevronRight aria-hidden="true" />
-          <Link to="/blog">Insights</Link>
+          <a href="/blog">Insights</a>
           <Lucide.ChevronRight aria-hidden="true" />
           <span aria-current="page" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '180px' }}>{blog.title}</span>
         </motion.nav>
@@ -207,31 +141,31 @@ export default function BlogDetail() {
           >
             <div className="proj-nav-prev">
               {prevBlog ? (
-                <Link to={`/blog/${prevBlog.slug}`} className="proj-nav-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', textAlign: 'left' }}>
+                <a href={`/blog/${prevBlog.slug}`} className="proj-nav-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', textAlign: 'left' }}>
                   <Lucide.ArrowLeft aria-hidden="true" style={{ flexShrink: 0 }} />
                   <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                     <span style={{ fontSize: '9px', opacity: 0.5, letterSpacing: '0.05em' }}>Previous Article</span>
                     <span style={{ fontSize: '12px', fontWeight: 500, color: 'var(--dark)', marginTop: '4px', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden', textTransform: 'none', letterSpacing: 'normal' }}>{prevBlog.title}</span>
                   </span>
-                </Link>
+                </a>
               ) : (
                 <span style={{ opacity: 0.3, fontFamily: 'var(--ff-mono)', fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase' }}>First Article</span>
               )}
             </div>
             <div className="proj-nav-center">
-              <Link to="/blog" className="proj-nav-all">
+              <a href="/blog" className="proj-nav-all">
                 All Articles
-              </Link>
+              </a>
             </div>
             <div className="proj-nav-next">
               {nextBlog ? (
-                <Link to={`/blog/${nextBlog.slug}`} className="proj-nav-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', textAlign: 'right', justifyContent: 'flex-end' }}>
+                <a href={`/blog/${nextBlog.slug}`} className="proj-nav-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', textAlign: 'right', justifyContent: 'flex-end' }}>
                   <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
                     <span style={{ fontSize: '9px', opacity: 0.5, letterSpacing: '0.05em' }}>Next Article</span>
                     <span style={{ fontSize: '12px', fontWeight: 500, color: 'var(--dark)', marginTop: '4px', display: '-webkit-box', WebkitLineClamp: 1, WebkitBoxOrient: 'vertical', overflow: 'hidden', textTransform: 'none', letterSpacing: 'normal' }}>{nextBlog.title}</span>
                   </span>
                   <Lucide.ArrowRight aria-hidden="true" style={{ flexShrink: 0 }} />
-                </Link>
+                </a>
               ) : (
                 <span style={{ opacity: 0.3, fontFamily: 'var(--ff-mono)', fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Latest Article</span>
               )}
@@ -248,10 +182,10 @@ export default function BlogDetail() {
                   <span className="label" style={{ marginBottom: '12px' }}>Read More</span>
                   <h2 style={{ fontFamily: 'var(--ff-display)', fontSize: 'clamp(2rem, 4vw, 2.8rem)', fontWeight: 400, color: 'var(--dark)' }}>Related Insights</h2>
                 </div>
-                <Link to="/blog" className="btn-dark" style={{ padding: '12px 24px', fontSize: '10px' }}>
+                <a href="/blog" className="btn-dark" style={{ padding: '12px 24px', fontSize: '10px' }}>
                   <span>View All Articles</span>
                   <Lucide.ArrowRight className="icon-xs" style={{ width: '13px', height: '13px' }} />
-                </Link>
+                </a>
               </div>
               
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '40px' }}>
@@ -273,14 +207,14 @@ export default function BlogDetail() {
                     className="blog-card"
                   >
                     <div style={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/10' }}>
-                      <Link to={`/blog/${rBlog.slug}`} style={{ display: 'block', width: '100%', height: '100%' }}>
+                      <a href={`/blog/${rBlog.slug}`} style={{ display: 'block', width: '100%', height: '100%' }}>
                         <img 
                           src={rBlog.banner} 
                           alt={rBlog.title} 
                           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                           className="zoom-hover-img"
                         />
-                      </Link>
+                      </a>
                       <span style={{
                         position: 'absolute',
                         top: '16px',
@@ -306,17 +240,17 @@ export default function BlogDetail() {
                         <span>{rBlog.readTime}</span>
                       </div>
                       <h4 style={{ fontFamily: 'var(--ff-display)', fontSize: '1.5rem', fontWeight: 400, color: 'var(--dark)', marginBottom: '14px', lineHeight: 1.3 }}>
-                        <Link to={`/blog/${rBlog.slug}`} style={{ transition: 'color 0.3s' }} className="blog-title-link">
+                        <a href={`/blog/${rBlog.slug}`} style={{ transition: 'color 0.3s' }} className="blog-title-link">
                           {rBlog.title}
-                        </Link>
+                        </a>
                       </h4>
                       <p className="body-t" style={{ fontSize: '0.9rem', marginBottom: '24px', flexGrow: 1, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                         {rBlog.excerpt}
                       </p>
-                      <Link to={`/blog/${rBlog.slug}`} className="btn-ghost" style={{ marginTop: 'auto', padding: '10px 20px', fontSize: '10px', justifyContent: 'center', borderWidth: '1px' }}>
+                      <a href={`/blog/${rBlog.slug}`} className="btn-ghost" style={{ marginTop: 'auto', padding: '10px 20px', fontSize: '10px', justifyContent: 'center', borderWidth: '1px' }}>
                         <span>Read Insight</span>
                         <Lucide.ArrowUpRight className="icon-xs" style={{ width: '12px', height: '12px' }} />
-                      </Link>
+                      </a>
                     </div>
                   </motion.article>
                 ))}

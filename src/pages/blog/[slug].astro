@@ -1,0 +1,47 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import BlogDetail from '../../components/BlogDetail.jsx';
+import { blogsData } from '../../data/blogsData.js';
+
+export function getStaticPaths() {
+  return blogsData.map((blog) => ({
+    params: { slug: blog.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+
+// Calculate props for the component
+const blogIndex = blogsData.findIndex((b) => b.slug === slug);
+const blog = blogsData[blogIndex];
+
+const prevBlog = blogIndex > 0 ? blogsData[blogIndex - 1] : null;
+const nextBlog = blogIndex < blogsData.length - 1 ? blogsData[blogIndex + 1] : null;
+
+const relatedBlogs = blogsData
+  .filter((b) => b.slug !== slug)
+  .map((b) => {
+    let score = 0;
+    if (b.category === blog.category) score += 3;
+    const commonTags = b.tags.filter(t => blog.tags.includes(t));
+    score += commonTags.length;
+    return { blog: b, score };
+  })
+  .sort((a, b) => b.score - a.score)
+  .slice(0, 2)
+  .map(item => item.blog);
+---
+
+<Layout 
+	title={`${blog.metaTitle || blog.title} | Craft Design Studio`}
+	description={blog.metaDescription}
+	image={blog.banner}
+>
+	<BlogDetail 
+		client:load 
+		blog={blog} 
+		prevBlog={prevBlog} 
+		nextBlog={nextBlog} 
+		relatedBlogs={relatedBlogs} 
+	/>
+</Layout>

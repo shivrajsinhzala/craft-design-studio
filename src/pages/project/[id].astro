@@ -1,0 +1,39 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProjectDetail from '../../components/ProjectDetail.jsx';
+import { projectsData } from '../../data/projectsData.js';
+
+export function getStaticPaths() {
+  return projectsData.map((project) => ({
+    params: { id: project.id },
+  }));
+}
+
+const { id } = Astro.params;
+
+// Calculate props for the component
+const projectIndex = projectsData.findIndex((p) => p.id === id);
+const project = projectsData[projectIndex];
+
+const prevProject =
+  projectIndex > -1
+    ? projectsData[projectIndex === 0 ? projectsData.length - 1 : projectIndex - 1]
+    : null;
+const nextProject =
+  projectIndex > -1
+    ? projectsData[projectIndex === projectsData.length - 1 ? 0 : projectIndex + 1]
+    : null;
+---
+
+<Layout 
+	title={`${project.title} — ${project.tag} | Craft Design Studio`}
+	description={project.description}
+	image={project.banner}
+>
+	<ProjectDetail 
+		client:load 
+		project={project} 
+		prevProject={prevProject} 
+		nextProject={nextProject} 
+	/>
+</Layout>

@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+// removed react-router-dom and helmet
 import { motion, AnimatePresence } from 'framer-motion';
 import * as Lucide from 'lucide-react';
 import { blogsData } from '../data/blogsData.js';
@@ -32,11 +31,7 @@ export default function BlogList() {
   return (
     <PageTransition>
       <div className="blog-list-page">
-        <Helmet>
-          <title>Design Journal & Insights | Craft Design Studio</title>
-          <meta name="description" content="Read our design journal featuring insights on interior design trends, 3D visualization, architectural rendering, and workspace planning in Morbi and Rajkot, Gujarat." />
-          <link rel="canonical" href="https://craftdesignstudio.in/blog" />
-        </Helmet>
+
 
         {/* HEADER SPACING */}
         <div style={{ height: '140px' }} />
@@ -65,7 +60,7 @@ export default function BlogList() {
                 className="feat-card"
               >
                 <div className="feat-img-col">
-                  <Link to={`/blog/${featuredBlog.slug}`} style={{ display: 'block', width: '100%', height: '100%' }}>
+                  <a href={`/blog/${featuredBlog.slug}`} style={{ display: 'block', width: '100%', height: '100%' }}>
                     <img
                       src={featuredBlog.banner}
                       alt={featuredBlog.title}
@@ -77,7 +72,7 @@ export default function BlogList() {
                       }}
                       className="zoom-hover-img"
                     />
-                  </Link>
+                  </a>
                 </div>
                 <div className="feat-content-col">
                   <div style={{ display: 'flex', gap: '8px', marginBottom: '16px' }}>
@@ -98,9 +93,9 @@ export default function BlogList() {
                     </span>
                   </div>
                   <h3 className="feat-title">
-                    <Link to={`/blog/${featuredBlog.slug}`} style={{ transition: 'color 0.3s' }} className="blog-title-link">
+                    <a href={`/blog/${featuredBlog.slug}`} style={{ transition: 'color 0.3s' }} className="blog-title-link">
                       {featuredBlog.title}
-                    </Link>
+                    </a>
                   </h3>
                   <p className="body-t" style={{ fontSize: '0.96rem', marginBottom: '28px', lineHeight: '1.8' }}>
                     {featuredBlog.excerpt}
@@ -110,10 +105,10 @@ export default function BlogList() {
                     <span>·</span>
                     <span>{featuredBlog.date}</span>
                   </div>
-                  <Link to={`/blog/${featuredBlog.slug}`} className="btn-dark" style={{ alignSelf: 'flex-start' }}>
+                  <a href={`/blog/${featuredBlog.slug}`} className="btn-dark" style={{ alignSelf: 'flex-start' }}>
                     <span>Read Feature</span>
                     <Lucide.ArrowRight className="icon-xs" />
-                  </Link>
+                  </a>
                 </div>
               </motion.div>
             </section>
@@ -159,7 +154,7 @@ export default function BlogList() {
                     className="blog-card"
                   >
                     <div style={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/10' }}>
-                      <Link to={`/blog/${blog.slug}`} style={{ display: 'block', width: '100%', height: '100%' }}>
+                      <a href={`/blog/${blog.slug}`} style={{ display: 'block', width: '100%', height: '100%' }}>
                         <img
                           src={blog.banner}
                           alt={blog.title}
@@ -171,7 +166,7 @@ export default function BlogList() {
                           }}
                           className="zoom-hover-img"
                         />
-                      </Link>
+                      </a>
                       <span
                         style={{
                           position: 'absolute',
@@ -200,9 +195,9 @@ export default function BlogList() {
                         <span>{blog.readTime}</span>
                       </div>
                       <h3 style={{ fontFamily: 'var(--ff-display)', fontSize: '1.6rem', fontWeight: 400, lineHeight: 1.25, color: 'var(--dark)', marginBottom: '12px' }}>
-                        <Link to={`/blog/${blog.slug}`} style={{ transition: 'color 0.3s' }} className="blog-title-link">
+                        <a href={`/blog/${blog.slug}`} style={{ transition: 'color 0.3s' }} className="blog-title-link">
                           {blog.title}
-                        </Link>
+                        </a>
                       </h3>
                       <p className="body-t" style={{ fontSize: '0.92rem', marginBottom: '20px', flexGrow: 1, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                         {blog.excerpt}
@@ -226,8 +221,8 @@ export default function BlogList() {
                         ))}
                       </div>
 
-                      <Link
-                        to={`/blog/${blog.slug}`}
+                      <a
+                        href={`/blog/${blog.slug}`}
                         className="btn-ghost"
                         style={{
                           marginTop: 'auto',
@@ -239,7 +234,7 @@ export default function BlogList() {
                       >
                         <span>Read Article</span>
                         <Lucide.ArrowUpRight className="icon-xs" />
-                      </Link>
+                      </a>
                     </div>
                   </motion.article>
                 ))}

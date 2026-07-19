@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+// removed react-router-dom
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
-import { Helmet } from 'react-helmet-async';
+
 import * as Lucide from 'lucide-react';
 import { projectsData } from '../data/projectsData.js';
 import { blogsData } from '../data/blogsData.js';
@@ -56,11 +56,10 @@ const serviceImages = [
 ];
 
 export default function Home() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/';
   const containerRef = useRef(null);
 
-  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
+  const [isDesktop, setIsDesktop] = useState(typeof window !== 'undefined' ? window.innerWidth >= 768 : true);
 
   useEffect(() => {
     const mql = window.matchMedia('(min-width: 768px)');
@@ -70,21 +69,19 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (location.state && location.state.scrollTo) {
-      const target = location.state.scrollTo;
-      window.history.replaceState({}, document.title);
-
-      const timer = setTimeout(() => {
+    if (typeof window !== 'undefined' && window.location.hash) {
+      setTimeout(() => {
+        const target = window.location.hash;
         if (window.lenis) {
-          window.lenis.scrollTo(target, { duration: 1.5 });
+          window.lenis.scrollTo(target);
         } else {
           document.querySelector(target)?.scrollIntoView({ behavior: 'smooth' });
         }
-      }, 700);
-
-      return () => clearTimeout(timer);
+        // clear hash to prevent scrolling again on reload
+        history.replaceState(null, null, ' ');
+      }, 500);
     }
-  }, [location]);
+  }, []);
 
   // Form State
   const [formState, setFormState] = useState({
@@ -281,58 +278,7 @@ export default function Home() {
   return (
     <PageTransition>
       <div ref={containerRef}>
-        <Helmet>
-          <title>Craft Design Studio | Interior Design, 3D Visualization & Turnkey Projects in Morbi</title>
-          <meta name="description" content="Premium interior design, 3D visualization, turnkey projects, architectural rendering, and walkthrough studio in Morbi & Rajkot, Gujarat. Craft Design Studio." />
-          <link rel="canonical" href="https://craftdesignstudio.in/" />
-          <script type="application/ld+json">
-            {JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "ProfessionalService",
-              "name": "Craft Design Studio",
-              "alternateName": "Craft Design Studio",
-              "description": "Premium interior design, 3D visualization, turnkey projects, architectural rendering, and walkthrough animation studio in Morbi & Rajkot, Gujarat.",
-              "image": "https://craftdesignstudio.in/Logo.png",
-              "@id": "https://craftdesignstudio.in/#organization",
-              "url": "https://craftdesignstudio.in/",
-              "telephone": "+91-87583-95671, +91-83206-95380",
-              "priceRange": "$$$",
-              "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": "4.9",
-                "reviewCount": "28"
-              },
-              "address": [
-                {
-                  "@type": "PostalAddress",
-                  "streetAddress": "1st Floor, Shreeji Arcade, Opposite VI Store, Sanala Road",
-                  "addressLocality": "Morbi",
-                  "addressRegion": "Gujarat",
-                  "postalCode": "363641",
-                  "addressCountry": "IN"
-                },
-                {
-                  "@type": "PostalAddress",
-                  "streetAddress": "Kataria Chowkdi, Near Housing",
-                  "addressLocality": "Rajkot",
-                  "addressRegion": "Gujarat",
-                  "postalCode": "360001",
-                  "addressCountry": "IN"
-                }
-              ],
-              "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": "22.8133765",
-                "longitude": "70.8297183"
-              },
-              "hasMap": "https://www.google.com/maps?cid=17039764175334688423",
-              "sameAs": [
-                "https://instagram.com/craft_design_studio1",
-                "https://www.google.com/maps?cid=17039764175334688423"
-              ]
-            })}
-          </script>
-        </Helmet>
+
 
         {/* Skip link */}
         <a href="#main-content-section" className="skip-link" onClick={(e) => scrollToSection(e, '#main-content-section')}>
@@ -739,10 +685,10 @@ export default function Home() {
             <div className="h-track-container" style={{ overflow: 'visible', width: '100%' }}>
               <div className="h-track" id="hTrack" role="list" aria-label="Project gallery">
                 {projectsData.map((proj, idx) => (
-                  <Link
+                  <a
                     key={proj.id}
                     className="proj-card"
-                    to={`/project/${proj.id}`}
+                    href={`/project/${proj.id}`}
                     role="listitem"
                     aria-label={`${proj.title} — ${proj.tag} project`}
                   >
@@ -762,7 +708,7 @@ export default function Home() {
                         <Lucide.ArrowUpRight aria-hidden="true" />
                       </div>
                     </div>
-                  </Link>
+                  </a>
                 ))}
                 {/* Right spacer to keep the last card from touching the right edge of the screen */}
                 <div className="h-track-spacer" style={{ width: 'var(--pad-h)', flexShrink: 0 }} aria-hidden="true" />
@@ -839,10 +785,10 @@ export default function Home() {
                   <RevealText text="Latest Insights" delay={0.1} />
                 </h2>
               </div>
-              <Link to="/blog" className="btn-dark" style={{ padding: '12px 24px', fontSize: '10px' }}>
+              <a href="/blog" className="btn-dark" style={{ padding: '12px 24px', fontSize: '10px' }}>
                 <span>Read All Insights</span>
                 <Lucide.ArrowRight className="icon-xs" />
-              </Link>
+              </a>
             </div>
             
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '30px' }} className="insights-grid">
@@ -864,14 +810,14 @@ export default function Home() {
                   className="blog-card"
                 >
                   <div style={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/10' }}>
-                    <Link to={`/blog/${blog.slug}`} style={{ display: 'block', width: '100%', height: '100%' }}>
+                    <a href={`/blog/${blog.slug}`} style={{ display: 'block', width: '100%', height: '100%' }}>
                       <img 
                         src={blog.banner} 
                         alt={blog.title} 
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                         className="zoom-hover-img"
                       />
-                    </Link>
+                    </a>
                     <span style={{
                       position: 'absolute',
                       top: '16px',
@@ -897,17 +843,17 @@ export default function Home() {
                       <span>{blog.readTime}</span>
                     </div>
                     <h4 style={{ fontFamily: 'var(--ff-display)', fontSize: '1.4rem', fontWeight: 400, color: 'var(--dark)', marginBottom: '12px', lineHeight: 1.3 }}>
-                      <Link to={`/blog/${blog.slug}`} style={{ transition: 'color 0.3s' }} className="blog-title-link">
+                      <a href={`/blog/${blog.slug}`} style={{ transition: 'color 0.3s' }} className="blog-title-link">
                         {blog.title}
-                      </Link>
+                      </a>
                     </h4>
                     <p className="body-t" style={{ fontSize: '0.88rem', marginBottom: '20px', flexGrow: 1, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                       {blog.excerpt}
                     </p>
-                    <Link to={`/blog/${blog.slug}`} className="btn-ghost" style={{ marginTop: 'auto', padding: '8px 16px', fontSize: '10px', justifyContent: 'center', borderWidth: '1px' }}>
+                    <a href={`/blog/${blog.slug}`} className="btn-ghost" style={{ marginTop: 'auto', padding: '8px 16px', fontSize: '10px', justifyContent: 'center', borderWidth: '1px' }}>
                       <span>Read Insight</span>
                       <Lucide.ArrowUpRight className="icon-xs" style={{ width: '12px', height: '12px' }} />
-                    </Link>
+                    </a>
                   </div>
                 </motion.article>
               ))}

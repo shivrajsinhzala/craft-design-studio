@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+// removed react-router-dom and helmet
 import * as Lucide from 'lucide-react';
 import PageTransition from '../components/PageTransition.jsx';
 
@@ -19,11 +18,7 @@ export default function NotFound() {
           textAlign: 'center'
         }}
       >
-        <Helmet>
-          <title>Page Not Found | Craft – The Design Studio</title>
-          <meta name="description" content="The page you are looking for does not exist. Return to Craft The Design Studio homepage." />
-          <meta name="robots" content="noindex, nofollow" />
-        </Helmet>
+
 
         <div style={{ position: 'relative', width: '100%', maxWidth: '440px', margin: '0 auto' }}>
           {/* Subtle gold line accent */}
@@ -75,10 +70,10 @@ export default function NotFound() {
             The link you followed may be broken, or the page has been moved or deleted. Let's get you back on track.
           </p>
 
-          <Link to="/" className="btn-dark" style={{ gap: '12px' }}>
+          <a href="/" className="btn-dark" style={{ gap: '12px' }}>
             <Lucide.Home className="icon-xs" />
             <span>Back to Homepage</span>
-          </Link>
+          </a>
         </div>
       </div>
     </PageTransition>
