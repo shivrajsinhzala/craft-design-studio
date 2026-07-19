@@ -1,0 +1,13 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.jsx';
+import AboutContent from '../components/About.jsx';
+---
+
+<Layout 
+	title="About Us | Craft The Design Studio" 
+	description="Learn about Craft The Design Studio. We are a premium interior design and 3D architectural visualization agency based in Morbi and Rajkot."
+>
+	<AboutContent client:load />
+	<Footer client:load />
+</Layout>

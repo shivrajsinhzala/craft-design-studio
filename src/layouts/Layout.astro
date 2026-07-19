@@ -21,6 +21,14 @@ const { title, description, image = '/banner.jpg' } = Astro.props;
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		
+		<!-- Preconnect for speed -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<!-- Fonts — swap for fast LCP -->
+		<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500&display=swap" rel="stylesheet" />
+
+		<!-- Canonical URL -->
+		<link rel="canonical" href={Astro.url} />
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content={Astro.url} />
 		<meta property="og:title" content={title} />
@@ -32,6 +40,64 @@ const { title, description, image = '/banner.jpg' } = Astro.props;
 		<meta property="twitter:title" content={title} />
 		<meta property="twitter:description" content={description} />
 		<meta property="twitter:image" content={new URL(image, Astro.url)} />
+
+		<!-- JSON-LD Structured Data for Local SEO -->
+		<script type="application/ld+json">
+		{
+			"@context": "https://schema.org",
+			"@type": "ProfessionalService",
+			"name": "Craft Design Studio",
+			"alternateName": "Craft The Design Studio",
+			"description": "Premium interior design and 3D visualization studio specializing in turnkey projects, photorealistic renders, architectural visualization, floor plans, and animation walkthroughs.",
+			"url": "https://craftdesignstudio.in/",
+			"logo": "https://craftdesignstudio.in/Logo.png",
+			"image": "https://craftdesignstudio.in/Logo.png",
+			"telephone": ["+918758395671", "+918320695380"],
+			"email": "hello@craftdesignstudio.in",
+			"foundingDate": "2023",
+			"founder": [
+				{
+					"@type": "Person",
+					"name": "Vishvarajsinh Zala",
+					"jobTitle": "Co-Founder & Design Director"
+				},
+				{
+					"@type": "Person",
+					"name": "Yash Gharvaliya",
+					"jobTitle": "Co-Founder & Visualization Lead"
+				}
+			],
+			"address": [
+				{
+					"@type": "PostalAddress",
+					"streetAddress": "1st Floor, Shreeji Arcade, Opposite VI Store, Sanala Road",
+					"addressLocality": "Morbi",
+					"addressRegion": "Gujarat",
+					"postalCode": "363641",
+					"addressCountry": "IN"
+				},
+				{
+					"@type": "PostalAddress",
+					"streetAddress": "Kataria Chowkdi, Near Housing",
+					"addressLocality": "Rajkot",
+					"addressRegion": "Gujarat",
+					"addressCountry": "IN"
+				}
+			],
+			"geo": {
+				"@type": "GeoCoordinates",
+				"latitude": "22.8133765",
+				"longitude": "70.8297183"
+			},
+			"hasMap": "https://www.google.com/maps?cid=17039764175334688423",
+			"sameAs": [
+				"https://instagram.com/craft_design_studio1",
+				"https://www.google.com/maps?cid=17039764175334688423"
+			],
+			"priceRange": "$$",
+			"openingHours": "Mo-Sa 09:00-19:00"
+		}
+		</script>
 	</head>
 	<body>
         <Navbar client:load />

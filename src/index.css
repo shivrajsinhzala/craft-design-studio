@@ -1625,3 +1625,7 @@ textarea:focus-visible {
   }
 }
 
+
+/* Instagram Grid */
+.ig-post:hover img { transform: scale(1.08) !important; }
+.ig-post:hover .ig-overlay { opacity: 1 !important; }

@@ -5,7 +5,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
 
-import * as Lucide from 'lucide-react';
+import { 
+  ArrowRight, MapPin, Award, Phone, Home as HomeIcon, Monitor, 
+  Building2, Layout, Film, MoveRight, ArrowUpRight, Instagram, Send, Heart, MessageCircle
+} from 'lucide-react';
 import { projectsData } from '../data/projectsData.js';
 import { blogsData } from '../data/blogsData.js';
 import PageTransition from '../components/PageTransition.jsx';
@@ -277,7 +280,7 @@ export default function Home() {
 
   return (
     <PageTransition>
-      <div ref={containerRef}>
+      <main ref={containerRef}>
 
 
         {/* Skip link */}
@@ -305,7 +308,7 @@ export default function Home() {
             >
               <a href="#projects" onClick={(e) => scrollToSection(e, '#projects')} className="btn-dark" id="heroBtn1">
                 <span>View Our Work</span>
-                <Lucide.ArrowRight className="icon-xs" aria-hidden="true" />
+                <ArrowRight className="icon-xs" aria-hidden="true" />
               </a>
               <a href="#contact" onClick={(e) => scrollToSection(e, '#contact')} className="btn-ghost" id="heroBtn2">
                 Start a Project
@@ -317,7 +320,7 @@ export default function Home() {
               transition={{ delay: 0.7, duration: 0.8 }}
               className="hero-location"
             >
-              <Lucide.MapPin className="icon-xs" aria-hidden="true" />
+              <MapPin className="icon-xs" aria-hidden="true" />
               <span>Morbi &amp; Rajkot, Gujarat</span>
             </motion.p>
           </div>
@@ -335,6 +338,8 @@ export default function Home() {
                     key={slide.img}
                     src={slide.img}
                     alt={`${slide.title} — ${slide.location} visualization`}
+                    loading={idx === 0 ? "eager" : "lazy"}
+                    fetchpriority={idx === 0 ? "high" : "auto"}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: idx === heroIdx ? 1 : 0 }}
                     transition={{ duration: 0.9, ease: 'easeInOut' }}
@@ -390,7 +395,7 @@ export default function Home() {
               id="heroTag" 
               aria-hidden="true"
             >
-              <Lucide.Award className="icon-xs" aria-hidden="true" />
+              <Award className="icon-xs" aria-hidden="true" />
               <span>Premium Quality Visualization</span>
             </motion.div>
           </div>
@@ -507,10 +512,10 @@ export default function Home() {
                       <img src="/vhzala.webp" alt="Vishvarajsinh Zala — Co-Founder of Craft Design Studio" loading="lazy" width="72" height="72" />
                     </div>
                     <div className="f-info">
-                      <h4>Vishvarajsinh Zala</h4>
+                      <h3>Vishvarajsinh Zala</h3>
                       <span>Co-Founder &amp; Design Director</span>
                       <a href="tel:+918758395671" className="f-phone" aria-label="Call Vishvarajsinh Zala at +91 87583 95671">
-                        <Lucide.Phone className="icon-xs" aria-hidden="true" />+91 87583 95671
+                        <Phone className="icon-xs" aria-hidden="true" />+91 87583 95671
                       </a>
                     </div>
                   </motion.div>
@@ -525,10 +530,10 @@ export default function Home() {
                       <img src="/yash.webp" alt="Yash Gharvaliya — Co-Founder of Craft Design Studio" loading="lazy" width="72" height="72" />
                     </div>
                     <div className="f-info">
-                      <h4>Yash Gharvaliya</h4>
+                      <h3>Yash Gharvaliya</h3>
                       <span>Co-Founder &amp; Visualization Lead</span>
                       <a href="tel:+918320695380" className="f-phone" aria-label="Call Yash Gharvaliya at +91 83206 95380">
-                        <Lucide.Phone className="icon-xs" aria-hidden="true" />+91 83206 95380
+                        <Phone className="icon-xs" aria-hidden="true" />+91 83206 95380
                       </a>
                     </div>
                   </motion.div>
@@ -555,7 +560,7 @@ export default function Home() {
                 {
                   idx: 0,
                   num: '01',
-                  icon: <Lucide.Home aria-hidden="true" />,
+                  icon: <HomeIcon aria-hidden="true" />,
                   title: 'Interior Design',
                   text: 'Aesthetically refined and functional spaces tailored to your lifestyle, business goals, and spatial requirements.',
                   tags: ['Space planning', 'Furniture layout', 'Material selection', 'Color palette design', 'Lighting concepts', 'Mood boards']
@@ -563,7 +568,7 @@ export default function Home() {
                 {
                   idx: 1,
                   num: '02',
-                  icon: <Lucide.Monitor aria-hidden="true" />,
+                  icon: <Monitor aria-hidden="true" />,
                   title: '3D Interior Visualization',
                   text: 'High-quality photorealistic interior renders that help clients visualize the final outcome before execution begins.',
                   tags: ['Living room renders', 'Bedroom renders', 'Kitchen visualization', 'Office interiors', 'Hospitality spaces', 'Luxury apartments']
@@ -571,7 +576,7 @@ export default function Home() {
                 {
                   idx: 2,
                   num: '03',
-                  icon: <Lucide.Building2 aria-hidden="true" />,
+                  icon: <Building2 aria-hidden="true" />,
                   title: 'Architectural Visualization',
                   text: 'Exterior architectural rendering services for residential, commercial, and mixed-use projects.',
                   tags: ['Exterior renders', 'Daylight renders', 'Night renders', 'Landscape visualization', 'Architectural detailing']
@@ -579,7 +584,7 @@ export default function Home() {
                 {
                   idx: 3,
                   num: '04',
-                  icon: <Lucide.Layout aria-hidden="true" />,
+                  icon: <Layout aria-hidden="true" />,
                   title: '3D Floor Plans',
                   text: 'Interactive and visually engaging floor plan presentations for developers, architects, and real estate marketing.',
                   tags: ['Photorealistic plans', 'Developer packages', 'Real estate marketing', 'Architectural documentation']
@@ -587,7 +592,7 @@ export default function Home() {
                 {
                   idx: 4,
                   num: '05',
-                  icon: <Lucide.Film aria-hidden="true" />,
+                  icon: <Film aria-hidden="true" />,
                   title: 'Animation Walkthroughs',
                   text: 'Cinematic walkthrough animations that let clients experience their project through motion and storytelling.',
                   tags: ['Interior walkthroughs', 'Exterior flythroughs', 'Real estate videos', 'Camera animation', 'Cinematic lighting']
@@ -677,7 +682,7 @@ export default function Home() {
                   </h2>
                 </div>
                 <p className="scroll-cue">
-                  <Lucide.MoveRight className="icon-sm" aria-hidden="true" />&nbsp;Scroll to explore
+                  <MoveRight className="icon-sm" aria-hidden="true" />&nbsp;Scroll to explore
                 </p>
               </div>
             </div>
@@ -705,7 +710,7 @@ export default function Home() {
                         <p>{proj.tag}</p>
                       </div>
                       <div className="proj-arrow-wrap" aria-hidden="true">
-                        <Lucide.ArrowUpRight aria-hidden="true" />
+                        <ArrowUpRight aria-hidden="true" />
                       </div>
                     </div>
                   </a>
@@ -787,7 +792,7 @@ export default function Home() {
               </div>
               <a href="/blog" className="btn-dark" style={{ padding: '12px 24px', fontSize: '10px' }}>
                 <span>Read All Insights</span>
-                <Lucide.ArrowRight className="icon-xs" />
+                <ArrowRight className="icon-xs" />
               </a>
             </div>
             
@@ -842,22 +847,78 @@ export default function Home() {
                       <span>·</span>
                       <span>{blog.readTime}</span>
                     </div>
-                    <h4 style={{ fontFamily: 'var(--ff-display)', fontSize: '1.4rem', fontWeight: 400, color: 'var(--dark)', marginBottom: '12px', lineHeight: 1.3 }}>
+                    <h3 style={{ fontFamily: 'var(--ff-display)', fontSize: '1.4rem', fontWeight: 400, color: 'var(--dark)', marginBottom: '12px', lineHeight: 1.3 }}>
                       <a href={`/blog/${blog.slug}`} style={{ transition: 'color 0.3s' }} className="blog-title-link">
                         {blog.title}
                       </a>
-                    </h4>
+                    </h3>
                     <p className="body-t" style={{ fontSize: '0.88rem', marginBottom: '20px', flexGrow: 1, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                       {blog.excerpt}
                     </p>
                     <a href={`/blog/${blog.slug}`} className="btn-ghost" style={{ marginTop: 'auto', padding: '8px 16px', fontSize: '10px', justifyContent: 'center', borderWidth: '1px' }}>
                       <span>Read Insight</span>
-                      <Lucide.ArrowUpRight className="icon-xs" style={{ width: '12px', height: '12px' }} />
+                      <ArrowUpRight className="icon-xs" style={{ width: '12px', height: '12px' }} />
                     </a>
                   </div>
                 </motion.article>
               ))}
             </div>
+          </div>
+        </section>
+        {/* INSTAGRAM GRID */}
+        <section className="section" style={{ background: 'var(--bg)', paddingBottom: '0' }}>
+          <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2rem' }}>
+            <div>
+              <p className="label">Social</p>
+              <h2 className="section-title" style={{ fontSize: '2.5rem' }}>Follow <span className="yellow-t">@craft_design_studio1</span></h2>
+            </div>
+            <a href="https://www.instagram.com/craft_design_studio1" target="_blank" rel="noopener noreferrer" className="btn-ghost" style={{ marginBottom: '12px' }}>
+              <Instagram style={{ width: 16, height: 16, marginRight: 8 }} />
+              <span>Follow Us</span>
+            </a>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '0' }}>
+            {[
+              "/Flora 11/F11 LV ELE 05.webp",
+              "/Golden Heights/GH MB 2 ELE 3.webp",
+              "/Flora 11/MB 3 ELE 1.webp",
+              "/Golden Heights/TR ELE 02.webp",
+              "/Flora 11/F11 LV ELE 04.webp"
+            ].map((img, i) => (
+              <motion.a
+                key={i}
+                href="https://www.instagram.com/craft_design_studio1"
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: i * 0.1 }}
+                style={{ position: 'relative', display: 'block', aspectRatio: '1/1', overflow: 'hidden' }}
+                className="ig-post"
+                aria-label="View Instagram Post"
+              >
+                <img 
+                  src={img} 
+                  alt="Instagram Post" 
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} 
+                />
+                <div className="ig-overlay" style={{
+                  position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+                  background: 'rgba(20, 18, 16, 0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  gap: '24px', opacity: 0, transition: 'opacity 0.3s ease'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--bg)', fontWeight: '500' }}>
+                    <Heart fill="currentColor" style={{ width: 24, height: 24 }} />
+                    <span>{120 + i * 45}</span>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--bg)', fontWeight: '500' }}>
+                    <MessageCircle fill="currentColor" style={{ width: 24, height: 24 }} />
+                    <span>{12 + i * 7}</span>
+                  </div>
+                </div>
+              </motion.a>
+            ))}
           </div>
         </section>
 
@@ -877,19 +938,19 @@ export default function Home() {
                 <div className="c-locations">
                   <address className="c-loc">
                     <div className="c-loc-icon" aria-hidden="true">
-                      <Lucide.MapPin aria-hidden="true" />
+                      <MapPin aria-hidden="true" />
                     </div>
                     <div>
-                      <h4>Morbi Studio</h4>
+                      <h3>Morbi Studio</h3>
                       <p>Craft Design Studio, 1st Floor, Shreeji Arcade,<br />Opposite VI Store, Sanala Road,<br />Morbi – 363641, Gujarat</p>
                     </div>
                   </address>
                   <address className="c-loc">
                     <div className="c-loc-icon" aria-hidden="true">
-                      <Lucide.MapPin aria-hidden="true" />
+                      <MapPin aria-hidden="true" />
                     </div>
                     <div>
-                      <h4>Rajkot Studio</h4>
+                      <h3>Rajkot Studio</h3>
                       <p>Kataria Chowkdi, Near Housing,<br />Rajkot, Gujarat</p>
                     </div>
                   </address>
@@ -899,19 +960,19 @@ export default function Home() {
                   <div className="c-person">
                     <span>Vishvarajsinh Zala</span>
                     <a href="tel:+918758395671" aria-label="Call Vishvarajsinh Zala">
-                      <Lucide.Phone className="icon-xs" aria-hidden="true" />+91 87583 95671
+                      <Phone className="icon-xs" aria-hidden="true" />+91 87583 95671
                     </a>
                   </div>
                   <div className="c-person">
                     <span>Yash Gharvaliya</span>
                     <a href="tel:+918320695380" aria-label="Call Yash Gharvaliya">
-                      <Lucide.Phone className="icon-xs" aria-hidden="true" />+91 83206 95380
+                      <Phone className="icon-xs" aria-hidden="true" />+91 83206 95380
                     </a>
                   </div>
                 </div>
 
                 <a href="https://instagram.com/craft_design_studio1" target="_blank" rel="noopener noreferrer" className="ig-link" aria-label="Follow Craft Design Studio on Instagram">
-                  <Lucide.Instagram aria-hidden="true" />
+                  <Instagram aria-hidden="true" />
                   <span>@craft_design_studio1</span>
                 </a>
               </div>
@@ -992,7 +1053,7 @@ export default function Home() {
                       {formStatus === 'sending' && 'Sending…'}
                       {formStatus === 'success' && '✓ Sent!'}
                     </span>
-                    {formStatus === 'idle' && <Lucide.Send className="icon-xs" aria-hidden="true" />}
+                    {formStatus === 'idle' && <Send className="icon-xs" aria-hidden="true" />}
                   </button>
                   <p
                     className="form-ok"
@@ -1010,7 +1071,7 @@ export default function Home() {
         
         {/* Standard Full Footer */}
         <Footer />
-      </div>
+      </main>
     </PageTransition>
   );
 }

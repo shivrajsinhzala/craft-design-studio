@@ -1,0 +1,13 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.jsx';
+import ContactContent from '../components/Contact.jsx';
+---
+
+<Layout 
+	title="Contact Us | Craft The Design Studio" 
+	description="Get in touch with Craft The Design Studio for your next interior design or 3D architectural visualization project in Morbi and Rajkot."
+>
+	<ContactContent client:load />
+	<Footer client:load />
+</Layout>

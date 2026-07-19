@@ -3,6 +3,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -14,12 +18,12 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: 'About', target: '#about' },
+    { name: 'About', target: '/about', isExternal: true },
     { name: 'Services', target: '#services' },
     { name: 'Projects', target: '#projects' },
     { name: 'Process', target: '#process' },
     { name: 'Blog', target: '/blog', isExternal: true },
-    { name: 'Contact', target: '#contact', isCta: true },
+    { name: 'Contact', target: '/contact', isExternal: true, isCta: true },
   ];
 
   // Scrolled state and show/hide on scroll

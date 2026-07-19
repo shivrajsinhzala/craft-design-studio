@@ -81,9 +81,9 @@ export default function Footer({ simple = false }) {
             <nav className="footer-col" aria-label="Studio navigation">
               <h5>Studio</h5>
               <a href="/" onClick={(e) => { e.preventDefault(); window.lenis?.scrollTo(0); window.location.href='/'; }}>Home</a>
-              <a href="/#about">About</a>
+              <a href="/about">About</a>
               <a href="/blog">Blog &amp; Insights</a>
-              <a href="/#contact">Contact</a>
+              <a href="/contact">Contact</a>
             </nav>
             <div className="footer-col">
               <h5>Locations</h5>
