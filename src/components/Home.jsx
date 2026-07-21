@@ -149,7 +149,7 @@ export default function Home() {
     setFormStatus('sending');
     
     try {
-      const res = await fetch("https://formsubmit.co/ajax/hello@shivrajsinh.in", {
+      const res = await fetch("https://formsubmit.co/ajax/4f46b0d29726ee32272aa2566fc3a788", {
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
