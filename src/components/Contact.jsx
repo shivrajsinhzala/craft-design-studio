@@ -19,7 +19,7 @@ export default function Contact() {
   return (
     <main className="page-main">
       {/* Hero Section */}
-      <section className="contact-hero section" style={{ paddingTop: '180px', paddingBottom: '60px' }}>
+      <section className="contact-hero section page-hero">
         <div className="container">
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
@@ -38,9 +38,9 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Content Grid */}
-      <section className="contact-content section" style={{ paddingTop: '20px', paddingBottom: '120px' }}>
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '80px', alignItems: 'start' }}>
+      {/* Contact Form & Info Section */}
+      <section className="contact-content section contact-content-sec">
+        <div className="container contact-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'start' }}>
           
           {/* Left Column: Info & Locations */}
           <div className="contact-left">

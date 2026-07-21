@@ -1088,6 +1088,9 @@ address { font-style:normal; }
 
 @media (max-width: 768px) {
   :root { --sec-pad:72px; --pad-h:20px; }
+  .footer { padding: 56px 0 24px; }
+  .page-hero { padding-top: 130px; padding-bottom: 40px; }
+  .contact-content-sec { padding-top: 0px; padding-bottom: 64px; }
 
   body { cursor:auto; }
   .cursor { display:none; }
@@ -1198,6 +1201,8 @@ address { font-style:normal; }
 }
 
 @media (max-width: 480px) {
+  :root { --sec-pad: 56px; }
+  .page-hero { padding-top: 100px; padding-bottom: 32px; }
   .hero-actions { flex-direction:column; align-items:stretch; }
   .hero-actions .btn-dark,
   .hero-actions .btn-ghost { justify-content:center; text-align:center; }
@@ -1446,8 +1451,16 @@ textarea:focus-visible {
   overflow-x: auto;
   scrollbar-width: none;
 }
-.category-tabs::-webkit-scrollbar {
-  display: none;
+.category.h-track::-webkit-scrollbar { display:none; }
+
+/* ── Generic Page Hero ── */
+.page-hero {
+  padding-top: 180px;
+  padding-bottom: 60px;
+}
+.contact-content-sec {
+  padding-top: 20px;
+  padding-bottom: 120px;
 }
 
 /* Responsive Blog Cards Grid */
@@ -1687,5 +1700,11 @@ textarea:focus-visible {
   }
   .ig-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-grid {
+    grid-template-columns: 1fr !important;
   }
 }

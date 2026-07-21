@@ -7,7 +7,7 @@ export default function About() {
   return (
     <main className="page-main">
       {/* Hero Section */}
-      <section className="about-hero section" style={{ paddingTop: '180px', paddingBottom: '60px' }}>
+      <section className="about-hero section page-hero">
         <div className="container">
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
