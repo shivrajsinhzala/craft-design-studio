@@ -867,17 +867,17 @@ export default function Home() {
         </section>
         {/* INSTAGRAM GRID */}
         <section className="section" style={{ background: 'var(--bg)', paddingBottom: '0' }}>
-          <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2rem' }}>
+          <div className="container ig-header">
             <div>
               <p className="label">Social</p>
-              <h2 className="section-title" style={{ fontSize: '2.5rem' }}>Follow <span className="yellow-t">@craft_design_studio1</span></h2>
+              <h2 className="section-title ig-title">Follow <span className="yellow-t">@craft_design_studio1</span></h2>
             </div>
             <a href="https://www.instagram.com/craft_design_studio1" target="_blank" rel="noopener noreferrer" className="btn-ghost" style={{ marginBottom: '12px' }}>
               <Instagram style={{ width: 16, height: 16, marginRight: 8 }} />
               <span>Follow Us</span>
             </a>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '0' }}>
+          <div className="ig-grid">
             {[
               "/Flora 11/F11 LV ELE 05.webp",
               "/Golden Heights/GH MB 2 ELE 3.webp",
@@ -894,20 +894,14 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: i * 0.1 }}
-                style={{ position: 'relative', display: 'block', aspectRatio: '1/1', overflow: 'hidden' }}
                 className="ig-post"
                 aria-label="View Instagram Post"
               >
                 <img 
                   src={img} 
                   alt="Instagram Post" 
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }} 
                 />
-                <div className="ig-overlay" style={{
-                  position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
-                  background: 'rgba(20, 18, 16, 0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  gap: '24px', opacity: 0, transition: 'opacity 0.3s ease'
-                }}>
+                <div className="ig-overlay">
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--bg)', fontWeight: '500' }}>
                     <Heart fill="currentColor" style={{ width: 24, height: 24 }} />
                     <span>{120 + i * 45}</span>

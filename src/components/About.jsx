@@ -29,7 +29,7 @@ export default function About() {
 
       {/* Intro Section */}
       <section className="about-intro section" style={{ paddingTop: '40px' }}>
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '80px', alignItems: 'start' }}>
+        <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 400px), 1fr))', gap: '80px', alignItems: 'start' }}>
           
           <div className="about-text-content">
             <h2 className="section-title" style={{ fontSize: 'clamp(2rem, 3vw, 2.5rem)', marginBottom: '2rem' }}>
@@ -122,7 +122,7 @@ export default function About() {
             <RevealText text="Our Founders" delay={0.1} />
           </h2>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '40px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 350px), 1fr))', gap: '40px' }}>
             
             {/* Founder 1 */}
             <motion.div 

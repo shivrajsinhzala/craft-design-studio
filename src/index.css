@@ -1627,5 +1627,61 @@ textarea:focus-visible {
 
 
 /* Instagram Grid */
+.ig-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+}
+.ig-title {
+  font-size: 2.5rem;
+}
+.ig-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+}
+.ig-post {
+  position: relative;
+  display: block;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+}
+.ig-post img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease);
+}
 .ig-post:hover img { transform: scale(1.08) !important; }
+.ig-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 18, 16, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-out);
+}
 .ig-post:hover .ig-overlay { opacity: 1 !important; }
+
+@media (max-width: 991px) {
+  .ig-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 768px) {
+  .ig-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .ig-title {
+    font-size: 2rem !important;
+  }
+  .ig-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
