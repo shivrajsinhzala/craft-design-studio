@@ -1086,6 +1086,29 @@ address { font-style:normal; }
   .proj-nav-bar { padding: 40px 48px; }
 }
 
+/* ── About & Contact Utilities ── */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.contact-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+.contact-form-box {
+  padding: 50px;
+}
+.founder-card-box {
+  padding: 40px;
+}
+.about-img-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
 @media (max-width: 768px) {
   :root { --sec-pad:72px; --pad-h:20px; }
   .footer { padding: 56px 0 24px; }
@@ -1120,6 +1143,11 @@ address { font-style:normal; }
   .nav-toggle { display:flex; }
   .nav-ig { display:none; }
 
+  .contact-form-row { grid-template-columns: 1fr; }
+  .contact-form-box { padding: 32px 20px; }
+  .founder-card-box { padding: 32px 20px; }
+  .about-img-grid { grid-template-columns: 1fr; }
+  
   .hero { grid-template-columns:1fr; grid-template-rows:auto 55vw auto; padding-top:80px; min-height:auto; }
   .hero-left { padding:32px var(--pad-h); }
   .hero-title { font-size:clamp(2.8rem, 10vw, 4.5rem); margin-bottom:28px; }

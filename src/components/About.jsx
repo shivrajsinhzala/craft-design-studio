@@ -76,7 +76,7 @@ export default function About() {
               />
             </motion.div>
             
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+            <div className="about-img-grid">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -130,7 +130,8 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              style={{ background: 'var(--bg)', padding: '40px', borderRadius: '2px', border: '1px solid var(--border-2)', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', transition: 'border-color 0.3s, transform 0.3s' }}
+              className="founder-card-box"
+              style={{ background: 'var(--bg)', borderRadius: '2px', border: '1px solid var(--border-2)', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', transition: 'border-color 0.3s, transform 0.3s' }}
               onMouseOver={e => { e.currentTarget.style.borderColor = 'var(--yellow)'; e.currentTarget.style.transform = 'translateY(-6px)'; }}
               onMouseOut={e => { e.currentTarget.style.borderColor = 'var(--border-2)'; e.currentTarget.style.transform = 'translateY(0)'; }}
             >
@@ -148,7 +149,8 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              style={{ background: 'var(--bg)', padding: '40px', borderRadius: '2px', border: '1px solid var(--border-2)', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', transition: 'border-color 0.3s, transform 0.3s' }}
+              className="founder-card-box"
+              style={{ background: 'var(--bg)', borderRadius: '2px', border: '1px solid var(--border-2)', position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', transition: 'border-color 0.3s, transform 0.3s' }}
               onMouseOver={e => { e.currentTarget.style.borderColor = 'var(--yellow)'; e.currentTarget.style.transform = 'translateY(-6px)'; }}
               onMouseOut={e => { e.currentTarget.style.borderColor = 'var(--border-2)'; e.currentTarget.style.transform = 'translateY(0)'; }}
             >

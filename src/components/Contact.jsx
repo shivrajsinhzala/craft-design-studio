@@ -40,7 +40,7 @@ export default function Contact() {
 
       {/* Contact Form & Info Section */}
       <section className="contact-content section contact-content-sec">
-        <div className="container contact-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'start' }}>
+        <div className="container contact-grid" style={{ gap: '80px', alignItems: 'start' }}>
           
           {/* Left Column: Info & Locations */}
           <div className="contact-left">
@@ -146,11 +146,11 @@ export default function Contact() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.4 }}
-            className="contact-right" 
-            style={{ background: 'var(--bg)', padding: '50px', borderRadius: '4px', border: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}
+            className="contact-right contact-form-box" 
+            style={{ background: 'var(--bg)', borderRadius: '4px', border: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}
           >
             <form onSubmit={handleSubmit} style={{ position: 'relative', zIndex: 2 }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginBottom: '24px' }}>
+              <div className="contact-form-row">
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   <label htmlFor="fname" className="label" style={{ marginBottom: 0 }}>Name</label>
                   <input type="text" id="fname" name="name" placeholder="Your full name" required style={{ padding: '16px 0', border: 'none', borderBottom: '1px solid var(--border-2)', background: 'transparent', fontFamily: 'var(--ff-body)', fontSize: '16px', outline: 'none', color: 'var(--dark)' }} />
