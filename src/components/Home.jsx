@@ -147,19 +147,37 @@ export default function Home() {
     if (!formState.name.trim() || !formState.email.trim() || !formState.message.trim()) return;
 
     setFormStatus('sending');
-    await new Promise((resolve) => setTimeout(resolve, 1400));
-    setFormStatus('success');
-
-    setTimeout(() => {
-      setFormState({
-        name: '',
-        email: '',
-        phone: '',
-        service: '',
-        message: ''
+    
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/hello@shivrajsinh.in", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(formState)
       });
+      
+      if (res.ok) {
+        setFormStatus('success');
+        setTimeout(() => {
+          setFormState({
+            name: '',
+            email: '',
+            phone: '',
+            service: '',
+            message: ''
+          });
+          setFormStatus('idle');
+        }, 4000);
+      } else {
+        console.error("Form submission failed");
+        setFormStatus('idle');
+      }
+    } catch (error) {
+      console.error(error);
       setFormStatus('idle');
-    }, 4000);
+    }
   };
 
   // Helper to scroll to section

@@ -6,14 +6,35 @@ import RevealText from './RevealText.jsx';
 export default function Contact() {
   const [formStatus, setFormStatus] = useState('idle');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setFormStatus('sending');
-    setTimeout(() => {
-      setFormStatus('success');
-      e.target.reset();
-      setTimeout(() => setFormStatus('idle'), 5000);
-    }, 1500);
+    
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const res = await fetch("https://formsubmit.co/ajax/hello@shivrajsinh.in", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      
+      if (res.ok) {
+        setFormStatus('success');
+        e.target.reset();
+        setTimeout(() => setFormStatus('idle'), 5000);
+      } else {
+        console.error("Form submission failed");
+        setFormStatus('idle');
+      }
+    } catch (error) {
+      console.error(error);
+      setFormStatus('idle');
+    }
   };
 
   return (
