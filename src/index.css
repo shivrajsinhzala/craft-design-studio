@@ -31,12 +31,14 @@
 
 /* ── Reset ── */
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
+html { scroll-behavior:smooth; overflow-x: hidden; width: 100%; }
 body {
   font-family: var(--ff-body);
   background: var(--bg);
   color: var(--dark);
   overflow-x: hidden;
+  width: 100%;
+  position: relative;
   -webkit-font-smoothing: antialiased;
 }
 img { display:block; max-width:100%; height:auto; }
@@ -1095,19 +1097,21 @@ address { font-style:normal; }
   .nav-logo img { height:36px; }
   .nav-links {
     position:fixed; inset:0;
-    width:100vw;
+    width:100%;
     height:100vh;
+    height:100dvh;
     background:var(--bg);
     flex-direction:column;
     justify-content:center;
     align-items:center;
     gap:32px;
     transform:translateX(100%);
-    transition:transform 0.4s var(--ease-out);
+    transition:transform 0.4s var(--ease-out), visibility 0.4s;
+    visibility:hidden;
     z-index:1001;
     border-left:1px solid var(--border);
   }
-  .nav-links.open { transform:translateX(0); }
+  .nav-links.open { transform:translateX(0); visibility:visible; }
   .nav-lnk { font-size:18px; opacity:1; letter-spacing:0.06em; }
   .nav-cta { margin-top:8px; padding:12px 28px; font-size:14px; }
   .nav-toggle { display:flex; }
