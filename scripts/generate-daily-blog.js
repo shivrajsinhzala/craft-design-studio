@@ -190,7 +190,8 @@ CRITICAL INSTRUCTIONS (Sentry-style In-Depth Writing Guidelines):
    - *Sthapatya* (Residential exterior elevation & interior design in Morbi)
    - *Twin Tower* (Contemporary residential & commercial 3D visualization in Rajkot/Morbi)
 7. **HTML Output**: Format the body content strictly in HTML (using <p>, <h3>, <blockquote>, <ul>, <li>, and <strong class="keyword"> tags for key phrases). Start the first paragraph with <p class="drop-cap">.
-8. **JSON Format**: Return strict JSON format with this exact schema:
+8. **Plain Text Titles & Metadata (CRITICAL)**: The "title", "metaTitle", "metaDescription", "excerpt", and "slug" MUST be clean plain-text strings with ZERO HTML tags (no <strong>, <em>, etc.). HTML markup is strictly prohibited in title and metadata fields.
+9. **JSON Format**: Return strict JSON format with this exact schema:
 
 {
   "slug": "unique-url-friendly-lowercase-slug",
@@ -217,7 +218,19 @@ CRITICAL INSTRUCTIONS (Sentry-style In-Depth Writing Guidelines):
       cleanedText = cleanedText.replace(/^```\s*/, '').replace(/\s*```$/, '');
     }
     
+    const stripHtml = (str) => typeof str === 'string' ? str.replace(/<[^>]*>/g, '').trim() : str;
+
     const newBlog = JSON.parse(cleanedText);
+
+    // Sanitize title and metadata fields (remove any accidentally generated HTML tags)
+    newBlog.title = stripHtml(newBlog.title);
+    newBlog.metaTitle = stripHtml(newBlog.metaTitle);
+    newBlog.metaDescription = stripHtml(newBlog.metaDescription);
+    newBlog.excerpt = stripHtml(newBlog.excerpt);
+    newBlog.slug = stripHtml(newBlog.slug).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+    if (Array.isArray(newBlog.tags)) {
+      newBlog.tags = newBlog.tags.map(stripHtml);
+    }
 
     // Ensure unique slug
     let baseSlug = newBlog.slug || selectedKeywordObj.keyword.toLowerCase().replace(/[^a-z0-9]+/g, '-');
