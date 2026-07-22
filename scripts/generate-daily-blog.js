@@ -69,9 +69,8 @@ const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 // Call Gemini API with automatic model fallbacks and exponential backoff retry for HTTP 429 / rate limits
 async function generateContentWithFallback(promptText) {
   const candidateModels = [
-    "gemini-2.0-flash",
-    "gemini-1.5-flash",
     "gemini-2.5-flash",
+    "gemini-2.0-flash",
     "gemini-1.5-pro",
     "gemini-flash-latest"
   ];
