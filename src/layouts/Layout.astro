@@ -9,6 +9,7 @@ interface Props {
 	image?: string;
 }
 
+const { title, description, image = '/banner.jpg' } = Astro.props;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site || 'https://craftdesignstudio.in');
 ---
 
