@@ -30,6 +30,55 @@ const relatedBlogs = blogsData
   .sort((a, b) => b.score - a.score)
   .slice(0, 2)
   .map(item => item.blog);
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": blog.title,
+  "description": blog.metaDescription || blog.excerpt,
+  "image": blog.banner ? `https://craftdesignstudio.in${blog.banner}` : "https://craftdesignstudio.in/banner.jpg",
+  "datePublished": blog.date,
+  "author": {
+    "@type": "Person",
+    "name": blog.author || "Vishvarajsinh Zala"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Craft Design Studio",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://craftdesignstudio.in/Logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `https://craftdesignstudio.in/blog/${blog.slug}`
+  }
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://craftdesignstudio.in"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Insights",
+      "item": "https://craftdesignstudio.in/blog"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": blog.title,
+      "item": `https://craftdesignstudio.in/blog/${blog.slug}`
+    }
+  ]
+};
 ---
 
 <Layout 
@@ -37,6 +86,8 @@ const relatedBlogs = blogsData
 	description={blog.metaDescription}
 	image={blog.banner}
 >
+	<script type="application/ld+json" is:inline set:html={JSON.stringify(articleSchema)} />
+	<script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbSchema)} />
 	<BlogDetail 
 		client:load 
 		blog={blog} 
