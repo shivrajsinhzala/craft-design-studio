@@ -26,6 +26,9 @@ try {
   console.warn("Could not read local .env file:", e.message);
 }
 
+// Set ASTRO_TELEMETRY_DISABLED to prevent prompt/permission errors during Astro build
+process.env.ASTRO_TELEMETRY_DISABLED = '1';
+
 // Get API Key from environment
 const apiKey = process.env.GEMINI_API_KEY;
 const isCI = process.env.GITHUB_ACTIONS === 'true';
@@ -302,9 +305,15 @@ CRITICAL INSTRUCTIONS (Sentry-style In-Depth Writing Guidelines):
     if (shouldPush) {
       console.log("📤 Committing and pushing changes to Git repository...");
       try {
+        const safeTitle = newBlog.title.replace(/["`$\\]/g, '').replace(/'/g, '');
         execSync('git add src/data/blogsData.json public/sitemap.xml', { stdio: 'inherit' });
-        execSync(`git commit -m "chore: auto-publish daily blog - ${newBlog.title}"`, { stdio: 'inherit' });
-        execSync('git push origin main', { stdio: 'inherit' });
+        execSync(`git commit -m "chore: auto-publish daily blog - ${safeTitle}"`, { stdio: 'inherit' });
+        try {
+          execSync('git push origin HEAD:main', { stdio: 'inherit' });
+        } catch (pushErr) {
+          console.warn("⚠️ Initial git push failed, retrying with origin main...", pushErr.message);
+          execSync('git push origin main', { stdio: 'inherit' });
+        }
         console.log("🚀 Changes pushed to origin/main successfully!");
       } catch (gitError) {
         console.error("❌ Error during git operations:", gitError.message);
