@@ -4,6 +4,6 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://craftdesignstudio.in',
-  trailingSlash: 'never',
+  trailingSlash: 'always',
   integrations: [react(), sitemap()],
 });

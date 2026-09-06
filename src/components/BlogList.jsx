@@ -60,7 +60,7 @@ export default function BlogList() {
                 className="feat-card"
               >
                 <div className="feat-img-col">
-                  <a href={`/blog/${featuredBlog.slug}`} style={{ display: 'block', width: '100%', height: '100%' }}>
+                  <a href={`/blog/${featuredBlog.slug}/`} style={{ display: 'block', width: '100%', height: '100%' }}>
                     <img
                       src={featuredBlog.banner}
                       alt={featuredBlog.title}
@@ -93,7 +93,7 @@ export default function BlogList() {
                     </span>
                   </div>
                   <h3 className="feat-title">
-                    <a href={`/blog/${featuredBlog.slug}`} style={{ transition: 'color 0.3s' }} className="blog-title-link">
+                    <a href={`/blog/${featuredBlog.slug}/`} style={{ transition: 'color 0.3s' }} className="blog-title-link">
                       {featuredBlog.title}
                     </a>
                   </h3>
@@ -105,7 +105,7 @@ export default function BlogList() {
                     <span>·</span>
                     <span>{featuredBlog.date}</span>
                   </div>
-                  <a href={`/blog/${featuredBlog.slug}`} className="btn-dark" style={{ alignSelf: 'flex-start' }}>
+                  <a href={`/blog/${featuredBlog.slug}/`} className="btn-dark" style={{ alignSelf: 'flex-start' }}>
                     <span>Read Feature</span>
                     <Lucide.ArrowRight className="icon-xs" />
                   </a>
@@ -154,7 +154,7 @@ export default function BlogList() {
                     className="blog-card"
                   >
                     <div style={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/10' }}>
-                      <a href={`/blog/${blog.slug}`} style={{ display: 'block', width: '100%', height: '100%' }}>
+                      <a href={`/blog/${blog.slug}/`} style={{ display: 'block', width: '100%', height: '100%' }}>
                         <img
                           src={blog.banner}
                           alt={blog.title}
@@ -195,7 +195,7 @@ export default function BlogList() {
                         <span>{blog.readTime}</span>
                       </div>
                       <h3 style={{ fontFamily: 'var(--ff-display)', fontSize: '1.6rem', fontWeight: 400, lineHeight: 1.25, color: 'var(--dark)', marginBottom: '12px' }}>
-                        <a href={`/blog/${blog.slug}`} style={{ transition: 'color 0.3s' }} className="blog-title-link">
+                        <a href={`/blog/${blog.slug}/`} style={{ transition: 'color 0.3s' }} className="blog-title-link">
                           {blog.title}
                         </a>
                       </h3>
@@ -222,7 +222,7 @@ export default function BlogList() {
                       </div>
 
                       <a
-                        href={`/blog/${blog.slug}`}
+                        href={`/blog/${blog.slug}/`}
                         className="btn-ghost"
                         style={{
                           marginTop: 'auto',

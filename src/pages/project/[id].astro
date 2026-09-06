@@ -23,6 +23,42 @@ const nextProject =
   projectIndex > -1
     ? projectsData[projectIndex === projectsData.length - 1 ? 0 : projectIndex + 1]
     : null;
+const projectSchema = {
+  "@context": "https://schema.org",
+  "@type": "VisualArtwork",
+  "name": `${project.title} — ${project.tag}`,
+  "description": project.description,
+  "image": `https://craftdesignstudio.in${project.banner}`,
+  "creator": {
+    "@type": "Organization",
+    "name": "Craft Design Studio"
+  }
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://craftdesignstudio.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Projects",
+      "item": "https://craftdesignstudio.in/#projects"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": project.title,
+      "item": `https://craftdesignstudio.in/project/${project.id}/`
+    }
+  ]
+};
 ---
 
 <Layout 
@@ -30,6 +66,8 @@ const nextProject =
 	description={project.description}
 	image={project.banner}
 >
+	<script type="application/ld+json" is:inline set:html={JSON.stringify(projectSchema)} />
+	<script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbSchema)} />
 	<ProjectDetail 
 		client:load 
 		project={project} 

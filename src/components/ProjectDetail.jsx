@@ -149,7 +149,7 @@ export default function ProjectDetail({ project, prevProject, nextProject }) {
             aria-label="Project navigation"
           >
             <div className="proj-nav-prev">
-              <a href={`/project/${prevProject.id}`} className="proj-nav-link">
+              <a href={`/project/${prevProject.id}/`} className="proj-nav-link">
                 <Lucide.ArrowLeft aria-hidden="true" /> {prevProject.title}
               </a>
             </div>
@@ -166,7 +166,7 @@ export default function ProjectDetail({ project, prevProject, nextProject }) {
               </a>
             </div>
             <div className="proj-nav-next">
-              <a href={`/project/${nextProject.id}`} className="proj-nav-link">
+              <a href={`/project/${nextProject.id}/`} className="proj-nav-link">
                 {nextProject.title} <Lucide.ArrowRight aria-hidden="true" />
               </a>
             </div>

@@ -18,12 +18,12 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { name: 'About', target: '/about', isExternal: true },
+    { name: 'About', target: '/about/', isExternal: true },
     { name: 'Services', target: '#services' },
     { name: 'Projects', target: '#projects' },
     { name: 'Process', target: '#process' },
-    { name: 'Blog', target: '/blog', isExternal: true },
-    { name: 'Contact', target: '/contact', isExternal: true, isCta: true },
+    { name: 'Blog', target: '/blog/', isExternal: true },
+    { name: 'Contact', target: '/contact/', isExternal: true, isCta: true },
   ];
 
   // Scrolled state and show/hide on scroll

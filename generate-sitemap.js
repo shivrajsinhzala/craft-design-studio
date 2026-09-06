@@ -27,16 +27,18 @@ function generateSitemap() {
 
   // Core Pages
   addUrl('/', 1.0, 'weekly');
-  addUrl('/blog', 0.9, 'weekly');
+  addUrl('/about/', 0.9, 'monthly');
+  addUrl('/contact/', 0.9, 'monthly');
+  addUrl('/blog/', 0.9, 'weekly');
 
   // Dynamic Projects
   projectsData.forEach(project => {
-    addUrl(`/project/${project.id}`, 0.8, 'monthly');
+    addUrl(`/project/${project.id}/`, 0.8, 'monthly');
   });
 
   // Dynamic Blogs
   blogsData.forEach(blog => {
-    addUrl(`/blog/${blog.slug}`, 0.7, 'monthly');
+    addUrl(`/blog/${blog.slug}/`, 0.7, 'monthly');
   });
 
   const sitemapContent = sitemapHeader + urls.join('') + sitemapFooter;

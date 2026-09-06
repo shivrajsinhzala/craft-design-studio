@@ -23,3 +23,5 @@ dist/
 .env*.local
 service-account.json
 
+# Astro
+.astro/settings.json

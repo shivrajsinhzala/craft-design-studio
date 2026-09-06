@@ -9,8 +9,9 @@ interface Props {
 	image?: string;
 }
 
-const { title, description, image = '/banner.jpg' } = Astro.props;
-const canonicalUrl = new URL(Astro.url.pathname, Astro.site || 'https://craftdesignstudio.in');
+const { title, description, image = '/og-image.png' } = Astro.props;
+const pathname = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const canonicalUrl = new URL(pathname, Astro.site || 'https://craftdesignstudio.in');
 ---
 
 <!doctype html>

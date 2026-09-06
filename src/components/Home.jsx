@@ -463,22 +463,34 @@ export default function Home() {
             <div className="about-grid">
               <div className="about-visuals">
                 <motion.div 
-                  initial={{ clipPath: 'inset(0 0 100% 0)' }}
-                  whileInView={{ clipPath: 'inset(0 0 0% 0)' }}
-                  viewport={{ once: true, margin: '-10%' }}
-                  transition={{ duration: 1.4, ease: [0.19, 1, 0.22, 1] }}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  transition={{ duration: 1.2, ease: [0.19, 1, 0.22, 1] }}
                   className="ab-img ab-img-1"
                 >
-                  <img src="/Sthapatya/ELEVATION 1.webp" alt="Sthapatya residential elevation design with modern architecture by Craft Design Studio" loading="lazy" width="800" height="1000" />
+                  <img 
+                    src="/Sthapatya/ELEVATION 1.webp" 
+                    alt="Sthapatya residential elevation design with modern architecture by Craft Design Studio" 
+                    loading="eager" 
+                    width="800" 
+                    height="1000" 
+                  />
                 </motion.div>
                 <motion.div 
-                  initial={{ clipPath: 'inset(0 0 100% 0)' }}
-                  whileInView={{ clipPath: 'inset(0 0 0% 0)' }}
-                  viewport={{ once: true, margin: '-10%' }}
-                  transition={{ duration: 1.4, delay: 0.2, ease: [0.19, 1, 0.22, 1] }}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.1 }}
+                  transition={{ duration: 1.2, delay: 0.2, ease: [0.19, 1, 0.22, 1] }}
                   className="ab-img ab-img-2"
                 >
-                  <img src="/Twin Tower/L1.webp" alt="Twin Tower luxury living room visualization with contemporary interiors" loading="lazy" width="600" height="400" />
+                  <img 
+                    src="/Twin Tower/L1.webp" 
+                    alt="Twin Tower luxury living room visualization with contemporary interiors" 
+                    loading="eager" 
+                    width="600" 
+                    height="400" 
+                  />
                 </motion.div>
                 <div className="ab-accent-box" aria-hidden="true">
                   <span className="ab-year">Est.</span>
@@ -711,7 +723,7 @@ export default function Home() {
                   <a
                     key={proj.id}
                     className="proj-card"
-                    href={`/project/${proj.id}`}
+                    href={`/project/${proj.id}/`}
                     role="listitem"
                     aria-label={`${proj.title} — ${proj.tag} project`}
                   >
@@ -808,7 +820,7 @@ export default function Home() {
                   <RevealText text="Latest Insights" delay={0.1} />
                 </h2>
               </div>
-              <a href="/blog" className="btn-dark" style={{ padding: '12px 24px', fontSize: '10px' }}>
+              <a href="/blog/" className="btn-dark" style={{ padding: '12px 24px', fontSize: '10px' }}>
                 <span>Read All Insights</span>
                 <ArrowRight className="icon-xs" />
               </a>
@@ -833,7 +845,7 @@ export default function Home() {
                   className="blog-card"
                 >
                   <div style={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/10' }}>
-                    <a href={`/blog/${blog.slug}`} style={{ display: 'block', width: '100%', height: '100%' }}>
+                    <a href={`/blog/${blog.slug}/`} style={{ display: 'block', width: '100%', height: '100%' }}>
                       <img 
                         src={blog.banner} 
                         alt={blog.title} 
@@ -866,14 +878,14 @@ export default function Home() {
                       <span>{blog.readTime}</span>
                     </div>
                     <h3 style={{ fontFamily: 'var(--ff-display)', fontSize: '1.4rem', fontWeight: 400, color: 'var(--dark)', marginBottom: '12px', lineHeight: 1.3 }}>
-                      <a href={`/blog/${blog.slug}`} style={{ transition: 'color 0.3s' }} className="blog-title-link">
+                      <a href={`/blog/${blog.slug}/`} style={{ transition: 'color 0.3s' }} className="blog-title-link">
                         {blog.title}
                       </a>
                     </h3>
                     <p className="body-t" style={{ fontSize: '0.88rem', marginBottom: '20px', flexGrow: 1, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
                       {blog.excerpt}
                     </p>
-                    <a href={`/blog/${blog.slug}`} className="btn-ghost" style={{ marginTop: 'auto', padding: '8px 16px', fontSize: '10px', justifyContent: 'center', borderWidth: '1px' }}>
+                    <a href={`/blog/${blog.slug}/`} className="btn-ghost" style={{ marginTop: 'auto', padding: '8px 16px', fontSize: '10px', justifyContent: 'center', borderWidth: '1px' }}>
                       <span>Read Insight</span>
                       <ArrowUpRight className="icon-xs" style={{ width: '12px', height: '12px' }} />
                     </a>

@@ -1,4 +1,30 @@
 User-agent: *
 Allow: /
 
+# Allow Search Engines & AI Search Retrieval (GEO Citation)
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Restrict aggressive scrapers
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
 Sitemap: https://craftdesignstudio.in/sitemap.xml
