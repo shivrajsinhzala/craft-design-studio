@@ -8,7 +8,7 @@ import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motio
 import { 
   ArrowRight, MapPin, Award, Phone, Home as HomeIcon, Monitor, 
   Building2, Layout, Film, MoveRight, ArrowUpRight, Instagram, Send, Heart, MessageCircle,
-  ChevronDown, HelpCircle
+  ChevronDown, HelpCircle, Volume2, VolumeX, Play, Pause, Sparkles
 } from 'lucide-react';
 import { projectsData } from '../data/projectsData.js';
 import { blogsData } from '../data/blogsData.js';
@@ -146,6 +146,29 @@ export default function Home() {
   const [hoveredSvcIdx, setHoveredSvcIdx] = useState(null);
   const [openFaq, setOpenFaq] = useState(null);
 
+  // Reel Video State
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+
+  const togglePlay = () => {
+    if (!videoRef.current) return;
+    if (videoRef.current.paused) {
+      videoRef.current.play();
+      setIsPlaying(true);
+    } else {
+      videoRef.current.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  const toggleMute = () => {
+    if (!videoRef.current) return;
+    const nextMuted = !isMuted;
+    videoRef.current.muted = nextMuted;
+    setIsMuted(nextMuted);
+  };
+
   // Framer Motion Spring mouse tracker for Services Floating Preview
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -164,6 +187,17 @@ export default function Home() {
   }, [mouseX, mouseY]);
 
 
+
+  const scrollToSection = (e, target) => {
+    if (e && typeof e.preventDefault === 'function') e.preventDefault();
+    if (typeof window !== 'undefined') {
+      if (window.lenis) {
+        window.lenis.scrollTo(target);
+      } else {
+        document.querySelector(target)?.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
 
   // ── Form Submission ──
   const handleInputChange = (e) => {
@@ -760,6 +794,120 @@ export default function Home() {
               </AnimatePresence>
             </motion.div>
           )}
+        </section>
+ 
+        {/* CRAFT IN MOTION: EXECUTED LUXURY REEL */}
+        <section className="reel-showcase section" id="execution" aria-label="On-Site Turnkey Execution">
+          <div className="container">
+            <div className="reel-grid">
+              {/* Left Column: Narrative & Conversion */}
+              <div className="reel-copy">
+                <p className="label">On-Site Turnkey Execution</p>
+                <h2 className="section-title">
+                  <RevealText text="From Digital Vision" delay={0.1} />
+                  <RevealText text="To Tactile Elegance." className="yellow-t" delay={0.2} />
+                </h2>
+                <p className="body-t" style={{ marginTop: '22px' }}>
+                  Great interior architecture doesn’t end with a 3D render. We orchestrate every dimension of on-site execution in Morbi &amp; Rajkot—from civil coordination and custom arched joinery to calibrated 3000K warm lighting and seamless large-format porcelain flooring delivered with zero vendor friction.
+                </p>
+                
+                <div className="reel-features">
+                  <div className="reel-feat-item">
+                    <div className="feat-dot"></div>
+                    <div>
+                      <h4>Bespoke Arched Wave Niches</h4>
+                      <p>Custom parametric wall niches with warm indirect 3000K LED cove backlighting.</p>
+                    </div>
+                  </div>
+                  <div className="reel-feat-item">
+                    <div className="feat-dot"></div>
+                    <div>
+                      <h4>High-Gloss Porcelain Slabs</h4>
+                      <p>Precision floor tiling with mirror reflection and microscopic grout lines.</p>
+                    </div>
+                  </div>
+                  <div className="reel-feat-item">
+                    <div className="feat-dot"></div>
+                    <div>
+                      <h4>Single-Window Turnkey Handover</h4>
+                      <p>Complete civil, electrical, false ceiling, and bespoke furniture execution.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="reel-actions">
+                  <a
+                    href="https://wa.me/918758395671?text=Hi%20Craft%20Design%20Studio%2C%20I%20saw%20your%20living%20room%20execution%20reel%20and%20would%20like%20to%20consult%20for%20my%20space."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-dark"
+                  >
+                    <span>Consult on WhatsApp</span>
+                    <ArrowRight className="icon-xs" aria-hidden="true" />
+                  </a>
+                  <a href="#projects" onClick={(e) => scrollToSection(e, '#projects')} className="btn-ghost">
+                    View 3D Renders
+                  </a>
+                </div>
+              </div>
+
+              {/* Right Column: 9:16 Vertical Reel Player */}
+              <div className="reel-player-wrapper">
+                <div className="reel-ambient-glow" aria-hidden="true"></div>
+                <div className="reel-phone-frame">
+                  <div className="reel-video-container">
+                    <video
+                      ref={videoRef}
+                      src="/videos/craft-living-room-reel.mp4"
+                      poster="/videos/craft-reel-poster.webp"
+                      autoPlay
+                      loop
+                      muted={isMuted}
+                      playsInline
+                      className="reel-video"
+                      aria-label="Craft Design Studio living room turnkey execution walkthrough"
+                    />
+
+                    {/* Overlay Badges & Controls */}
+                    <div className="reel-badge-top">
+                      <span className="live-dot"></span>
+                      <span>Real On-Site Project · Morbi</span>
+                    </div>
+
+                    <div className="reel-controls">
+                      <button
+                        type="button"
+                        onClick={togglePlay}
+                        className="reel-btn"
+                        aria-label={isPlaying ? 'Pause video' : 'Play video'}
+                      >
+                        {isPlaying ? <Pause size={16} /> : <Play size={16} />}
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={toggleMute}
+                        className={`reel-btn reel-mute-btn ${!isMuted ? 'unmuted' : ''}`}
+                        aria-label={isMuted ? 'Unmute video' : 'Mute video'}
+                      >
+                        {isMuted ? (
+                          <>
+                            <VolumeX size={16} />
+                            <span className="mute-hint">Tap for Sound</span>
+                          </>
+                        ) : (
+                          <>
+                            <Volume2 size={16} />
+                            <span className="mute-hint">Sound On</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* FEATURED PROJECTS — HORIZONTAL SCROLL WITH PINNED HEADING */}
