@@ -169,6 +169,52 @@ export default function Home() {
     setIsMuted(nextMuted);
   };
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.defaultMuted = true;
+    video.muted = true;
+
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+
+    video.addEventListener('play', handlePlay);
+    video.addEventListener('pause', handlePause);
+
+    // Initial autoplay attempt
+    const promise = video.play();
+    if (promise !== undefined) {
+      promise
+        .then(() => setIsPlaying(true))
+        .catch(() => {
+          setIsPlaying(false);
+        });
+    }
+
+    // Scroll-triggered play/pause via IntersectionObserver for instant response
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    observer.observe(video);
+
+    return () => {
+      video.removeEventListener('play', handlePlay);
+      video.removeEventListener('pause', handlePause);
+      observer.disconnect();
+    };
+  }, []);
+
   // Framer Motion Spring mouse tracker for Services Floating Preview
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -855,7 +901,7 @@ export default function Home() {
               <div className="reel-player-wrapper">
                 <div className="reel-ambient-glow" aria-hidden="true"></div>
                 <div className="reel-phone-frame">
-                  <div className="reel-video-container">
+                  <div className="reel-video-container" onClick={togglePlay} role="region" aria-label="Video player">
                     <video
                       ref={videoRef}
                       src="/videos/craft-living-room-reel.mp4"
@@ -864,15 +910,17 @@ export default function Home() {
                       loop
                       muted={isMuted}
                       playsInline
+                      preload="auto"
                       className="reel-video"
                       aria-label="Craft Design Studio living room turnkey execution walkthrough"
                     />
 
-                    {/* Overlay Badges & Controls */}
-                    <div className="reel-badge-top">
-                      <span className="live-dot"></span>
-                      <span>Real On-Site Project · Morbi</span>
-                    </div>
+                    {/* Central Play Trigger when paused */}
+                    {!isPlaying && (
+                      <div className="reel-play-overlay" aria-hidden="true">
+                        <Play size={26} fill="currentColor" />
+                      </div>
+                    )}
 
                     <div className="reel-controls">
                       <button
