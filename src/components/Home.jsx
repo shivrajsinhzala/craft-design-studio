@@ -291,9 +291,29 @@ export default function Home() {
           return track.scrollWidth - window.innerWidth;
         };
 
+        const scrollDist = getScrollAmount();
+
         const hScrollTween = gsap.to(track, {
-          x: () => -getScrollAmount(),
+          x: () => -scrollDist,
           ease: 'none',
+        });
+
+        // Parallax depth: inner images counter-drift as track scrolls
+        const projImages = track.querySelectorAll('.proj-img img');
+        projImages.forEach((img) => {
+          gsap.fromTo(img,
+            { xPercent: 12 },
+            {
+              xPercent: -12,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: pin,
+                start: 'top top',
+                end: () => '+=' + scrollDist,
+                scrub: true,
+              }
+            }
+          );
         });
 
         ScrollTrigger.create({
@@ -301,7 +321,7 @@ export default function Home() {
           pin: true,
           animation: hScrollTween,
           scrub: true, // Direct synchronization with smooth scroll (Lenis) to eliminate jerks
-          end: () => '+=' + getScrollAmount(),
+          end: () => '+=' + scrollDist,
           invalidateOnRefresh: true,
         });
       });
@@ -309,9 +329,24 @@ export default function Home() {
       mm.add("(max-width: 767px)", () => {
         // Reset any transforms so native CSS overflow-x takes over
         gsap.set(track, { clearProps: "transform" });
+        const projImages = track.querySelectorAll('.proj-img img');
+        gsap.set(projImages, { clearProps: "transform" });
       });
 
       ScrollTrigger.refresh();
+    }
+
+    // 5. Process Section Milestone Line Animations
+    const processRows = containerRef.current?.querySelectorAll('.process-row');
+    if (processRows) {
+      processRows.forEach((row) => {
+        ScrollTrigger.create({
+          trigger: row,
+          start: 'top 75%',
+          onEnter: () => row.classList.add('active'),
+          onLeaveBack: () => row.classList.remove('active'),
+        });
+      });
     }
   }, { scope: containerRef });
 
@@ -380,9 +415,15 @@ export default function Home() {
                     alt={`${slide.title} — ${slide.location} visualization`}
                     loading={idx === 0 ? "eager" : "lazy"}
                     fetchpriority={idx === 0 ? "high" : "auto"}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: idx === heroIdx ? 1 : 0 }}
-                    transition={{ duration: 0.9, ease: 'easeInOut' }}
+                    initial={{ opacity: 0, scale: 1.07 }}
+                    animate={{
+                      opacity: idx === heroIdx ? 1 : 0,
+                      scale: idx === heroIdx ? 1.0 : 1.07,
+                    }}
+                    transition={{
+                      opacity: { duration: 1.1, ease: [0.16, 1, 0.3, 1] },
+                      scale: { duration: 6.0, ease: 'easeOut' },
+                    }}
                     style={{
                       position: 'absolute',
                       inset: 0,
@@ -821,7 +862,9 @@ export default function Home() {
                   role="listitem"
                 >
                   <span className="proc-n" aria-hidden="true">{step.num}</span>
-                  <div className="proc-line" aria-hidden="true"></div>
+                  <div className="proc-line" aria-hidden="true">
+                    <div className="proc-line-fill"></div>
+                  </div>
                   <div className="proc-body">
                     <h3>{step.title}</h3>
                     <p>{step.text}</p>
