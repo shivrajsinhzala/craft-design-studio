@@ -23,6 +23,9 @@ const canonicalUrl = new URL(pathname, Astro.site || 'https://craftdesignstudio.
 		<title>{title}</title>
 		<meta name="description" content={description} />
 		
+		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+		<link rel="alternate" type="application/rss+xml" title="Craft Design Studio RSS Feed" href="https://craftdesignstudio.in/rss.xml" />
+		
 		<!-- Preconnect for speed -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -43,20 +46,24 @@ const canonicalUrl = new URL(pathname, Astro.site || 'https://craftdesignstudio.
 		<meta property="twitter:description" content={description} />
 		<meta property="twitter:image" content={new URL(image, canonicalUrl.href)} />
 
-		<!-- JSON-LD Structured Data for Local SEO -->
+		<!-- JSON-LD Structured Data for Local SEO (InteriorDesigner & ProfessionalService) -->
 		<script type="application/ld+json" is:inline>
 		{
 			"@context": "https://schema.org",
-			"@type": "ProfessionalService",
+			"@type": ["InteriorDesigner", "HomeAndConstructionBusiness", "ProfessionalService"],
 			"name": "Craft Design Studio",
 			"alternateName": "Craft The Design Studio",
-			"description": "Premium interior design and 3D visualization studio specializing in turnkey projects, photorealistic renders, architectural visualization, floor plans, and animation walkthroughs.",
+			"description": "Morbi & Rajkot's leading interior design and 3D architectural visualization studio. Specializing in luxury turnkey residential interiors, commercial ceramic tile experience centers, 3D floor plans, and photorealistic animation walkthroughs.",
 			"url": "https://craftdesignstudio.in/",
 			"logo": "https://craftdesignstudio.in/Logo.png",
-			"image": "https://craftdesignstudio.in/Logo.png",
+			"image": "https://craftdesignstudio.in/og-image.png",
 			"telephone": ["+918758395671", "+918320695380"],
 			"email": "hello@craftdesignstudio.in",
 			"foundingDate": "2023",
+			"currenciesAccepted": "INR",
+			"paymentAccepted": "Cash, Credit Card, Bank Transfer, UPI",
+			"priceRange": "$$",
+			"openingHours": "Mo-Sa 09:00-19:00",
 			"founder": [
 				{
 					"@type": "Person",
@@ -83,6 +90,7 @@ const canonicalUrl = new URL(pathname, Astro.site || 'https://craftdesignstudio.
 					"streetAddress": "Kataria Chowkdi, Near Housing",
 					"addressLocality": "Rajkot",
 					"addressRegion": "Gujarat",
+					"postalCode": "360004",
 					"addressCountry": "IN"
 				}
 			],
@@ -91,13 +99,82 @@ const canonicalUrl = new URL(pathname, Astro.site || 'https://craftdesignstudio.
 				"latitude": "22.8133765",
 				"longitude": "70.8297183"
 			},
+			"areaServed": [
+				{
+					"@type": "City",
+					"name": "Morbi",
+					"sameAs": "https://en.wikipedia.org/wiki/Morbi"
+				},
+				{
+					"@type": "City",
+					"name": "Rajkot",
+					"sameAs": "https://en.wikipedia.org/wiki/Rajkot"
+				},
+				{
+					"@type": "State",
+					"name": "Gujarat"
+				}
+			],
+			"hasOfferCatalog": {
+				"@type": "OfferCatalog",
+				"name": "Interior Design and Architectural Visualization Services",
+				"itemListElement": [
+					{
+						"@type": "Offer",
+						"itemOffered": {
+							"@type": "Service",
+							"name": "Turnkey Residential Interior Design",
+							"description": "Complete residential interior execution, space planning, bespoke joinery, and material procurement in Morbi & Rajkot."
+						}
+					},
+					{
+						"@type": "Offer",
+						"itemOffered": {
+							"@type": "Service",
+							"name": "Commercial & Ceramic Showroom Interior Design",
+							"description": "High-impact tile experience centers, corporate office zoning, and luxury sanitaryware display design for Morbi exporters."
+						}
+					},
+					{
+						"@type": "Offer",
+						"itemOffered": {
+							"@type": "Service",
+							"name": "3D Architectural Visualization & CGI",
+							"description": "Photorealistic 3D interior and exterior architectural renders, lighting simulations, and material calibrations."
+						}
+					},
+					{
+						"@type": "Offer",
+						"itemOffered": {
+							"@type": "Service",
+							"name": "3D Floor Plans & Cut Sections",
+							"description": "Dimensionally accurate 3D floor plan cutouts for high-rise apartments and luxury villas."
+						}
+					},
+					{
+						"@type": "Offer",
+						"itemOffered": {
+							"@type": "Service",
+							"name": "Cinematic 3D Walkthrough Animations",
+							"description": "Ultra-HD cinematic interior and exterior architectural video walkthroughs for real estate developers."
+						}
+					}
+				]
+			},
+			"knowsAbout": [
+				"Interior Design",
+				"Interior Architecture",
+				"3D Architectural Visualization",
+				"Turnkey Interior Execution",
+				"Ceramic Showroom Design",
+				"Residential Villa Design",
+				"Space Planning"
+			],
 			"hasMap": "https://www.google.com/maps?cid=17039764175334688423",
 			"sameAs": [
 				"https://instagram.com/craft_design_studio1",
 				"https://www.google.com/maps?cid=17039764175334688423"
-			],
-			"priceRange": "$$",
-			"openingHours": "Mo-Sa 09:00-19:00"
+			]
 		}
 		</script>
 	</head>

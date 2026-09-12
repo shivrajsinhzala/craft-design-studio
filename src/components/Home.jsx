@@ -7,13 +7,41 @@ import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motio
 
 import { 
   ArrowRight, MapPin, Award, Phone, Home as HomeIcon, Monitor, 
-  Building2, Layout, Film, MoveRight, ArrowUpRight, Instagram, Send, Heart, MessageCircle
+  Building2, Layout, Film, MoveRight, ArrowUpRight, Instagram, Send, Heart, MessageCircle,
+  ChevronDown, HelpCircle
 } from 'lucide-react';
 import { projectsData } from '../data/projectsData.js';
 import { blogsData } from '../data/blogsData.js';
 import PageTransition from '../components/PageTransition.jsx';
 import RevealText from '../components/RevealText.jsx';
 import Footer from '../components/Footer.jsx';
+
+const HOME_FAQS = [
+  {
+    q: "Who is the best interior designer in Morbi for residential and commercial spaces?",
+    a: "Craft The Design Studio is recognized as one of the best interior design studios in Morbi & Rajkot, specializing in luxury residential apartments, villas, and commercial experience centers. Led by Vishvarajsinh Zala (Design Director) and Yash Gharvaliya (Visualization Lead), our studio at Shreeji Arcade on Sanala Road delivers turnkey interior solutions combining bespoke material finishes with photorealistic 3D visualization."
+  },
+  {
+    q: "What interior design and 3D architectural visualization services do you offer in Morbi?",
+    a: "We provide end-to-end interior and architectural visualization services including: turnkey residential interior design, modern commercial office layouts, ceramic tile and sanitaryware showroom display centers, photorealistic 3D interior renders, 3D architectural elevations, cut-section 3D floor plans, and ultra-HD 3D animation walkthroughs."
+  },
+  {
+    q: "Do you undertake turnkey interior design and execution projects in Morbi?",
+    a: "Yes, we provide full turnkey interior execution in Morbi and Rajkot. Our turnkey process covers complete civil coordination, modular furniture fabrication, electrical layouts, false ceiling design, Italian marble and sintered stone installation, custom joinery, lighting calibration, and final styling—providing a single-window handover with zero vendor friction."
+  },
+  {
+    q: "How do you design commercial tile and sanitaryware experience centers in Morbi?",
+    a: "Morbi is India's ceramic hub. We specialize in designing high-impact ceramic showrooms, slab display galleries (including 3200x1600mm sintered porcelain), and sanitaryware experience centers. We integrate specialized color-rendering index (CRI 95+) architectural lighting, modular mock-up displays, and executive B2B client discussion zones."
+  },
+  {
+    q: "What is the typical cost and timeline of an interior design project in Morbi?",
+    a: "Costs vary based on space scale, finishes, and scope (3D concept design vs. full turnkey execution). A typical 3BHK or 4BHK residential project ranges from ₹1,200 to ₹3,500+ per sq ft depending on material choices (Italian marble, veneer, acrylic, smart automation). 3D visualization is completed within 7–14 days, while turnkey projects are delivered within 60–120 days."
+  },
+  {
+    q: "Where is Craft Design Studio located and how can I book a design consultation in Morbi?",
+    a: "Our Morbi studio is located on the 1st Floor, Shreeji Arcade, Opposite VI Store, Sanala Road, Morbi – 363641. You can call us directly at +91 87583 95671 or +91 83206 95380, or submit a request via our contact form for an in-person design consultation."
+  }
+];
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -116,6 +144,7 @@ export default function Home() {
 
   // Services Hover Preview State
   const [hoveredSvcIdx, setHoveredSvcIdx] = useState(null);
+  const [openFaq, setOpenFaq] = useState(null);
 
   // Framer Motion Spring mouse tracker for Services Floating Preview
   const mouseX = useMotionValue(0);
@@ -175,18 +204,8 @@ export default function Home() {
         setFormStatus('idle');
       }
     } catch (error) {
-      console.error(error);
-      setFormStatus('idle');
-    }
-  };
-
-  // Helper to scroll to section
-  const scrollToSection = (e, targetId) => {
-    e.preventDefault();
-    if (window.lenis) {
-      window.lenis.scrollTo(targetId);
-    } else {
-      document.querySelector(targetId)?.scrollIntoView({ behavior: 'smooth' });
+      console.error("Form error:", error);
+      setFormStatus('error');
     }
   };
 
@@ -317,6 +336,9 @@ export default function Home() {
             <h1 className="hero-title" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               <RevealText text="Designing Interiors," delay={0.1} />
               <RevealText text="Defining Elegance." className="yellow-t" delay={0.3} />
+              <span style={{ fontSize: 'clamp(0.95rem, 1.6vw, 1.25rem)', fontWeight: 400, color: 'var(--muted)', marginTop: '16px', letterSpacing: '0.02em', textTransform: 'none', lineHeight: 1.4, fontFamily: 'var(--ff-body)' }}>
+                Best Interior Designer &amp; 3D Architectural Visualization Studio in Morbi &amp; Rajkot
+              </span>
             </h1>
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
@@ -580,7 +602,7 @@ export default function Home() {
               <div>
                 <p className="label">What We Do</p>
                 <h2 className="section-title">
-                  <RevealText text="Our Services" delay={0.1} />
+                  <RevealText text="Interior Design & 3D Visualization in Morbi & Rajkot" delay={0.1} />
                 </h2>
               </div>
               <p className="svc-sub">Precision craftsmanship across every dimension of space and visual design.</p>
@@ -895,6 +917,88 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* INTERIOR DESIGN MORBI FAQ SECTION */}
+        <section className="section section-cream" id="faq" aria-label="Frequently Asked Questions about Interior Design in Morbi">
+          <div className="container" style={{ maxWidth: '960px' }}>
+            <div style={{ textAlign: 'center', marginBottom: '60px' }}>
+              <p className="label">Common Inquiries</p>
+              <h2 className="section-title" style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.8rem)', marginBottom: '16px' }}>
+                Interior Design &amp; 3D Visualization <span className="yellow-t">FAQs</span>
+              </h2>
+              <p className="body-t" style={{ maxWidth: '640px', margin: '0 auto', fontSize: '1rem', color: 'var(--muted)' }}>
+                Everything you need to know about our residential turnkey process, commercial showroom design, and 3D architectural visualization in Morbi &amp; Rajkot.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {HOME_FAQS.map((faq, idx) => {
+                const isOpen = openFaq === idx;
+                return (
+                  <div 
+                    key={idx}
+                    style={{
+                      background: 'var(--bg)',
+                      border: '1px solid var(--border)',
+                      borderRadius: '4px',
+                      overflow: 'hidden',
+                      transition: 'border-color 0.3s ease'
+                    }}
+                  >
+                    <button
+                      onClick={() => setOpenFaq(isOpen ? null : idx)}
+                      style={{
+                        width: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        padding: '24px 28px',
+                        background: 'none',
+                        border: 'none',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        gap: '16px'
+                      }}
+                      aria-expanded={isOpen}
+                    >
+                      <span style={{ fontFamily: 'var(--ff-display)', fontSize: '1.25rem', fontWeight: 500, color: 'var(--dark)' }}>
+                        {faq.q}
+                      </span>
+                      <ChevronDown 
+                        style={{ 
+                          width: '20px', 
+                          height: '20px', 
+                          flexShrink: 0, 
+                          color: 'var(--yellow)',
+                          transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                          transition: 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+                        }} 
+                      />
+                    </button>
+                    <AnimatePresence>
+                      {isOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                          style={{ overflow: 'hidden' }}
+                        >
+                          <div style={{ padding: '0 28px 24px 28px', borderTop: '1px solid rgba(0,0,0,0.05)' }}>
+                            <p className="body-t" style={{ fontSize: '0.98rem', lineHeight: '1.8', color: 'var(--muted)', paddingTop: '16px' }}>
+                              {faq.a}
+                            </p>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
         {/* INSTAGRAM GRID */}
         <section className="section" style={{ background: 'var(--bg)', paddingBottom: '0' }}>
           <div className="container ig-header">

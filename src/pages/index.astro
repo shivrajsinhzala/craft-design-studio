@@ -1,11 +1,67 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Home from '../components/Home.jsx';
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Who is the best interior designer in Morbi for residential and commercial spaces?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Craft The Design Studio is recognized as one of the best interior design studios in Morbi & Rajkot, specializing in luxury residential apartments, villas, and commercial experience centers. Led by Vishvarajsinh Zala (Design Director) and Yash Gharvaliya (Visualization Lead), our studio at Shreeji Arcade on Sanala Road delivers turnkey interior solutions combining bespoke material finishes with photorealistic 3D visualization."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What interior design and 3D architectural visualization services do you offer in Morbi?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We provide end-to-end interior and architectural visualization services including: turnkey residential interior design, modern commercial office layouts, ceramic tile and sanitaryware showroom display centers, photorealistic 3D interior renders, 3D architectural elevations, cut-section 3D floor plans, and ultra-HD 3D animation walkthroughs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you undertake turnkey interior design and execution projects in Morbi?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, we provide full turnkey interior execution in Morbi and Rajkot. Our turnkey process covers complete civil coordination, modular furniture fabrication, electrical layouts, false ceiling design, Italian marble and sintered stone installation, custom joinery, lighting calibration, and final styling—providing a single-window handover with zero vendor friction."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do you design commercial tile and sanitaryware experience centers in Morbi?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Morbi is India's ceramic hub. We specialize in designing high-impact ceramic showrooms, slab display galleries (including 3200x1600mm sintered porcelain), and sanitaryware experience centers. We integrate specialized color-rendering index (CRI 95+) architectural lighting, modular mock-up displays, and executive B2B client discussion zones."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the typical cost and timeline of an interior design project in Morbi?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Costs vary based on space scale, finishes, and scope (3D concept design vs. full turnkey execution). A typical 3BHK or 4BHK residential project ranges from ₹1,200 to ₹3,500+ per sq ft depending on material choices (Italian marble, veneer, acrylic, smart automation). 3D visualization is completed within 7–14 days, while turnkey projects are delivered within 60–120 days."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where is Craft Design Studio located and how can I book a design consultation in Morbi?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Our Morbi studio is located on the 1st Floor, Shreeji Arcade, Opposite VI Store, Sanala Road, Morbi – 363641. You can call us directly at +91 87583 95671 or +91 83206 95380, or submit a request via our contact form for an in-person design consultation."
+      }
+    }
+  ]
+};
 ---
 
 <Layout 
-	title="Craft The Design Studio | Interior Design & 3D Visualization in Morbi & Rajkot" 
-	description="Premium interior design, 3D architectural visualization, and floor plan services in Morbi & Rajkot, Gujarat. Specializing in modern, luxurious residential and commercial spaces."
+	title="Best Interior Designer in Morbi | Craft The Design Studio" 
+	description="Looking for the best interior designer in Morbi? Craft The Design Studio delivers luxury turnkey residential interiors, commercial ceramic showrooms, and 3D architectural visualization in Morbi & Rajkot."
 >
+	<script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
 	<Home client:load />
 </Layout>

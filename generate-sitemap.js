@@ -27,6 +27,7 @@ function generateSitemap() {
 
   // Core Pages
   addUrl('/', 1.0, 'weekly');
+  addUrl('/interior-designer-morbi/', 1.0, 'weekly');
   addUrl('/about/', 0.9, 'monthly');
   addUrl('/contact/', 0.9, 'monthly');
   addUrl('/blog/', 0.9, 'weekly');

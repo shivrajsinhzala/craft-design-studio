@@ -28,3 +28,5 @@ User-agent: Bytespider
 Disallow: /
 
 Sitemap: https://craftdesignstudio.in/sitemap.xml
+Sitemap: https://craftdesignstudio.in/sitemap-index.xml
+Sitemap: https://craftdesignstudio.in/rss.xml

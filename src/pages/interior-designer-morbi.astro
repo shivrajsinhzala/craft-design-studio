@@ -1,0 +1,346 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.jsx';
+import { ArrowRight, MapPin, Phone, CheckCircle2, Building2, Eye, Layers } from 'lucide-react';
+import { projectsData } from '../data/projectsData.js';
+import { blogsData } from '../data/blogsData.js';
+
+const morbiProjects = projectsData.filter(p => p.location.toLowerCase().includes('morbi'));
+const morbiBlogs = blogsData.filter(b => 
+  b.title.toLowerCase().includes('morbi') || 
+  b.slug.toLowerCase().includes('morbi') || 
+  (b.tags && b.tags.some(t => t.toLowerCase().includes('morbi')))
+).slice(0, 6);
+
+const localSchema = {
+  "@context": "https://schema.org",
+  "@type": ["InteriorDesigner", "HomeAndConstructionBusiness", "ProfessionalService"],
+  "name": "Craft Design Studio - Interior Designer Morbi",
+  "alternateName": "Craft The Design Studio Morbi",
+  "description": "Premier interior design, 3D architectural visualization, and turnkey interior contracting studio in Morbi, Gujarat. Specializing in luxury residences, bungalows, and ceramic tile experience centers.",
+  "url": "https://craftdesignstudio.in/interior-designer-morbi/",
+  "logo": "https://craftdesignstudio.in/Logo.png",
+  "image": "https://craftdesignstudio.in/Silver%20Heights/FL%20LV%20ELE%201.webp",
+  "telephone": ["+918758395671", "+918320695380"],
+  "email": "hello@craftdesignstudio.in",
+  "priceRange": "$$",
+  "openingHours": "Mo-Sa 09:00-19:00",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1st Floor, Shreeji Arcade, Opposite VI Store, Sanala Road",
+    "addressLocality": "Morbi",
+    "addressRegion": "Gujarat",
+    "postalCode": "363641",
+    "addressCountry": "IN"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "22.8133765",
+    "longitude": "70.8297183"
+  },
+  "hasMap": "https://www.google.com/maps?cid=17039764175334688423",
+  "founder": [
+    {
+      "@type": "Person",
+      "name": "Vishvarajsinh Zala",
+      "jobTitle": "Design Director & Co-Founder"
+    },
+    {
+      "@type": "Person",
+      "name": "Yash Gharvaliya",
+      "jobTitle": "Lead 3D Visualizer & Co-Founder"
+    }
+  ]
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://craftdesignstudio.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Interior Designer in Morbi",
+      "item": "https://craftdesignstudio.in/interior-designer-morbi/"
+    }
+  ]
+};
+---
+
+<Layout 
+  title="Best Interior Designer in Morbi | Luxury Turnkey & 3D Visualization | Craft Design Studio"
+  description="Craft The Design Studio is Morbi's leading interior design studio on Sanala Road. Delivering bespoke luxury residences, commercial ceramic showrooms, and photorealistic 3D visualization."
+  image="/Silver Heights/FL LV ELE 1.webp"
+>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(localSchema)} />
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <main style="padding-top: 140px; background: var(--bg); min-height: 100vh;">
+    <!-- HERO SECTION -->
+    <section class="container" style="margin-bottom: 80px;">
+      <nav aria-label="Breadcrumb" style="margin-bottom: 24px; font-family: var(--ff-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted);">
+        <a href="/" style="color: var(--muted); text-decoration: none;">Home</a>
+        <span style="margin: 0 8px;">/</span>
+        <span style="color: var(--yellow);">Interior Designer in Morbi</span>
+      </nav>
+
+      <div style="max-width: 900px;">
+        <p class="label" style="display: flex; align-items: center; gap: 8px;">
+          <MapPin style={{ width: '14px', height: '14px', color: 'var(--yellow)' }} />
+          Sanala Road, Morbi, Gujarat
+        </p>
+        <h1 class="section-title" style="font-size: clamp(2.6rem, 5.5vw, 4.6rem); font-weight: 300; line-height: 1.15; margin-bottom: 24px;">
+          Best Interior Designer in <span class="yellow-t">Morbi</span>
+        </h1>
+        <p class="body-t" style="font-size: 1.15rem; line-height: 1.8; color: var(--muted); max-width: 760px; margin-bottom: 36px;">
+          Craft The Design Studio elevates contemporary living and commercial architecture across Morbi. We engineer bespoke turnkey residences, iconic ceramic tile experience centers, and photorealistic 3D visual environments with relentless geometric precision.
+        </p>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+          <a href="/contact/" class="btn-dark" style="padding: 14px 28px; font-size: 11px;">
+            <span>Schedule Morbi Studio Visit</span>
+            <ArrowRight style={{ width: '14px', height: '14px' }} />
+          </a>
+          <a href="tel:+918758395671" class="btn-ghost" style="padding: 14px 24px; font-size: 11px;">
+            <Phone style={{ width: '14px', height: '14px', marginRight: '6px' }} />
+            <span>Call +91 87583 95671</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- KEY STATS STRIP -->
+    <section style="background: var(--bg-cream); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 48px 0; margin-bottom: 100px;">
+      <div class="container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 32px; text-align: center;">
+        <div>
+          <div style="font-family: var(--ff-display); font-size: 3rem; color: var(--dark); font-weight: 500;">50+</div>
+          <p style="font-family: var(--ff-mono); font-size: 11px; text-transform: uppercase; color: var(--muted); margin-top: 6px;">Delivered Projects</p>
+        </div>
+        <div>
+          <div style="font-family: var(--ff-display); font-size: 3rem; color: var(--dark); font-weight: 500;">100%</div>
+          <p style="font-family: var(--ff-mono); font-size: 11px; text-transform: uppercase; color: var(--muted); margin-top: 6px;">Client Satisfaction</p>
+        </div>
+        <div>
+          <div style="font-family: var(--ff-display); font-size: 3rem; color: var(--dark); font-weight: 500;">2 Studios</div>
+          <p style="font-family: var(--ff-mono); font-size: 11px; text-transform: uppercase; color: var(--muted); margin-top: 6px;">Morbi &amp; Rajkot</p>
+        </div>
+        <div>
+          <div style="font-family: var(--ff-display); font-size: 3rem; color: var(--dark); font-weight: 500;">Zero</div>
+          <p style="font-family: var(--ff-mono); font-size: 11px; text-transform: uppercase; color: var(--muted); margin-top: 6px;">Vendor Execution Friction</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDITORIAL CONTENT: WHY CRAFT DESIGN STUDIO IN MORBI -->
+    <section class="container" style="margin-bottom: 120px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 64px; align-items: center;">
+        <div>
+          <p class="label">The Morbi Advantage</p>
+          <h2 class="section-title" style="font-size: clamp(2rem, 3.5vw, 2.8rem); margin-bottom: 24px; line-height: 1.2;">
+            Crafting Industrial Craft Into <span class="yellow-t">Bespoke Luxury</span>
+          </h2>
+          <p class="body-t" style="margin-bottom: 20px; line-height: 1.8; font-size: 1.05rem;">
+            As the ceramic capital of India, Morbi demands a design vernacular that understands both heavy industrial engineering and ultra-luxurious residential comfort. At Craft The Design Studio, we combine deep knowledge of large-format sintered porcelain slabs (3200x1600mm), seamless acoustic paneling, and Italian marble detailing.
+          </p>
+          <p class="body-t" style="margin-bottom: 32px; line-height: 1.8; font-size: 1.05rem;">
+            Whether designing high-end residences in areas like Ravapar Road, Sanala Road, and luxury Morbi bungalows, or conceptualizing flagship ceramic brand experience centers, our workflow provides seamless 3D renders followed by flawless turnkey on-site execution.
+          </p>
+          
+          <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 14px;">
+            <li style="display: flex; align-items: center; gap: 12px; font-family: var(--ff-body); color: var(--dark);">
+              <CheckCircle2 style={{ width: '18px', height: '18px', color: 'var(--yellow)', flexShrink: 0 }} />
+              <span>Full single-window turnkey execution from shell to final handover</span>
+            </li>
+            <li style="display: flex; align-items: center; gap: 12px; font-family: var(--ff-body); color: var(--dark);">
+              <CheckCircle2 style={{ width: '18px', height: '18px', color: 'var(--yellow)', flexShrink: 0 }} />
+              <span>Photorealistic 3D interior renders &amp; 3D architectural elevations</span>
+            </li>
+            <li style="display: flex; align-items: center; gap: 12px; font-family: var(--ff-body); color: var(--dark);">
+              <CheckCircle2 style={{ width: '18px', height: '18px', color: 'var(--yellow)', flexShrink: 0 }} />
+              <span>Specialized ceramic tile showroom &amp; sanitaryware experience design</span>
+            </li>
+            <li style="display: flex; align-items: center; gap: 12px; font-family: var(--ff-body); color: var(--dark);">
+              <CheckCircle2 style={{ width: '18px', height: '18px', color: 'var(--yellow)', flexShrink: 0 }} />
+              <span>Transparent cost management with zero surprise budget inflation</span>
+            </li>
+          </ul>
+        </div>
+
+        <div style="border-radius: 4px; overflow: hidden; border: 1px solid var(--border);">
+          <img 
+            src="/Silver Heights/FL LV ELE 2.webp" 
+            alt="Interior design project in Morbi by Craft Design Studio"
+            style="width: 100%; height: auto; display: block; object-fit: cover;"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- CORE SERVICES IN MORBI -->
+    <section style="background: var(--bg-cream); padding: 100px 0; margin-bottom: 120px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+      <div class="container">
+        <div style="text-align: center; margin-bottom: 64px;">
+          <p class="label">Comprehensive Spatial Solutions</p>
+          <h2 class="section-title" style="font-size: clamp(2.2rem, 4vw, 3.4rem);">
+            Our Interior &amp; Visualization Services in Morbi
+          </h2>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px;">
+          <div style="background: var(--bg); padding: 36px; border: 1px solid var(--border); border-radius: 4px;">
+            <Building2 style={{ width: '32px', height: '32px', color: 'var(--yellow)', marginBottom: '20px' }} />
+            <h3 style="font-family: var(--ff-display); font-size: 1.6rem; margin-bottom: 14px; color: var(--dark);">Turnkey Residential Interiors</h3>
+            <p class="body-t" style="font-size: 0.95rem; line-height: 1.7; color: var(--muted);">
+              From 3BHK/4BHK apartments to multi-acre luxury bungalows in Morbi, we manage every trade: civil masonry, electrical plumbing, false ceiling, carpentry, modular kitchen fabrication, and designer furniture.
+            </p>
+          </div>
+
+          <div style="background: var(--bg); padding: 36px; border: 1px solid var(--border); border-radius: 4px;">
+            <Layers style={{ width: '32px', height: '32px', color: 'var(--yellow)', marginBottom: '20px' }} />
+            <h3 style="font-family: var(--ff-display); font-size: 1.6rem; margin-bottom: 14px; color: var(--dark);">Ceramic Showrooms &amp; Offices</h3>
+            <p class="body-t" style="font-size: 0.95rem; line-height: 1.7; color: var(--muted);">
+              Engineered display systems for porcelain tiles, big slabs, and sanitaryware. Optimized with CRI 95+ architectural lighting and ergonomic executive cabins to convert international buyers.
+            </p>
+          </div>
+
+          <div style="background: var(--bg); padding: 36px; border: 1px solid var(--border); border-radius: 4px;">
+            <Eye style={{ width: '32px', height: '32px', color: 'var(--yellow)', marginBottom: '20px' }} />
+            <h3 style="font-family: var(--ff-display); font-size: 1.6rem; margin-bottom: 14px; color: var(--dark);">3D Architectural Visualization</h3>
+            <p class="body-t" style="font-size: 0.95rem; line-height: 1.7; color: var(--muted);">
+              High-poly 3D interior renders, cut-section floor plans, and cinematic animation walkthroughs that empower developers and architects to market spaces before construction breaks ground.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MORBI FEATURED PORTFOLIO -->
+    <section class="container" style="margin-bottom: 120px;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; flex-wrap: wrap; gap: 20px;">
+        <div>
+          <p class="label">Morbi Project Portfolio</p>
+          <h2 class="section-title" style="font-size: clamp(2.2rem, 4vw, 3.4rem);">
+            Recent Work in <span class="yellow-t">Morbi</span>
+          </h2>
+        </div>
+        <a href="/#projects" class="btn-ghost" style="padding: 10px 20px; font-size: 11px;">
+          <span>View Full Portfolio</span>
+          <ArrowRight style={{ width: '12px', height: '12px', marginLeft: '6px' }} />
+        </a>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px;">
+        {morbiProjects.map(project => (
+          <article style="background: var(--bg-cream); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column;">
+            <div style="position: relative; aspect-ratio: 16/10; overflow: hidden;">
+              <a href={`/project/${project.id}/`} style="display: block; width: 100%; height: 100%;">
+                <img 
+                  src={project.banner} 
+                  alt={`${project.title} - Interior Design in Morbi`} 
+                  style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease;"
+                  class="zoom-hover-img"
+                />
+              </a>
+              <span style="position: absolute; top: 16px; left: 16px; font-size: 9px; font-family: var(--ff-mono); padding: 4px 10px; background: rgba(20,18,16,0.85); color: #fff; border-radius: 20px; text-transform: uppercase;">
+                {project.location}
+              </span>
+            </div>
+            <div style="padding: 24px;">
+              <p style="font-family: var(--ff-mono); font-size: 10px; text-transform: uppercase; color: var(--yellow); margin-bottom: 8px;">{project.tag}</p>
+              <h3 style="font-family: var(--ff-display); font-size: 1.5rem; margin-bottom: 12px; color: var(--dark);">
+                <a href={`/project/${project.id}/`} style="color: inherit; text-decoration: none;">{project.title}</a>
+              </h3>
+              <p class="body-t" style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                {project.description}
+              </p>
+              <a href={`/project/${project.id}/`} class="btn-ghost" style="padding: 8px 16px; font-size: 10px; width: 100%; justify-content: center;">
+                <span>Explore Project Details</span>
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- MORBI SEO BLOG GUIDES -->
+    {morbiBlogs.length > 0 && (
+      <section style="background: var(--bg-cream); padding: 80px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 120px;">
+        <div class="container">
+          <div style="margin-bottom: 40px;">
+            <p class="label">Morbi Design Guides</p>
+            <h2 class="section-title" style="font-size: clamp(2rem, 3.5vw, 2.8rem);">
+              Expert Insights on Morbi Interior Architecture
+            </h2>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+            {morbiBlogs.map(b => (
+              <a 
+                href={`/blog/${b.slug}/`} 
+                style="display: block; background: var(--bg); padding: 24px; border: 1px solid var(--border); border-radius: 4px; text-decoration: none; transition: border-color 0.3s ease;"
+              >
+                <p style="font-family: var(--ff-mono); font-size: 10px; color: var(--yellow); text-transform: uppercase; margin-bottom: 8px;">{b.category}</p>
+                <h3 style="font-family: var(--ff-display); font-size: 1.25rem; color: var(--dark); line-height: 1.35; margin-bottom: 10px;">{b.title}</h3>
+                <span style="font-family: var(--ff-mono); font-size: 10px; color: var(--muted); text-transform: uppercase;">Read Guide &rarr;</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- STUDIO ADDRESS & CONTACT CTA -->
+    <section class="container" style="margin-bottom: 120px;">
+      <div style="background: var(--dark); color: #fff; padding: clamp(40px, 6vw, 70px); border-radius: 4px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 48px; align-items: center;">
+        <div>
+          <p class="label" style="color: var(--yellow);">Morbi Headquarters</p>
+          <h2 class="section-title" style="color: #fff; font-size: clamp(2rem, 3.5vw, 3rem); margin-bottom: 20px;">
+            Visit Our Design Studio in Morbi
+          </h2>
+          <p style="color: rgba(255,255,255,0.7); line-height: 1.8; margin-bottom: 24px;">
+            Discuss your residential villa, apartment, or commercial showroom project with Design Director Vishvarajsinh Zala and our visualization team over a cup of coffee.
+          </p>
+          <address style="font-style: normal; color: rgba(255,255,255,0.9); line-height: 1.7; margin-bottom: 28px;">
+            <strong>Craft The Design Studio</strong><br />
+            1st Floor, Shreeji Arcade, Opposite VI Store,<br />
+            Sanala Road, Morbi – 363641, Gujarat
+          </address>
+          <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+            <a href="tel:+918758395671" class="btn-dark" style="background: var(--yellow); color: var(--dark); border-color: var(--yellow); padding: 12px 24px; font-size: 11px;">
+              <span>Call +91 87583 95671</span>
+            </a>
+            <a href="/contact/" class="btn-ghost" style="color: #fff; border-color: rgba(255,255,255,0.3); padding: 12px 24px; font-size: 11px;">
+              <span>Send Project Enquiry</span>
+            </a>
+          </div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.05); padding: 32px; border: 1px solid rgba(255,255,255,0.1); border-radius: 4px;">
+          <h3 style="font-family: var(--ff-display); font-size: 1.6rem; margin-bottom: 16px; color: #fff;">Operating Hours</h3>
+          <p style="color: rgba(255,255,255,0.7); line-height: 1.8; margin-bottom: 16px;">
+            Monday &ndash; Saturday: 09:00 AM &ndash; 07:00 PM<br />
+            Sunday: By Prior Appointment Only
+          </p>
+          <p style="font-family: var(--ff-mono); font-size: 11px; text-transform: uppercase; color: var(--yellow); margin-bottom: 8px;">Email</p>
+          <p style="color: #fff; margin-bottom: 20px;">hello@craftdesignstudio.in</p>
+          <a 
+            href="https://www.google.com/maps?cid=17039764175334688423" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            style="display: inline-flex; align-items: center; gap: 8px; color: var(--yellow); font-family: var(--ff-mono); font-size: 11px; text-transform: uppercase; text-decoration: none;"
+          >
+            <MapPin style={{ width: '14px', height: '14px' }} />
+            <span>Open in Google Maps &rarr;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

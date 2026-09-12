@@ -276,7 +276,7 @@ CRITICAL INSTRUCTIONS (Sentry-style In-Depth Writing Guidelines):
     }
 
     // 6.5 Request Indexing via Google Indexing API if credentials present
-    const blogUrl = `https://craftdesignstudio.in/blog/${newBlog.slug}`;
+    const blogUrl = `https://craftdesignstudio.in/blog/${newBlog.slug}/`;
     console.log(`📡 Checking Google Indexing API configuration for URL: ${blogUrl}`);
     try {
       let credentials;

@@ -86,16 +86,30 @@ async function run() {
     const token = await getGoogleIndexingToken(credentials.client_email, credentials.private_key);
     console.log("🔑 Google Authentication Successful!");
 
-    // Submit homepage
-    const homepageUrl = "https://craftdesignstudio.in/";
-    console.log(`📡 Pinging Google Indexing API for Homepage: ${homepageUrl}`);
-    const homeResult = await requestGoogleIndexing(homepageUrl, token);
-    console.log("✅ Homepage submitted successfully:", JSON.stringify(homeResult));
+    // Submit pillar pages
+    const pillarPages = [
+      "https://craftdesignstudio.in/",
+      "https://craftdesignstudio.in/interior-designer-morbi/",
+      "https://craftdesignstudio.in/about/",
+      "https://craftdesignstudio.in/contact/",
+      "https://craftdesignstudio.in/blog/"
+    ];
 
-    // Submit each blog post
+    for (const pageUrl of pillarPages) {
+      console.log(`📡 Pinging Google Indexing API for Pillar Page: ${pageUrl}`);
+      try {
+        const res = await requestGoogleIndexing(pageUrl, token);
+        console.log(`   └─> Success:`, JSON.stringify(res));
+      } catch (err) {
+        console.error(`   └─> Failed:`, err.message);
+      }
+      await new Promise(resolve => setTimeout(resolve, 300));
+    }
+
+    // Submit each blog post with trailing slash
     for (let i = 0; i < blogs.length; i++) {
       const blog = blogs[i];
-      const blogUrl = `https://craftdesignstudio.in/blog/${blog.slug}`;
+      const blogUrl = `https://craftdesignstudio.in/blog/${blog.slug}/`;
       console.log(`📡 [${i + 1}/${blogs.length}] Pinging Google Indexing API for: ${blogUrl}`);
       try {
         const result = await requestGoogleIndexing(blogUrl, token);
@@ -104,7 +118,7 @@ async function run() {
         console.error(`   └─> Failed:`, err.message);
       }
       // Brief sleep to avoid hitting API rate limits
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 300));
     }
 
     console.log("🎉 All pages submitted to Google Search Indexing successfully!");
