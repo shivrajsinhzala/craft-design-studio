@@ -31,6 +31,7 @@ function generateSitemap() {
   addUrl('/about/', 0.9, 'monthly');
   addUrl('/contact/', 0.9, 'monthly');
   addUrl('/blog/', 0.9, 'weekly');
+  addUrl('/review/', 0.8, 'monthly');
 
   // Dynamic Projects
   projectsData.forEach(project => {

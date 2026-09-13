@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ReviewGenerator from '../components/ReviewGenerator.jsx';
+---
+
+<Layout 
+	title="Leave a 5-Star Review | Craft Design Studio Morbi & Rajkot" 
+	description="Thank you for choosing Craft Design Studio. We appreciate your feedback — tap to copy your personalized 5-star review and open Google in seconds."
+	hideNav={true}
+	hideWhatsApp={true}
+>
+	<main id="review-main-content">
+		<ReviewGenerator client:load />
+	</main>
+</Layout>

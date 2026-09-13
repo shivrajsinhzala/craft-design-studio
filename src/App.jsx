@@ -13,6 +13,7 @@ import ProjectDetail from './pages/ProjectDetail.jsx';
 import BlogList from './pages/BlogList.jsx';
 import BlogDetail from './pages/BlogDetail.jsx';
 import NotFound from './pages/NotFound.jsx';
+import ReviewGenerator from './components/ReviewGenerator.jsx';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -42,6 +43,7 @@ function AnimatedRoutes() {
         <Route path="/project/:id" element={<ProjectDetail />} />
         <Route path="/blog" element={<BlogList />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
+        <Route path="/review" element={<ReviewGenerator />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>

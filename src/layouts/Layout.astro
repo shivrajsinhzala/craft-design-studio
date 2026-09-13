@@ -9,9 +9,11 @@ interface Props {
 	title: string;
 	description: string;
 	image?: string;
+	hideNav?: boolean;
+	hideWhatsApp?: boolean;
 }
 
-const { title, description, image = '/og-image.png' } = Astro.props;
+const { title, description, image = '/og-image.png', hideNav = false, hideWhatsApp = false } = Astro.props;
 const pathname = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
 const canonicalUrl = new URL(pathname, Astro.site || 'https://craftdesignstudio.in');
 ---
@@ -183,29 +185,31 @@ const canonicalUrl = new URL(pathname, Astro.site || 'https://craftdesignstudio.
 	</head>
 	<body>
 		<Cursor client:load />
-		<Navbar client:load />
+		{!hideNav && <Navbar client:load />}
 		<slot />
 
 		<!-- Floating WhatsApp Consultation Button -->
-		<a
-			href="https://wa.me/918758395671?text=Hi%20Craft%20Design%20Studio%2C%20I%20would%20like%20to%20consult%20for%20a%20design/visualization%20project."
-			target="_blank"
-			rel="noopener noreferrer"
-			class="whatsapp-float"
-			aria-label="Chat on WhatsApp for a design consultation"
-		>
-			<span class="tooltip-text">Chat with Us</span>
-			<svg
-				viewBox="0 0 512 512"
-				width="28"
-				height="28"
-				fill="currentColor"
-				class="whatsapp-icon"
-				aria-hidden="true"
+		{!hideWhatsApp && (
+			<a
+				href="https://wa.me/918758395671?text=Hi%20Craft%20Design%20Studio%2C%20I%20would%20like%20to%20consult%20for%20a%20design/visualization%20project."
+				target="_blank"
+				rel="noopener noreferrer"
+				class="whatsapp-float"
+				aria-label="Chat on WhatsApp for a design consultation"
 			>
-				<path d="M480 256C480 132.3 379.7 32 256 32S32 132.3 32 256c0 42.1 11.6 81.5 31.8 115L32 480l111.5-31.1c32.7 18.2 70.2 28.1 112.5 28.1 123.7 0 224-100.3 224-224zm-224 190.9c-34.7 0-68.7-9.3-98.3-26.9l-7-4.2-72.9 20.3 20.7-72.3-4.6-7.3c-19.3-30.7-29.5-66.1-29.5-102.5 0-106.1 86.4-192.5 192.5-192.5s192.5 86.4 192.5 192.5-86.4 192.5-192.5 192.5zm105.6-144.3c-5.8-2.9-34.2-16.9-39.5-18.8-5.3-1.9-9.2-2.9-13.1 2.9-3.9 5.8-15 18.8-18.4 22.7-3.4 3.9-6.8 4.4-12.6 1.5-34.1-17.1-56.4-30.4-78.9-68.9-6-10.2 6-9.5 17-31.7 1.9-3.9 1-7.3-.5-10.2-1.5-2.9-13.1-31.5-17.9-43-4.7-11.3-9.5-9.7-13.1-9.9-3.4-.2-7.3-.2-11.1-.2s-10.1 1.5-15.5 7.3c-5.3 5.8-20.3 19.8-20.3 48.4s20.8 56.2 23.7 60c2.9 3.9 40.9 62.4 99.1 87.5 36.8 15.9 51.2 17.2 69.6 14.5 11.2-1.7 34.2-14 39.1-27.6 4.9-13.6 4.9-25.2 3.4-27.6-1.5-2.4-5.3-3.9-11-6.8z" />
-			</svg>
-		</a>
+				<span class="tooltip-text">Chat with Us</span>
+				<svg
+					viewBox="0 0 512 512"
+					width="28"
+					height="28"
+					fill="currentColor"
+					class="whatsapp-icon"
+					aria-hidden="true"
+				>
+					<path d="M480 256C480 132.3 379.7 32 256 32S32 132.3 32 256c0 42.1 11.6 81.5 31.8 115L32 480l111.5-31.1c32.7 18.2 70.2 28.1 112.5 28.1 123.7 0 224-100.3 224-224zm-224 190.9c-34.7 0-68.7-9.3-98.3-26.9l-7-4.2-72.9 20.3 20.7-72.3-4.6-7.3c-19.3-30.7-29.5-66.1-29.5-102.5 0-106.1 86.4-192.5 192.5-192.5s192.5 86.4 192.5 192.5-86.4 192.5-192.5 192.5zm105.6-144.3c-5.8-2.9-34.2-16.9-39.5-18.8-5.3-1.9-9.2-2.9-13.1 2.9-3.9 5.8-15 18.8-18.4 22.7-3.4 3.9-6.8 4.4-12.6 1.5-34.1-17.1-56.4-30.4-78.9-68.9-6-10.2 6-9.5 17-31.7 1.9-3.9 1-7.3-.5-10.2-1.5-2.9-13.1-31.5-17.9-43-4.7-11.3-9.5-9.7-13.1-9.9-3.4-.2-7.3-.2-11.1-.2s-10.1 1.5-15.5 7.3c-5.3 5.8-20.3 19.8-20.3 48.4s20.8 56.2 23.7 60c2.9 3.9 40.9 62.4 99.1 87.5 36.8 15.9 51.2 17.2 69.6 14.5 11.2-1.7 34.2-14 39.1-27.6 4.9-13.6 4.9-25.2 3.4-27.6-1.5-2.4-5.3-3.9-11-6.8z" />
+				</svg>
+			</a>
+		)}
 
 		<script>
 			import Lenis from 'lenis';
