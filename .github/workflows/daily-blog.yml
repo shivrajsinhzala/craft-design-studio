@@ -2,8 +2,8 @@ name: Daily SEO Blog Generator
 
 on:
   schedule:
-    # Run every day at 04:00 UTC (09:30 AM IST)
-    - cron: '0 4 * * *'
+    # Run weekly on Monday at 04:00 UTC (09:30 AM IST) to stabilize crawl frequency
+    - cron: '0 4 * * 1'
   workflow_dispatch:
     # Allows manual triggering from the GitHub Actions tab
 

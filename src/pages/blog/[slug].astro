@@ -36,13 +36,21 @@ const pageTitle = rawTitle.includes('Craft')
   : `${rawTitle} | Craft Design Studio`;
 const pageDescription = (blog.metaDescription || blog.excerpt || '').trim().slice(0, 158);
 
+const isoDate = (() => {
+  const parsed = Date.parse(blog.date);
+  if (isNaN(parsed)) return blog.date;
+  const d = new Date(parsed);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+})();
+
 const articleSchema = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": blog.title,
   "description": pageDescription,
   "image": blog.banner ? `https://craftdesignstudio.in${blog.banner}` : "https://craftdesignstudio.in/og-image.png",
-  "datePublished": blog.date,
+  "datePublished": isoDate,
+  "dateModified": isoDate,
   "author": {
     "@type": "Person",
     "name": blog.author || "Vishvarajsinh Zala"
